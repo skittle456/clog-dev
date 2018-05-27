@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'clog.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "djqtu3alim7k4",
+        "NAME": "pgheroku",
         "USER": "juieybujxtuosi",
-        "PASSWORD": "df6ac5b31860ff34521fa33c539c590676da67f29de4bcbc51c8e359a98ae581",
+        "PASSWORD": "djqtu3alim7k4",
         "HOST": "ec2-54-204-39-46.compute-1.amazonaws.com",
         "PORT": "5432",
     }
