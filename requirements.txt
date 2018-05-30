@@ -11,3 +11,5 @@
 # manage.py: 8
 # url.py: 2
 Django == 2.0.3
+
+gunicorn == 19.7.0
