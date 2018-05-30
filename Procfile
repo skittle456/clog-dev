@@ -1,1 +1,1 @@
-web: gunicorn clog:app --preload
+web: gunicorn clog.wsgi
