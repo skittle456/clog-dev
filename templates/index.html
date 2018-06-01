@@ -1,34 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='index.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css">
-	<title>CLOG</title>
-</head>
-<body>
-	<div class="container">
-	CLOG
-	<hr/>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}<title>CLOG</title>{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static "/css/index.css" %}" />
+{% endblock %}
+{% block content %}
 	<div class="row">
-		<div class="col-3">
-				<a href="https://thematter.co/thinkers/homeless-world/51863">
-				<img src=https://thematter.co/wp-content/uploads/2018/05/arnmaijob-20180526-web-740x560.png>
+		{% for blog in blogs %}
+			<div class="col-3">
+				<a href="{{blog.url}}" >
+					<img src="{{blog.img_url}}" target="_blank" style="width:270px;height:auto;">
 				</a>
-				<a href="https://thematter.co/thinkers/homeless-world/51863" title="Homeless world"></a>
+				<div class="form-in-line">
+					{{blog.created_on|date}}
+					<img width="16"height="16" src="{{blog.provider.favicon_url}}" style="margin-left:20px;">
+					<span> {{blog.provider.provider_name}} </span>
+				</div>
+				<h5>
+					<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
+				</h5>
 			</div>
-		<div class="col-3">
-				<a href="https://thematter.co/wp-content/uploads/2018/05/coupleovercome-web-740x560.png">
-					<img src=https://thematter.co/wp-content/uploads/2018/05/arnmaijob-20180526-web-740x560.png>
-					</a>
-					<a href="https://thematter.co/pulse/rivalry-in-love/51845" title="Rivalry in love"></a>
-			</div>
-		<div class="col-3">
-			<iframe src="https://www.blognone.com/node/102606" ></iframe>
+				{% if forloop.counter|divisibleby:"3" and not forloop.last %}
+					</div>
+						<div class="row">
+							{% endif %}
+							{% endfor %}
 		</div>
-		
+{% endblock %}
 </body>
+{% block javascript %}
+{% endblock %}
 </html>
