@@ -1,0 +1,26 @@
+div.col-3 {
+    margin:20px;
+    margin-right:65px;
+    padding:25px;
+}
+span.text-logo {
+    position: absolute;
+    top: 28px;
+}
+span.subtext-logo {
+    position: absolute;
+    top: 52px;
+    font-size: small;
+    color: #999999;
+}
+button.btn.btn-md, button.btn {
+    background: #FFA300;
+    color:#ffff;
+    border-radius: 24px;
+}
+div.row {
+    margin-top:-45px;
+}
+.col-3 h5 a {
+    color: #2222;
+}
