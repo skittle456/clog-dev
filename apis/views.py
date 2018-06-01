@@ -12,7 +12,6 @@ import json
 # Create your views here.
 
 def index(request):
-    print('index django')
     blogs = Blog.objects.all()
     data = {
         "blogs": blogs
