@@ -7,18 +7,20 @@
 {% block content %}
 	<div class="row">
 		{% for blog in blogs %}
-			<div class="col-3 col-md-5 col-sm-5">
+			<div class="col-lg-3 col-sm-12" align="center" style="margin:auto;">
+				<div class="item" >
 				<a href="{{blog.url}}" target="_blank">
 					<img src="{{blog.img_url}}" style="width:270px;height:auto;">
 				</a>
 				<div class="form-in-line">
-					{{blog.created_on|date}}
-					<img width="16"height="16" src="{{blog.provider.favicon_url}}" style="margin-left:20px;">
-					<span> {{blog.provider.provider_name}} </span>
+					<span class="date">{{blog.created_on|date}}</span>
+					<span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
+					<span class="provider_name"> {{blog.provider.provider_name}} </span>
 				</div>
 				<h5>
 					<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
 				</h5>
+				</div>
 			</div>
 				{% if forloop.counter|divisibleby:"3" and not forloop.last %}
 					</div>
