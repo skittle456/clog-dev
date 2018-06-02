@@ -2,7 +2,7 @@
 {% load staticfiles %}
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha256-ko+X8xDY92jF49Uh47HOLP8Vb5zGDF0J+tdy9KLEP1I=" crossorigin="anonymous"></script>
     <script src="{% static "/js/base.js" %}"></script>
@@ -25,7 +25,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="narbars">
-                    <ul class="nav navbar-nav navbar-right ml-auto">
+                    <ul class="nav navbar-nav navbar-right ml-auto" style="margin-right:60px;">
                         <li class="nav-item">
                             <button type="button" class="btn btn-md" data-toggle="modal" data-target="#feedback-model">Feedback</button>
                                 <div class="modal fade" id="feedback-model" role="dialog">
@@ -54,11 +54,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                        <form class="form-inline">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        </form>
-                        </li>
+                        
                     </ul>
                 </div>
             </nav>
