@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/',include('apis.urls')),
     url(r'^favicon\.ico$', favicon_view),
+    url(r'^$',views.index,name='index'),
 ]

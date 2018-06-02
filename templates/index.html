@@ -7,9 +7,9 @@
 {% block content %}
 	<div class="row">
 		{% for blog in blogs %}
-			<div class="col-3 col-md-3 col-sm-3">
-				<a href="{{blog.url}}" >
-					<img src="{{blog.img_url}}" target="_blank" style="width:270px;height:auto;">
+			<div class="col-3 col-md-5 col-sm-5">
+				<a href="{{blog.url}}" target="_blank">
+					<img src="{{blog.img_url}}" style="width:270px;height:auto;">
 				</a>
 				<div class="form-in-line">
 					{{blog.created_on|date}}
