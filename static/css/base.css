@@ -3,6 +3,7 @@ body {
 }
 .container {
     padding-top:100px;
+    z-index:3000;
 }
 span.text-logo {
     position: absolute;
