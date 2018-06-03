@@ -8,6 +8,11 @@ span.text-logo {
     position: absolute;
     top: 32px;
 }
+a.btn.btn-md, a.btn {
+    background: #FFA300;
+    color:#ffff;
+    border-radius: 24px;
+}
 span.subtext-logo {
     position: absolute;
     top: 58px;

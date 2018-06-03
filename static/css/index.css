@@ -1,11 +1,6 @@
 .row {
     margin-bottom:10px;
 }
-button.btn.btn-md, button.btn {
-    background: #FFA300;
-    color:#ffff;
-    border-radius: 24px;
-}
 span.provider_name, span.date {
     font-size: 0.9rem;;
 }
