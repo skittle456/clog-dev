@@ -12,8 +12,7 @@ import json
 # Create your views here.
 
 def index(request):
-    blogs = Blog.objects.all()
-    blogs = blogs[::-1]
+    blogs = Blog.objects.order_by('-created_on')
     data = {
         "blogs": blogs
     }
