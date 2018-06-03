@@ -6,12 +6,12 @@ body {
 }
 span.text-logo {
     position: absolute;
-    top: 28px;
+    top: 32px;
 }
 span.subtext-logo {
     position: absolute;
-    top: 52px;
-    font-size: 7px;
+    top: 58px;
+    font-size: 10px;
     color: #999999;
 }
 .navbar-expand-md {
