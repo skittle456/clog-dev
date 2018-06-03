@@ -1,17 +1,18 @@
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 812px) {
-    .navbar-expand-md {
-        background-color: #fcfcfc;
-        z-index:9999;
-        position:fixed;
-        top: 0px;
-        width: 70%;
-        margin-top:-20px; 
-    }
+body {
+    font-family: 'Mitr', sans-serif;
 }
 .container {
     padding-top:100px;
+}
+span.text-logo {
+    position: absolute;
+    top: 28px;
+}
+span.subtext-logo {
+    position: absolute;
+    top: 52px;
+    font-size: 7px;
+    color: #999999;
 }
 .navbar-expand-md {
     background-color: #fcfcfc;

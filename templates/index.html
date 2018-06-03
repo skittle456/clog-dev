@@ -10,7 +10,7 @@
 			<div class="col-lg-3 col-sm-12" align="center" style="margin:auto;">
 				<div class="item" >
 				<a href="{{blog.url}}" target="_blank">
-					<img src="{{blog.img_url}}" style="width:270px;height:auto;">
+					<img class="lazy" src="{{blog.img_url}}" style="width:270px;height:auto;">
 				</a>
 				<div class="form-in-line">
 					<span class="date">{{blog.created_on|date}}</span>
@@ -27,9 +27,12 @@
 						<div class="row">
 							{% endif %}
 							{% endfor %}
+			<div class="col-lg-3 col-sm-12" style="margin:auto;"></div>
+			<div class="col-lg-3 col-sm-12" style="margin:auto;"></div>
 		</div>
 {% endblock %}
 </body>
 {% block javascript %}
+<script src="{% static "/js/index.js" %}"></script>
 {% endblock %}
 </html>
