@@ -22,7 +22,7 @@ span.subtext-logo {
 }
 .navbar-expand-md {
     background-color: #fcfcfc;
-    z-index:9999;
+    z-index:2000;
     position:fixed;
     overflow:hidden;
     top: 0px;
