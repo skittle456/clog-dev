@@ -13,6 +13,7 @@ import json
 
 def index(request):
     blogs = Blog.objects.all()
+    blogs = blogs[::-1]
     data = {
         "blogs": blogs
     }
