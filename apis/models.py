@@ -22,5 +22,5 @@ class Blog(models.Model):
 class Feedback(models.Model):
     feedback_id = models.AutoField(max_length=10,primary_key=True)
     feedback_message = models.TextField()
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(max_length=90)
     created_on = models.DateTimeField(auto_now_add=True)

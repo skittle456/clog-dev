@@ -75,17 +75,26 @@ WSGI_APPLICATION = 'clog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": "djqtu3alim7k4",
+#         "USER": "juieybujxtuosi",
+#         "PASSWORD": "df6ac5b31860ff34521fa33c539c590676da67f29de4bcbc51c8e359a98ae581",
+#         "HOST": "ec2-54-204-39-46.compute-1.amazonaws.com",
+#         "PORT": "5432",
+#     }
+# }
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "djqtu3alim7k4",
-        "USER": "juieybujxtuosi",
-        "PASSWORD": "df6ac5b31860ff34521fa33c539c590676da67f29de4bcbc51c8e359a98ae581",
-        "HOST": "ec2-54-204-39-46.compute-1.amazonaws.com",
+        "NAME": "clogdb",
+        "USER": "ubuntu",
+        "PASSWORD": "clogsince2018",
+        "HOST": "clogdb.cu3dhkpiem10.ap-southeast-1.rds.amazonaws.com",
         "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
