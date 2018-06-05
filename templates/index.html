@@ -11,7 +11,7 @@
 			<div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
 				<div class="item" >
 				<a href="{{blog.url}}" target="_blank">
-					<img class="lazy" src="{% static "/images/spinner.gif" %}" data-orig="{{blog.img_url}}" style="width:270px;height:auto;">
+					<img src="{{blog.img_url}}" style="width:270px;height:auto;">
 				</a>
 				<div class="form-in-line">
 					<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
