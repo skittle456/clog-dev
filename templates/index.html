@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load apis_extra %}
 {% block title %}<title>CLOG</title>{% endblock %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static "/css/index.css" %}" />
@@ -10,10 +11,10 @@
 			<div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
 				<div class="item" >
 				<a href="{{blog.url}}" target="_blank">
-					<img class="lazy" src="{{blog.img_url}}" style="width:270px;height:auto;">
+					<img class="lazy" src="{% static "/images/spinner.gif" %}" data-orig="{{blog.img_url}}" style="width:270px;height:auto;">
 				</a>
 				<div class="form-in-line">
-					<span class="date">{{blog.created_on|date}}</span>
+					<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
 					<span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
 					<span class="provider_name"> {{blog.provider.provider_name}} </span>
 				</div>
@@ -27,8 +28,6 @@
 						<div class="row">
 							{% endif %}
 							{% endfor %}
-			<div class="col-lg-3 col-sm-12" style="margin:auto;"></div>
-			<div class="col-lg-3 col-sm-12" style="margin:auto;"></div>
 		</div>
 {% endblock %}
 </body>
