@@ -6,4 +6,5 @@ jQuery(function($) {
 window.onload = function(){
     this.trigger("scroll");
 }
+$(window).trigger("scroll");
 });
