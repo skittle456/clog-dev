@@ -8,3 +8,14 @@ span.provider_name, span.date {
 span.date {
     margin-right:10px;
 }
+@media(max-width: 690px) {
+    h5, .h5{
+        font-size: 0.9rem;;
+    }
+    span.provider_name, span.date {
+        font-size: 0.7rem;;
+    }
+    div.item {
+        padding-bottom:35px;
+    }
+}
