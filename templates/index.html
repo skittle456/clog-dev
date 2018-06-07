@@ -8,7 +8,7 @@
 {% block content %}
 <div class="nav-scroller py-1 mb-2" >
         <nav class="nav d-flex justify-content-between" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
-		padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;">
+		padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
 		{% for category in categories %}
 		  <a class="p-2 text-muted" style="text-transform: capitalize;" href="/category/{{category.title}}">{{category.title}}</a>
 		{% endfor %}

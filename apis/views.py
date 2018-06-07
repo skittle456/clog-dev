@@ -22,7 +22,7 @@ def index(request):
 
 def list_by_category(request,category_title):
     catagory = Category.objects.filter(title=category_title)
-    blogs = Blog.objects.filter(category=catagory[0])
+    blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
     data = {
         "blogs": blogs,
