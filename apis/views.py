@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 #from django.contrib.auth import authenticate, login, logout
 from rest_framework.parsers import JSONParser
@@ -13,10 +13,37 @@ import json
 
 def index(request):
     blogs = Blog.objects.order_by('-created_on')
+    categories = Category.objects.order_by('created_on')
     data = {
-        "blogs": blogs
+        "blogs": blogs,
+        "categories": categories
     }
     return render(request,'index.html', context=data )
+
+def list_by_category(request,category_title):
+    catagory = Category.objects.filter(title=category_title)
+    blogs = Blog.objects.filter(category=catagory[0])
+    categories = Category.objects.order_by('created_on')
+    data = {
+        "blogs": blogs,
+        "categories": categories
+    }
+    return render(request,'index.html', context=data )
+
+class CategoryList(APIView):
+    def get(self,request):
+        rest_list = Category.objects.order_by('created_on')
+        serializer = CategorySerializer(rest_list, many=True)
+        json_data = {}
+        json_data['data'] = serializer.data
+        return JsonResponse(json_data, safe=False)
+
+    def post(self,request,format=None):
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            category = serializer.save()
+            return Response("Success", status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BlogList(APIView):
     def get(self,request):
@@ -32,6 +59,9 @@ class BlogList(APIView):
             blog = serializer.save()
             if request.data['provider_name']:
                 blog.provider = Provider.objects.get(provider_name=request.data['provider_name'])
+                blog.save()
+            if request.data['category_title']:
+                blog.category = Category.objects.get(title=request.data['category_title'])
                 blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -9,6 +9,19 @@ class Provider(models.Model):
     favicon_url = models.URLField(default=None,null=True,blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        time = str(self.created_on)
+        time = time[0:11]
+        return "%s %s" %  (self.provider_name, time)
+
+class Category(models.Model):
+    category_id = models.AutoField(max_length=10,primary_key=True)
+    title = models.CharField(max_length=70)
+    description = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "%s" %  (self.title)
 class Blog(models.Model):
     blog_id = models.AutoField(max_length=10,primary_key=True)
     img_url = models.URLField(null=True,blank=True)
@@ -19,8 +32,24 @@ class Blog(models.Model):
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        time = str(self.created_on)
+        time = time[0:11]
+        return "%s, %s" %  (self.title, self.provider.provider_name)
 class Feedback(models.Model):
     feedback_id = models.AutoField(max_length=10,primary_key=True)
     feedback_message = models.TextField()
     email = models.EmailField(max_length=90)
     created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        time = str(self.created_on)
+        time = time[0:11]
+        return "%s %s" %  (self.feedback_id, time)
+
+# class Tag(models.Model):
+#     tag_id = models.AutoField(max_length=10,primary_key=True)
+#     tag_name = models.CharField(max_length=70)
+#     created_on = models.DateTimeField(auto_now_add=True)

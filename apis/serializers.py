@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apis.models import Blog, Provider, Feedback
+from apis.models import *
 
 class BlogSerializer(serializers.ModelSerializer):
 
@@ -30,3 +30,18 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'feedback_message',
             'email',
             'created_on')
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('category_id',
+            'title',
+            'description',
+            'created_on')
+
+# class TagSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Tag
+#         fields = ('tag_id',
+#             'tag_name',
+#             'created_on')
