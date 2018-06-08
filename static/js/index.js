@@ -6,8 +6,11 @@ jQuery(function($) {
 $(window).trigger("scroll");
 });
 $(document).ready(function() {
-    $(".text-muted").click(function (){
-        $(this).addClass("active");
-        $(".text-muted").find(".active").removeClass("active");
-    })
+    // Highlight selected category  for category pages
+    pathName = window.location.pathname;
+    if (pathName.search("category") != -1){
+      let categoryName = pathName.substring(pathName.lastIndexOf('/') + 1);
+      $( "#category-"+categoryName ).addClass( "active" );
+    }
+
 })

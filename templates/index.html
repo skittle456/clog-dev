@@ -14,7 +14,9 @@
         <nav class="nav d-flex justify-content-between" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
 		padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
 		{% for category in categories %}
-		  <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/category/{{category.title}}">{{category.title}}</a>
+		  <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/category/{{category.title}}" id="category-{{category.title}}">
+        {{category.title}}
+      </a>
 		{% endfor %}
         </nav>
       </div>
@@ -24,7 +26,7 @@
 			<div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
 				<div class="item" >
 				<a href="{{blog.url}}" target="_blank">
-					<img class="lazy" src="{% static "/images/spinner.gif" %}" data-orig="{{blog.img_url}}" width="270" height="auto">					
+					<img class="lazy" src="{% static "/images/spinner.gif" %}" data-orig="{{blog.img_url}}" width="270" height="auto">
 				</a>
 				<div class="form-in-line">
 					<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
