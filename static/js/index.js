@@ -5,3 +5,9 @@ jQuery(function($) {
 });
 $(window).trigger("scroll");
 });
+$(document).ready(function() {
+    $(".text-muted").click(function (){
+        $(this).addClass("active");
+        $(".text-muted").find(".active").removeClass("active");
+    })
+})

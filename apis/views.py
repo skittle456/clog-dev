@@ -26,7 +26,8 @@ def list_by_category(request,category_title):
     categories = Category.objects.order_by('created_on')
     data = {
         "blogs": blogs,
-        "categories": categories
+        "categories": categories,
+        "this_title": category_title
     }
     return render(request,'index.html', context=data )
 

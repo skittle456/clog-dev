@@ -15,6 +15,12 @@ span.provider_name, span.date {
 span.date {
     margin-right:10px;
 }
+
+.active {
+    text-transform: capitalize;
+    background-color:lightsalmon;
+    border-radius: 24px;
+}
 @media(max-width: 690px) {
     h5, .h5{
         font-size: 0.9rem;;
