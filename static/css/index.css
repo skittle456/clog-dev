@@ -7,6 +7,7 @@ div.nav-scroller {
 
 .row {
     margin-bottom:10px;
+    overflow:hidden;
 }
 span.provider_name, span.date {
     font-size: 0.9rem;;

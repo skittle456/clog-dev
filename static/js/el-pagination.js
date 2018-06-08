@@ -57,7 +57,7 @@
                 }
                 link.hide();
                 loading.show();
-                var img = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
+                var img = $('<img id="dynamic">');
                 img.attr('src', "/../static/images/spinner.gif");
                 img.appendTo(loading);
                 var context = getContext(link);
