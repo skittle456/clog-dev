@@ -9,16 +9,20 @@ from django.utils.timezone import datetime
 from apis.models import *
 from apis.serializers import *
 import json
+from el_pagination.decorators import page_template
 # Create your views here.
-
-def index(request):
+@page_template('blog_list.html')
+def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
     categories = Category.objects.order_by('created_on')
     data = {
         "blogs": blogs,
         "categories": categories
     }
-    return render(request,'index.html', context=data )
+    if extra_context is not None:
+        data.update(extra_context)
+        print('show more', extra_context)
+    return render(request,template, context=data )
 
 def list_by_category(request,category_title):
     catagory = Category.objects.filter(title=category_title)
