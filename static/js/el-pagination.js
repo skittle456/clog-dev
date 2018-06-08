@@ -1,6 +1,10 @@
 'use strict';
 
 (function ($) {
+    jQuery.fn.centerElement = function () {
+        this.css ("left", ($ (window). width () - this.width ()) / 2 + $ (window). scrollLeft () + "px")
+        return this;
+     }
 
     $.fn.endlessPaginate = function(options) {
         var defaults = {
@@ -53,6 +57,9 @@
                 }
                 link.hide();
                 loading.show();
+                var img = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
+                img.attr('src', "/../static/images/spinner.gif");
+                img.appendTo(loading);
                 var context = getContext(link);
                 // Fire onClick callback.
                 if (settings.onClick.apply(html_link, [context]) !== false) {
@@ -73,6 +80,7 @@
                             link.attr('href', link.attr('href').replace(/page=\d+/, nextPage));
                             link.show();
                             loading.hide();
+                            img.remove();
                         }
 
                         // Fire onCompleted callback.
