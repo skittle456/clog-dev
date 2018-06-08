@@ -1,5 +1,10 @@
+
+@font-face {
+    font-family: Cloud-Light;
+    src: url('/static/fonts/Cloud-LightBold/Cloud-Light.otf') format("woff"), url("'/static/fonts/Cloud-LightBold/Cloud-Light.otf'")  format("truetype");
+}
 body {
-    font-family: 'Mitr', sans-serif;
+    font-family: Cloud-Light,'Mitr';
 }
 .container {
     padding-top:100px;
