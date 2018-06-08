@@ -1,48 +1,27 @@
-{% extends "base.html" %}
+{% load el_pagination_tags %}
 {% load staticfiles %}
 {% load apis_extra %}
-{% load el_pagination_tags %}
-{% block title %}<title>CLOG</title>{% endblock %}
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{% static "/css/index.css" %}" />
-{% endblock %}
-{% include page_template %}
-{% block js %}
-{% endblock %}
-{% block content %}
-	<div class="row">
-		{% lazy_paginate 12 blogs %}
-		{% for blog in blogs %}
-			<div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
-				<div class="item" >
-				<a href="{{blog.url}}" target="_blank">
-					<img class="lazy" src="{% static "/images/spinner.gif" %}" data-orig="{{blog.img_url}}" width="270" height="auto">					
+{% lazy_paginate 36 blogs %}
+{% for blog in blogs %}
+<div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
+  <div class="item">
+    <a href="{{blog.url}}" target="_blank">
+					<img src="{{blog.img_url}}" width="270" height="auto">
 				</a>
-				<div class="form-in-line">
-					<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
-					<span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
-					<span class="provider_name"> {{blog.provider.provider_name}} </span>
-				</div>
-				<h5>
+    <div class="form-in-line">
+      <span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
+      <span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
+      <span class="provider_name"> {{blog.provider.provider_name}} </span>
+    </div>
+    <h5>
 					<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
 				</h5>
-				</div>
-			</div>
-				{% if forloop.counter|divisibleby:"3" and not forloop.last %}
-					</div>
-						<div class="row">
-							{% endif %}
-							{% endfor %}
-        </div>
-        <div class="loading" align="center">{% show_more %}</div>
-{% endblock %}
-</body>
-{% block javascript %}
-<script src="{% static "/js/index.js" %}"></script>
-<script src="{% static "/js/el-pagination.js" %}"></script>
-<script>$.endlessPaginate({
-	paginateOnScroll: true
-});
-</script>
-{% endblock %}
-</html>
+  </div>
+</div>
+{% if forloop.counter|divisibleby:"3" and not forloop.last %}
+</div>
+<div class="row">
+  {% endif %}
+	{% endfor %}
+</div>
+<div class="row" align="center">{% show_more %}</div>

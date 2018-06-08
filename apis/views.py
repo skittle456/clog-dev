@@ -24,7 +24,8 @@ def index(request,template='index.html', extra_context=None):
         print('show more', extra_context)
     return render(request,template, context=data )
 
-def list_by_category(request,category_title):
+@page_template('blog_list.html')
+def list_by_category(request,category_title,template='index.html', extra_context=None):
     catagory = Category.objects.filter(title=category_title)
     blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
@@ -33,7 +34,10 @@ def list_by_category(request,category_title):
         "categories": categories,
         "this_title": category_title
     }
-    return render(request,'index.html', context=data )
+    if extra_context is not None:
+        data.update(extra_context)
+        print('show more', extra_context)
+    return render(request,template, context=data )
 
 class CategoryList(APIView):
     def get(self,request):
@@ -77,7 +81,7 @@ class BlogDetail(APIView):
             return Blog.objects.get(blog_id=blog_id)
         except Blog.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
     def get(self,request,blog_id,format=None):
         blog = self.get_object(blog_id)
         serializer = BlogSerializer(record)

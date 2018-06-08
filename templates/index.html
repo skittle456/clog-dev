@@ -6,7 +6,6 @@
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static "/css/index.css" %}" />
 {% endblock %}
-{% include page_template %}
 {% block js %}
 {% endblock %}
 {% block content %}
@@ -20,38 +19,19 @@
 		{% endfor %}
         </nav>
       </div>
-	<div class="row">
-		{% lazy_paginate 25 blogs %}
-		{% for blog in blogs %}
-			<div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
-				<div class="item" >
-				<a href="{{blog.url}}" target="_blank">
-					<img class="lazy" src="{% static "/images/spinner.gif" %}" data-orig="{{blog.img_url}}" width="270" height="auto">
-				</a>
-				<div class="form-in-line">
-					<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
-					<span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
-					<span class="provider_name"> {{blog.provider.provider_name}} </span>
-				</div>
-				<h5>
-					<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
-				</h5>
-				</div>
-			</div>
-				{% if forloop.counter|divisibleby:"3" and not forloop.last %}
-					</div>
-						<div class="row">
-							{% endif %}
-							{% endfor %}
-		</div>
-		<div class="loading" align="center">{% show_more %}</div>
+	<div class="row" id="blog_space">
+
+    {% include page_template %}
+
+
 {% endblock %}
 </body>
 {% block javascript %}
 <script src="{% static "/js/index.js" %}"></script>
 <script src="{% static "/js/el-pagination.js" %}"></script>
 <script>$.endlessPaginate({
-	paginateOnScroll: true
+  paginateOnScroll: true,
+
 });
 </script>
 {% endblock %}
