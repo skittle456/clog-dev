@@ -1,6 +1,7 @@
 {% load el_pagination_tags %}
 {% load staticfiles %}
 {% load apis_extra %}
+<div class="row">
 {% lazy_paginate 42 blogs %}
 {% for blog in blogs %}
 <div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
@@ -11,7 +12,7 @@
     <div class="form-in-line">
       <span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
       <span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
-      <span class="provider_name"> {{blog.provider.provider_name}} </span>
+	  <span class="provider_name"> {{blog.provider.provider_name}} </span>
     </div>
     <h5>
 					<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
@@ -22,6 +23,6 @@
 	</div>
 	<div class="row">
   {% endif %}
-	{% endfor %}
+  {% endfor %}
 </div>
-<div class="row" align="center">{% show_more " " " " %}</div>
+{% show_more " " " " %}
