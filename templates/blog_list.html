@@ -13,10 +13,13 @@
       <span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
       <span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
 	  <span class="provider_name"> {{blog.provider.provider_name}} </span>
-    </div>
+	</div>
     <h5>
-					<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
-				</h5>
+		<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
+		<div class="btn" role="button">
+				<i class="fa fa-map-marker" aria-hidden="true" style="color:red;"></i>
+			</div>
+	</h5>
   </div>
 </div>
 {% if forloop.counter|divisibleby:"3" and not forloop.last %}
