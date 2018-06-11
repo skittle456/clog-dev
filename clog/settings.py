@@ -28,18 +28,19 @@ SECRET_KEY = 'g(*6d6b!*-o2htu2!jd=*g*(^a3c2ig1bo2(i8buif0(z2%lo='
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'el_pagination',
+    'accounts',
     'apis',
 ]
 

@@ -151,6 +151,14 @@ class Pin(APIView):
         return Response("must authenicate", status=401)
 
 #formregister
+class Register(APIView):
+    def post(self,request,format=None):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            feedback = serializer.save()
+            return Response("Success", status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class Login(APIView):
     def post(self,request):
         user = authenticate(username=request.data['username'],password=request.data['password'])

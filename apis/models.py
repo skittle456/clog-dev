@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 # Create your models here.
 
 class Provider(models.Model):
@@ -45,10 +44,6 @@ class Blog(models.Model):
         time = time[0:11]
         return "%s, %s" %  (self.title, self.provider.provider_name)
 
-# class MyUser(User):
-#     pin_blog = models.ManyToManyField(Blog)
-#     class Meta:
-#         proxy = True
 
 class Feedback(models.Model):
     feedback_id = models.AutoField(max_length=10,primary_key=True)

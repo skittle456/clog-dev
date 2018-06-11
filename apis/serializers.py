@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from apis.models import *
+from accounts.models import User
 
 class BlogSerializer(serializers.ModelSerializer):
 
@@ -39,9 +40,20 @@ class CategorySerializer(serializers.ModelSerializer):
             'description',
             'created_on')
 
-# class TagSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Tag
-#         fields = ('tag_id',
-#             'tag_name',
-#             'created_on')
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('tag_id',
+            'tag_name',
+            'created_on')
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id',
+            'username',
+            'password',
+            'first_name',
+            'last_name',
+            'email')
