@@ -21,3 +21,14 @@ function post_feedback(){
         alert("fail")
     });
 }
+
+
+function login(){
+    console.log('logging in');
+    $('button.close').click();
+}
+
+function register(){
+    console.log('registering');
+    $('button.close').click();
+}
