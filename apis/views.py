@@ -132,3 +132,39 @@ class FeedbackList(APIView):
             feedback = serializer.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Pin(APIView):
+    def get_object(self,blog_id):
+        try:
+            return Blog.objects.get(tag_id=blog_id)
+        except Blog.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self,request,blog_id,format=None):
+        blog = self.get_object(blog_id)
+        if request.user.is_authenticated:
+            user = MyUser.objects.filter(id=request.user.id)
+            user.pin_blog.add(blog)
+            user.save()
+            return Response("success, %s pinned"%blog.blog_title, status=200)
+        #ask for register
+        return Response("must authenicate", status=401)
+
+#formregister
+class Login(APIView):
+    def post(self,request):
+        user = authenticate(username=request.data['username'],password=request.data['password'])
+        if user is not None:
+            if user.is_active:
+                login(request,user)
+                if request.user.is_authenticated:
+                    Response({"success"}, status=200)
+                    #return JsonResponse(json_data, safe=False,status=200)    
+        return Response({"detail": "Invalid credentials"}, status=401)
+
+class Logout(APIView):
+    def get(self,request):
+        logout(request)
+        if request.user.is_authenticated:
+            return Response("Unable to logout",status=401)
+        return Response({"success"}, status=200)
