@@ -27,6 +27,8 @@ class Tag(models.Model):
     tag_name = models.CharField(max_length=70)
     created_on = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return "%s" %  (self.tag_name)
 class Blog(models.Model):
     blog_id = models.AutoField(max_length=10,primary_key=True)
     img_url = models.URLField(null=True,blank=True)
