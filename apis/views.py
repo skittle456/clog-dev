@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-#from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -155,10 +155,12 @@ class Register(APIView):
     def post(self,request,format=None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            feedback = serializer.save()
+            user = serializer.save()
+            user.set_password(request.data['password'])
+            user.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 class Login(APIView):
     def post(self,request):
         user = authenticate(username=request.data['username'],password=request.data['password'])
@@ -166,7 +168,7 @@ class Login(APIView):
             if user.is_active:
                 login(request,user)
                 if request.user.is_authenticated:
-                    Response({"success"}, status=200)
+                    return Response({"success"}, status=200)
                     #return JsonResponse(json_data, safe=False,status=200)    
         return Response({"detail": "Invalid credentials"}, status=401)
 

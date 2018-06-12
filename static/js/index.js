@@ -12,5 +12,5 @@ $(document).ready(function() {
       let categoryName = pathName.substring(pathName.lastIndexOf('/') + 1);
       $( "#category-"+categoryName ).addClass( "active" );
     }
-
+    
 })
