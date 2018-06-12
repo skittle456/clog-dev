@@ -8,6 +8,7 @@ from rest_framework import status
 from django.utils.timezone import datetime
 from apis.models import *
 from apis.serializers import *
+from accounts.models import User
 import json
 from el_pagination.decorators import page_template
 # Create your views here.
@@ -136,17 +137,17 @@ class FeedbackList(APIView):
 class Pin(APIView):
     def get_object(self,blog_id):
         try:
-            return Blog.objects.get(tag_id=blog_id)
+            return Blog.objects.get(blog_id=blog_id)
         except Blog.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self,request,blog_id,format=None):
         blog = self.get_object(blog_id)
         if request.user.is_authenticated:
-            user = MyUser.objects.filter(id=request.user.id)
+            user = User.objects.get(id=request.user.id)
             user.pin_blog.add(blog)
             user.save()
-            return Response("success, %s pinned"%blog.blog_title, status=200)
+            return Response("success, %s pinned"%blog.title, status=200)
         #ask for register
         return Response("must authenicate", status=401)
 
