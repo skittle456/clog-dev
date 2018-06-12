@@ -16,10 +16,18 @@
 	</div>
     <h5>
 		<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
-		<div class="btn pin" role="button" value={{blog.blog_id}}>
+		<div class="btn pin" role="button" name={{blog.blog_id}}>
 				<i class="fa fa-map-marker" aria-hidden="true" style="color:red;"></i>
 			</div>
 	</h5>
+	<div class="tag">
+		{% for tag in blog.tags.all %}
+		{% if forloop.first and tag %}
+		<i class="fa fa-tag" aria-hidden="true"></i>
+		{% endif %}
+		{{ tag.tag_name }}
+	  {% endfor %}
+	</div>
   </div>
 </div>
 {% if forloop.counter|divisibleby:"3" and not forloop.last %}
