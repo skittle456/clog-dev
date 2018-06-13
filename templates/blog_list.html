@@ -13,7 +13,11 @@
 		<h5 class="card-title">
 				<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
 				<div class="btn pin" role="button" name={{blog.blog_id}}>
-						<i class="fa fa-map-pin" aria-hidden="true" style="color:red;"></i>
+						{% if not user.is_authenticated or blog not in pin_blogs %}
+								<i class="fa fa-map-pin" aria-hidden="true" ></i>
+						{% else %}
+								<i class="fa fa-map-pin" aria-hidden="true" style="color:red;"></i>
+						{% endif %}
 					</div>
 			</h5>
     <div class="form-in-line">

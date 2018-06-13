@@ -5,6 +5,7 @@ $('.pin').click(function(){
         url: "/apis/pin/"+$(this).attr("name"),
         method: "GET",
     }).done(function(){
+        $('.fa-map-pin').css("color", "red");
         console.log('blog has been pinned')
     })
     .fail(function() {
