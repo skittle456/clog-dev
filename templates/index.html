@@ -11,12 +11,24 @@
 {% block content %}
 <div class="nav-scroller py-1 mb-2" >
         <nav class="nav d-flex justify-content-between" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
-		padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
+    padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
+    <a class="p-2 text-muted active"  style="text-transform: capitalize;" href="/" id="category-feed">feed</a>
 		{% for category in categories %}
 		  <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/category/{{category.title}}" id="category-{{category.title}}">
         {{category.title}}
       </a>
-		{% endfor %}
+    {% endfor %}
+    {% if user.is_authenticated %}
+    <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/mypin" id="category-pin">
+      my pin
+      <i class="fa fa-map-pin"></i>
+    </a>
+    {% else %}
+    <a class="p-2 text-muted"  style="text-transform: capitalize;" href="#" data-toggle="modal" data-target="#login-modal" id="category-pin">
+      my pin
+      <i class="fa fa-map-pin"></i>
+    </a>
+    {% endif %}
         </nav>
       </div>
 

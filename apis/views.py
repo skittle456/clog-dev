@@ -40,6 +40,32 @@ def list_by_category(request,category_title,template='index.html', extra_context
         print('show more', extra_context)
     return render(request,template, context=data )
 
+@page_template('blog_list.html')
+def list_by_tag(request,tag_name,template='index.html', extra_context=None):
+    blogs = Blog.objects.filter(tags__tag_name__startswith=tag_name).order_by('-created_on')
+    categories = Category.objects.order_by('created_on')
+    data = {
+        "blogs": blogs,
+        "categories": categories,
+    }
+    if extra_context is not None:
+        data.update(extra_context)
+        print('show more', extra_context)
+    return render(request,template, context=data )
+
+@page_template('blog_list.html')
+def list_by_pin(request,template='index.html', extra_context=None):
+    blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+    categories = Category.objects.order_by('created_on')
+    data = {
+        "blogs": blogs,
+        "categories": categories,
+    }
+    if extra_context is not None:
+        data.update(extra_context)
+        print('show more', extra_context)
+    return render(request,template, context=data )
+
 class CategoryList(APIView):
     def get(self,request):
         rest_list = Category.objects.order_by('created_on')

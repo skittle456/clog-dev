@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^favicon\.ico$', favicon_view),
     url(r'^$',views.index,name='index'),
     url(r'^category/(?P<category_title>[\w]+)$',views.list_by_category,name='list_by_category'),
+    url(r'^tag/(?P<tag_name>[\w]+)$',views.list_by_tag,name='list_by_tag'),
+    url(r'^mypin',views.list_by_pin,name='list_by_pin'),
 ]

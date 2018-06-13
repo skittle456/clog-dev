@@ -5,27 +5,33 @@
 {% lazy_paginate 42 blogs %}
 {% for blog in blogs %}
 <div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
-  <div class="item">
+  <div class="item card" style="width:17rem;">
     <a href="{{blog.url}}" target="_blank">
 					<img src="{{blog.img_url}}" width="270" height="auto">
 				</a>
+			<div class="card-body">
+		<h5 class="card-title">
+				<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
+				<div class="btn pin" role="button" name={{blog.blog_id}}>
+						<i class="fa fa-map-pin" aria-hidden="true" style="color:red;"></i>
+					</div>
+			</h5>
     <div class="form-in-line">
       <span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
       <span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
 	  <span class="provider_name"> {{blog.provider.provider_name}} </span>
 	</div>
-    <h5>
-		<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
-		<div class="btn pin" role="button" name={{blog.blog_id}}>
-				<i class="fa fa-map-marker" aria-hidden="true" style="color:red;"></i>
-			</div>
-	</h5>
-	<div class="tag">
+	</div>
+	<div class="tag card-text" align="left">
 		{% for tag in blog.tags.all %}
 		{% if forloop.first and tag %}
 		<i class="fa fa-tag" aria-hidden="true"></i>
 		{% endif %}
-		{{ tag.tag_name }}
+		<a href="/tag/{{tag.tag_name}}" style="color:black;text-transform:capitalize;">
+			<span class="badge badge-pill">
+					{{ tag.tag_name }}
+			</span>
+		</a>
 	  {% endfor %}
 	</div>
   </div>
