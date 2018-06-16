@@ -41,7 +41,11 @@
                         <form>
                             <div class="form-group">
                                 <label for="Email" class="col-form-label">Email:</label>
-                                <input type="text" class="form-control" id="email">
+                                {% if not user.is_authenticated %}
+                                    <input type="text" class="form-control" id="email">
+                                {% else %}
+                                    <span class="form-control" id="email">{{user.email}} </span>
+                                {% endif %}
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="col-form-label">Message:</label>
@@ -71,6 +75,9 @@
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" id="login-password" placeholder="Password">
+                            </div>
+                            <div align="center" style="color:grey;">
+                                Not registed? <a href="#" data-toggle="modal" data-target="#register-modal"> Create an account</a>
                             </div>
                         </form>
                     </div>
