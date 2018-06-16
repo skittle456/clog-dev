@@ -11,7 +11,10 @@ from apis.serializers import *
 from accounts.models import User
 import json
 from el_pagination.decorators import page_template
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
+@csrf_exempt
 @page_template('blog_list.html')
 def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
@@ -177,6 +180,7 @@ class FeedbackList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class Pin(APIView):
+    @method_decorator(csrf_exempt)
     def get_object(self,blog_id):
         try:
             return Blog.objects.get(blog_id=blog_id)
@@ -192,6 +196,12 @@ class Pin(APIView):
             return Response("success, %s pinned"%blog.title, status=200)
         #ask for register
         return Response("must authenicate", status=401)
+    
+    def delete(self, request, blog_id, format=None):
+        print('deleting')
+        blog = self.get_object(blog_id)
+        blog.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 #formregister
 class Register(APIView):

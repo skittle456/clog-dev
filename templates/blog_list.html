@@ -14,9 +14,9 @@
 				<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
 				<div class="btn pin" role="button" name={{blog.blog_id}}>
 						{% if not user.is_authenticated or blog not in pin_blogs %}
-								<i class="fa fa-map-pin" aria-hidden="true" ></i>
+								<i class="fa fa-map-pin" aria-hidden="true" style="color:grey;" id="pin{{blog.blog_id}}" name="unpin"></i>
 						{% else %}
-								<i class="fa fa-map-pin" aria-hidden="true" style="color:red;"></i>
+								<i class="fa fa-map-pin" aria-hidden="true" style="color:red;" id="pin{{blog.blog_id}}" name="pinned"></i>
 						{% endif %}
 					</div>
 			</h5>
@@ -47,4 +47,5 @@
   {% endfor %}
 </div>
 {% show_more " " " " %}
+{% csrf_token %}
 <script src="{% static "/js/blog_list.js" %}"></script>
