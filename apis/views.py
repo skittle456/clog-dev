@@ -19,13 +19,15 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
     categories = Category.objects.order_by('created_on')
+    tags = Tag.objects.order_by('-created_on')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
     data = {
         "blogs": blogs,
         "categories": categories,
-        "pin_blogs": pin_blogs
+        "pin_blogs": pin_blogs,
+        "tags":tags
     }
     if extra_context is not None:
         data.update(extra_context)
@@ -37,6 +39,7 @@ def list_by_category(request,category_title,template='index.html', extra_context
     catagory = Category.objects.filter(title=category_title)
     blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
+    tags = Tag.objects.order_by('-created_on')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
@@ -44,7 +47,8 @@ def list_by_category(request,category_title,template='index.html', extra_context
         "blogs": blogs,
         "categories": categories,
         "pin_blogs": pin_blogs,
-        "this_title": category_title
+        "this_title": category_title,
+        "tags":tags
     }
     if extra_context is not None:
         data.update(extra_context)
@@ -55,6 +59,7 @@ def list_by_category(request,category_title,template='index.html', extra_context
 def list_by_tag(request,tag_name,template='index.html', extra_context=None):
     blogs = Blog.objects.filter(tags__tag_name__startswith=tag_name).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
+    tags = Tag.objects.order_by('-created_on')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
@@ -62,6 +67,7 @@ def list_by_tag(request,tag_name,template='index.html', extra_context=None):
         "blogs": blogs,
         "pin_blogs": pin_blogs,
         "categories": categories,
+        "tags": tags
     }
     if extra_context is not None:
         data.update(extra_context)
@@ -72,13 +78,15 @@ def list_by_tag(request,tag_name,template='index.html', extra_context=None):
 def list_by_pin(request,template='index.html', extra_context=None):
     blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
+    tags = Tag.objects.order_by('-created_on')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
     data = {
         "blogs": blogs,
         "categories": categories,
-        "pin_blogs": pin_blogs
+        "pin_blogs": pin_blogs,
+        "tags": tags
     }
     if extra_context is not None:
         data.update(extra_context)
@@ -200,7 +208,9 @@ class Pin(APIView):
     def delete(self, request, blog_id, format=None):
         print('deleting')
         blog = self.get_object(blog_id)
-        blog.delete()
+        user = User.objects.get(id=request.user.id)
+            user.pin_blog.remove(blog)
+            user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 #formregister
