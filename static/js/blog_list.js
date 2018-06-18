@@ -33,7 +33,8 @@ $('.pin').click(function(){
     }).done(function(){
         // $('.fa-map-pin').css("color", "red");
         $(pin).css("color", "red");
-        $(pin).val("pinned");
+        // $(pin).val("pinned");
+        $(pin).attr("name","pinned")
     })
     .fail(function() {
         $('#login-modal').modal();
@@ -47,7 +48,8 @@ else if ($(pin).attr("name") == "pinned"){
     }).done(function(){
         // $('.fa-map-pin').css("color", "red");
         $(pin).css("color", "grey");
-        $(pin).val("unpin");
+        // $(pin).val("unpin");
+        $(pin).attr("name","unpin")
         document.location.reload(true)
     })
     .fail(function() {
