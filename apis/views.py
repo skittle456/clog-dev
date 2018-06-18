@@ -209,8 +209,8 @@ class Pin(APIView):
         print('deleting')
         blog = self.get_object(blog_id)
         user = User.objects.get(id=request.user.id)
-            user.pin_blog.remove(blog)
-            user.save()
+        user.pin_blog.remove(blog)
+        user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 #formregister
