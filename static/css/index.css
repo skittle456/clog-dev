@@ -4,7 +4,9 @@ div.nav-scroller {
     height: 2.75rem;
     overflow-y: hidden;
 }
-
+::-webkit-scrollbar { 
+    display: none; 
+}
 .row {
     margin-bottom:10px;
 }
