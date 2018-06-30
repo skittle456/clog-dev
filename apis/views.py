@@ -13,6 +13,10 @@ import json
 from el_pagination.decorators import page_template
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
+from django.contrib.postgres.search import SearchVector
+from django.db.models import F
+from rest_framework.decorators import api_view
 # Create your views here.
 @csrf_exempt
 @page_template('blog_list.html')
@@ -20,14 +24,23 @@ def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
     categories = Category.objects.order_by('created_on')
     tags = Tag.objects.order_by('-created_on')
+    trending_blogs = Blog.objects.order_by('-total_views')[:5]
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+    search_query = request.GET.get('search')
+    if search_query == "":
+        return redirect('/')
+    elif search_query is not None:
+        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
+    #json_blogs = serializers.serialize("json", blogs)
     data = {
         "blogs": blogs,
         "categories": categories,
         "pin_blogs": pin_blogs,
-        "tags":tags
+        "tags":tags,
+        #"json_blogs": json_blogs,
+        "trending_blogs": trending_blogs,
     }
     if extra_context is not None:
         data.update(extra_context)
@@ -39,16 +52,25 @@ def list_by_category(request,category_title,template='index.html', extra_context
     catagory = Category.objects.filter(title=category_title)
     blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
+    trending_blogs = Blog.objects.order_by('-total_views')[:7]
     tags = Tag.objects.order_by('-created_on')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+    search_query = request.GET.get('search')
+    if search_query == "":
+        return redirect('/')
+    elif search_query is not None:
+        #redirect('/')
+        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
+    
     data = {
         "blogs": blogs,
         "categories": categories,
         "pin_blogs": pin_blogs,
         "this_title": category_title,
-        "tags":tags
+        "tags":tags,
+        "trending_blogs": trending_blogs,
     }
     if extra_context is not None:
         data.update(extra_context)
@@ -63,6 +85,13 @@ def list_by_tag(request,tag_name,template='index.html', extra_context=None):
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+    search_query = request.GET.get('search')
+    if search_query == "":
+        return redirect('/')
+    elif search_query is not None:
+        #redirect('/')
+        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
+    
     data = {
         "blogs": blogs,
         "pin_blogs": pin_blogs,
@@ -82,6 +111,12 @@ def list_by_pin(request,template='index.html', extra_context=None):
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+    search_query = request.GET.get('search')
+    if search_query == "":
+        return redirect('/')
+    elif search_query is not None:
+        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
+    
     data = {
         "blogs": blogs,
         "categories": categories,
@@ -128,6 +163,14 @@ class BlogList(APIView):
                 blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+def add_view(request,blog_id):
+    blog = Blog.objects.filter(blog_id=blog_id)
+    blog.update(total_views=F('total_views')+1)
+    # if request.user.is_authenticated:
+    #     user = User.objects.get(id=request.user.id)
+    #     user.pin_blog.add(blog)
+    #     user.save()
 
 class BlogDetail(APIView):
     def get_object(self,blog_id):
@@ -138,7 +181,7 @@ class BlogDetail(APIView):
 
     def get(self,request,blog_id,format=None):
         blog = self.get_object(blog_id)
-        serializer = BlogSerializer(record)
+        serializer = BlogSerializer(blog)
         json_data = {}
         json_data['data'] = serializer.data
         return JsonResponse(json_data, safe=False)

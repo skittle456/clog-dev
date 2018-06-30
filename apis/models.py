@@ -38,7 +38,7 @@ class Blog(models.Model):
     wrote_on = models.DateTimeField(blank=True,null=True)
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-
+    total_views = models.IntegerField(null=True,blank=True,default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     def __str__(self):
