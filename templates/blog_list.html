@@ -2,16 +2,16 @@
 {% load staticfiles %}
 {% load apis_extra %}
 <div class="row">
-{% lazy_paginate 42 blogs %}
+{% lazy_paginate 21 blogs %}
 {% for blog in blogs %}
 <div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
-  <div class="item card" style="width:17rem;">
-    <a href="{{blog.url}}" target="_blank">
-					<img src="{{blog.img_url}}" width="270" height="auto">
+  <div class="item card" style="width:302px;">
+    <a id="blog_link" href="#" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
+					<img src="{{blog.img_url}}" height="180" style="max-width: 300px;">
 				</a>
 			<div class="card-body">
 		<h5 class="card-title">
-				<a href="{{blog.url}}" target="_blank" style="color:black;">{{blog.title}}</a>
+				<a id="blog_link" href="#" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;" style="color:black;">{{blog.title}}</a>
 				<div class="btn pin" role="button" name={{blog.blog_id}}>
 						{% if not user.is_authenticated or blog not in pin_blogs %}
 								<i class="fa fa-map-pin" aria-hidden="true" style="color:grey;" id="pin{{blog.blog_id}}" name="unpin"></i>
@@ -32,7 +32,7 @@
 		<i class="fa fa-tag" aria-hidden="true"></i>
 		{% endif %}
 		<a href="/tag/{{tag.tag_name}}" style="color:black;text-transform:capitalize;">
-			<span class="badge badge-pill">
+			<span class="badge badge-pill tag-pill">
 					{{ tag.tag_name }}
 			</span>
 		</a>
@@ -44,7 +44,7 @@
 	</div>
 	<div class="row">
   {% endif %}
-  {% endfor %}
+	{% endfor %}
 </div>
 {% show_more " " " " %}
 {% csrf_token %}

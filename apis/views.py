@@ -24,7 +24,7 @@ def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
     categories = Category.objects.order_by('created_on')
     tags = Tag.objects.order_by('-created_on')
-    trending_blogs = Blog.objects.order_by('-total_views')[:5]
+    trending_blogs = Blog.objects.order_by('-total_views')[:7]
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
@@ -33,6 +33,7 @@ def index(request,template='index.html', extra_context=None):
         return redirect('/')
     elif search_query is not None:
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
+        blogs = list(set(blogs))
     #json_blogs = serializers.serialize("json", blogs)
     data = {
         "blogs": blogs,
@@ -52,7 +53,7 @@ def list_by_category(request,category_title,template='index.html', extra_context
     catagory = Category.objects.filter(title=category_title)
     blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
-    trending_blogs = Blog.objects.order_by('-total_views')[:7]
+    trending_blogs = Blog.objects.order_by('-total_views')[:5]
     tags = Tag.objects.order_by('-created_on')
     pin_blogs=None
     if request.user.is_authenticated:

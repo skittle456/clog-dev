@@ -33,7 +33,6 @@ $('.pin').click(function(){
     }).done(function(){
         // $('.fa-map-pin').css("color", "red");
         $(pin).css("color", "red");
-        // $(pin).val("pinned");
         $(pin).attr("name","pinned")
     })
     .fail(function() {
@@ -48,7 +47,6 @@ else if ($(pin).attr("name") == "pinned"){
     }).done(function(){
         // $('.fa-map-pin').css("color", "red");
         $(pin).css("color", "grey");
-        // $(pin).val("unpin");
         $(pin).attr("name","unpin")
         document.location.reload(true)
     })
@@ -57,3 +55,11 @@ else if ($(pin).attr("name") == "pinned"){
     });
 }
 });
+function getBlog(url,blog_id){
+    console.log('getting blog');
+    var request = $.ajax({
+        url: 'apis/add_view/'+blog_id,
+        type: 'GET',
+    });
+    window.open(url,'_blank');
+}

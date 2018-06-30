@@ -2,36 +2,81 @@
 {% load staticfiles %}
 {% load apis_extra %}
 {% load el_pagination_tags %}
-{% block title %}<title>CLOG</title>{% endblock %}
+{% block title %}<title>The CLOG</title>{% endblock %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static "/css/index.css" %}" />
 {% endblock %}
 {% block js %}
 {% endblock %}
 {% block content %}
+<div class="container-fluid" id="trending-container" >
+    <h3>Trending</h3>
+    <div id="demo" class="carousel slide" data-ride="carousel" style="padding-top:1.5rem;padding-bottom:3rem;">
+      
+        <!-- Indicators -->
+        <!-- 
+        <ul class="carousel-indicators" style="color:#FFA300;">
+          {% for blog in trending_blogs %}
+          {% if forloop.first %}
+          <li data-target="#demo" data-slide-to="{{forloop.counter0}}" class="active"></li>
+          {% else %}
+          <li data-target="#demo" data-slide-to="{{forloop.counter0}}"></li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+        -->
+        <!-- The slideshow -->
+        <div class="carousel-inner row w-100 h-60 mx-auto" role="listbox">
+          {% for blog in trending_blogs %}
+            {% if forloop.first %}
+            <div class="carousel-item col-md-3 active" id="item-{{forloop.counter0}}" >
+            {% else %}
+            <div class="carousel-item col-md-3" id="item-{{forloop.counter0}}" >
+            {% endif %}
+            <a href="{{blog.url}}" target="_blank">
+              <img class="img-fluid mx-auto d-block" src="{{blog.img_url}}" alt="{{blog.title}}" >
+            </a>
+            <div align="center">
+              <a href="{{blog.url}}" target="_blank" style="color:white;">
+              <p style="background-color: #FFA300;"><span>{{blog.title}}<span></p>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+          <i class="fa fa-chevron-left" aria-hidden="true" style="color:#999999"></i>
+        </a>
+        <a class="carousel-control-next text-faded" href="#demo" data-slide="next">
+          <i class="fa fa-chevron-right" aria-hidden="true" style="color:#999999"></i>
+        </a>
+      </div>
+    </div>
 <div class="nav-scroller py-1 mb-2" >
         <nav class="nav d-flex justify-content-between" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
     padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
-    <a class="p-2 text-muted active"  style="text-transform: capitalize;" href="/" id="category-feed">feed</a>
+    <a class="p-2 text-muted on-selected"  style="text-transform: capitalize;" href="/" id="category-feed">feed</a>
 		{% for category in categories %}
 		  <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/category/{{category.title}}" id="category-{{category.title}}">
         {{category.title}}
       </a>
     {% endfor %}
-    {% if user.is_authenticated %}
-    <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/mypin" id="category-pin">
-      my pin
-      <i class="fa fa-map-pin"></i>
-    </a>
-    {% else %}
-    <a class="p-2 text-muted"  style="text-transform: capitalize;" href="#" data-toggle="modal" data-target="#login-modal" id="category-pin">
-      my pin
-      <i class="fa fa-map-pin"></i>
-    </a>
-    {% endif %}
         </nav>
       </div>
-
+<div class="nav-scroller py-1 mb-2" >
+      <nav class="nav d-flex justify-content-between" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
+  padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
+      {% for tag in tags %}
+      <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/tag/{{tag.tag_name}}" >
+        <span class="badge badge-pill" id="tag-{{tag.tag_name}}">
+          {{tag.tag_name}}
+        </span>
+      </a>
+      {% endfor %}
+      </nav>
+  </div>
+  
 	{% include page_template %}
 
 
