@@ -64,7 +64,7 @@ def list_by_category(request,category_title,template='index.html', extra_context
     elif search_query is not None:
         #redirect('/')
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
-    
+        blogs = list(set(blogs))
     data = {
         "blogs": blogs,
         "categories": categories,
@@ -92,7 +92,7 @@ def list_by_tag(request,tag_name,template='index.html', extra_context=None):
     elif search_query is not None:
         #redirect('/')
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
-    
+        blogs = list(set(blogs))
     data = {
         "blogs": blogs,
         "pin_blogs": pin_blogs,
@@ -117,7 +117,7 @@ def list_by_pin(request,template='index.html', extra_context=None):
         return redirect('/')
     elif search_query is not None:
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
-    
+        blogs = list(set(blogs))
     data = {
         "blogs": blogs,
         "categories": categories,
