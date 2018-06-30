@@ -41,7 +41,7 @@ li.nav-item {
     margin-bottom: -20px;
   }
 
-input.form-control {
+input.searchbar {
     font-family: FontAwesome; 
     /* width: 130px; */
     width: 150px;
@@ -51,6 +51,6 @@ input.form-control {
     background-color: #E8E8E8;
 }
 
-input.form-control:focus {
+input.searchbar:focus {
     width: 180px;
 }
