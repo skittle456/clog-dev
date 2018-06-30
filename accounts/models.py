@@ -5,5 +5,6 @@ from apis.models import Blog
 
 class User(AbstractUser):
     pin_blog = models.ManyToManyField(Blog)
+    #watched_blog = models.ManyToManyField(Blog)
     class Meta:
         db_table = 'auth_user'
