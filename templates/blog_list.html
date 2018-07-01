@@ -6,12 +6,12 @@
 {% for blog in blogs %}
 <div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
   <div class="item card" style="width:302px;">
-    <a id="blog_link" href="#" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
+    <a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
 					<img src="{{blog.img_url}}" height="180" style="max-width: 300px;">
 				</a>
 			<div class="card-body">
 		<h5 class="card-title">
-				<a id="blog_link" href="#" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;" style="color:black;">{{blog.title}}</a>
+				<a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;" style="color:black;">{{blog.title}}</a>
 				<div class="btn pin" role="button" name={{blog.blog_id}}>
 						{% if not user.is_authenticated or blog not in pin_blogs %}
 								<i class="fa fa-map-pin" aria-hidden="true" style="color:grey;" id="pin{{blog.blog_id}}" name="unpin"></i>

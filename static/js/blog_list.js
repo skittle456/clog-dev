@@ -62,4 +62,5 @@ function getBlog(url,blog_id){
         type: 'GET',
     });
     window.open(url,'_blank');
+    return false;
 }
