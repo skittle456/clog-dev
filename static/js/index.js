@@ -35,7 +35,7 @@ $('div#demo').on('slide.bs.carousel', function (e) {
        //console.log(st);
        if (st > lastScrollTop && st > 56){
            // downscroll code
-           nav.fadeOut();
+           nav.fadeOut(200);
            //nav.addClass('nav-up');
            if(st >= 305){
             nav_category.addClass('fixed');
