@@ -32,7 +32,7 @@ $('div#demo').on('slide.bs.carousel', function (e) {
     var nav_tag = $('.nav-tag');
     $(window).scroll(function(event){
        var st = $(this).scrollTop();
-       console.log(st);
+       //console.log(st);
        if (st > lastScrollTop && st > 56){
            // downscroll code
            nav.fadeOut();
@@ -107,6 +107,10 @@ $(document).ready(function() {
     $('div.category-title').click(function() {
         var category_path = $(this).attr('id');
         if(location.pathname == "/" && category_path == "feed") {
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        }
+        else if (location.pathname == "/category/"+category_path){
             $("html, body").animate({ scrollTop: 0 }, "slow");
             return false;
         }
