@@ -9,9 +9,8 @@
 {% block js %}
 {% endblock %}
 {% block content %}
-<div class="container-fluid" id="trending-container" >
-    <h3>Trending</h3>
-    <div id="demo" class="carousel slide" data-ride="carousel" style="padding-top:1.5rem;padding-bottom:3rem;">
+<div id="trending-container">
+    <div id="demo" class="carousel slide" data-ride="carousel">
       
         <!-- Indicators -->
         <!-- 
@@ -26,7 +25,7 @@
         </ul>
         -->
         <!-- The slideshow -->
-        <div class="carousel-inner row w-100 h-60 mx-auto" role="listbox">
+        <div class="carousel-inner row w-100 mx-auto" role="listbox">
           {% for blog in trending_blogs %}
             {% if forloop.first %}
             <div class="carousel-item col-md-3 active" id="item-{{forloop.counter0}}" >
@@ -37,8 +36,8 @@
               <img class="img-fluid mx-auto d-block" src="{{blog.img_url}}" alt="{{blog.title}}" >
             </a>
             <div align="center">
-              <a href="{{blog.url}}" target="_blank" style="color:white;">
-              <p style="background-color: #FFA300;"><span>{{blog.title}}<span></p>
+              <a id="blog_link" href="{{blog.url}}" target="_blank">
+              <p ><span>{{blog.title}}<span></p>
               </a>
             </div>
           </div>
@@ -53,35 +52,49 @@
         </a>
       </div>
     </div>
-<div class="nav-scroller py-1 mb-2" >
-        <nav class="nav d-flex justify-content-between" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
-    padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
-    <a class="p-2 text-muted on-selected"  style="text-transform: capitalize;" href="/" id="category-feed">feed</a>
+</div>
+<div id="content-container">
+<div class="nav-scroller nav-category nav navbar-nav navbar-right ml-auto" style="background-color:white;">
+        <nav class="nav" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
+    padding-bottom: 1rem;margin-top: -1px;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;height:45px;">
+    <div class="p-2 category-title on-selected" id="feed">feed</div>
+    <div style='width: 1px; top: 0px; bottom: 50%; left: 0px; 
+    background-color: lightgrey; overflow: hidden'>
+&nbsp;
+</div>
 		{% for category in categories %}
-		  <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/category/{{category.title}}" id="category-{{category.title}}">
+		  <div class="p-2 category-title" id="{{category.title}}">
         {{category.title}}
-      </a>
+      </div>
+      <div style='width: 1px; top: 0px; bottom: 50%; left: 0px; 
+      background-color: lightgrey; overflow: hidden'>
+&nbsp;
+</div>
     {% endfor %}
         </nav>
       </div>
-<div class="nav-scroller py-1 mb-2" >
-      <nav class="nav d-flex justify-content-between" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
-  padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
+<div class="nav-scroller nav-tag py-1 mb-2" >
+      <nav class="nav d-flex justify-content-between tag-bar" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
+      padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
       {% for tag in tags %}
-      <a class="p-2 text-muted"  style="text-transform: capitalize;" href="/tag/{{tag.tag_name}}" >
-        <span class="badge badge-pill" id="tag-{{tag.tag_name}}">
+      <div class="p-2 text-muted tag-title"  id="{{tag.tag_name}}" style="text-transform: capitalize;" >
+        <span class="badge badge-pill blog-tag" id="tag-{{tag.tag_name}}">
           {{tag.tag_name}}
         </span>
-      </a>
+      </div>
       {% endfor %}
       </nav>
   </div>
-  
+<div class="loading" align="center" style="margin-top:40px;display:none;">
+    <i class="fa fa-circle-o-notch fa-spin fa-4x" style="color:#FFA300"></i>
+</div>
+<div id="blog-container">
 	{% include page_template %}
-
+</div>
 
 {% endblock %}
 </body>
+
 {% block javascript %}
 <script src="{% static "/js/index.js" %}"></script>
 <script src="{% static "/js/el-pagination.js" %}"></script>

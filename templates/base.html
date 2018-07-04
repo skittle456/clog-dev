@@ -6,8 +6,6 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
-    <link href="{% static 'fonts/Cloud-LightBold/Cloud-Light.otf' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'fonts/Cloud-LightBold/Cloud-LightBold.otf' %}" rel="stylesheet" media="screen">
     <script src="{% static "/js/base.js" %}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha256-Md8eaeo67OiouuXAi8t/Xpd8t2+IaJezATVTWbZqSOw=" crossorigin="anonymous" />
@@ -17,11 +15,15 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120276567-1"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        var host = window.location.hostname;
+        if(host != "localhost") {
+        // your google analytics code goes here
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'UA-120276567-1');
+        gtag('config', 'UA-120276567-1');
+        }
     </script>
     {% block css %}{% endblock %}
     {% block js %}{% endblock %}
@@ -133,63 +135,66 @@
             </div>
             <!-- End Register popup Modal -->
 
-        <nav class="navbar navbar-expand-md">
+        <nav class="navbar mainbar">
                 <a class="navbar-brand" style="color:#FFA300;" href="/">
-                    <img width="80" height="80" src="{% static "favicon.ico" %}" style="margin-bottom:-10px;">
-                    <span class="text-logo">The CLOG.co</span>
+                    <img class="brand" src="{% static "favicon.ico" %}">
+                    <span class="text-logo">The CLOG<span style="font-size:-40%;">.co</span></span>
                     <span class="subtext-logo"> Discover New Perspective</span>
                 </a>
+                <div class="nav-item search-item">
+                        <form id="search-form" type="GET" >
+                            <input class="form-control mr-sm-2 searchbar" type="search" placeholder="&#xf002;  search" aria-label="Search" name="search" onkeypress="mySearch()">
+                            <input type="submit" style="visibility: hidden;" />
+                        </form>
+                    </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarsExampleDefault"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"> <i class="fa fa-navicon"></i> </span>
+                    <span class="navbar-toggler-icon"> <i class="fa fa-user-circle-o fa-lg" style="margin-right:-19px;"></i> </span>
                 </button>
                 <div class="collapse navbar-collapse" id="narbars">
                     <ul class="nav navbar-nav navbar-right ml-auto" style="margin-right:40px;">
-                        <li class="nav-item">
-                            <form id="search-form" type="GET" action".">
-                                <input class="form-control mr-sm-2 searchbar" type="search" placeholder="&#xf002;  search" aria-label="Search" name="search" onkeypress="mySearch()">
-                                <input type="submit" style="visibility: hidden;" />
-                            </form>
-                        </li>
+                        <!--
                         <li role="separator" class="dropdown-divider"></li>
                         <li class="nav-item">
                             <a href="#" role="button" class="btn btn-md" data-toggle="modal" data-target="#feedback-model" >Feedback</a>
                         </li>
+                        -->
+                        {% if user.is_authenticated %}
+                        <li role="separator" class="dropdown-divider"></li>
                         <li class="nav-item">
-                        <div class="dropdown">
-                            <div class="btn" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                    <i class="fa fa-user-circle-o fa-lg"></i>
-                                    {% if user.is_authenticated %}
-                                    <span> Hi, {{user.first_name}}</span>
-                                    {% else %}
-                                    
-                                    {% endif %}
-                                </div>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                {% if user.is_authenticated %}
-                                <a class="dropdown-item"  style="text-transform: capitalize;" href="/mypin" id="category-pin">
-                                    my pin
-                                    <i class="fa fa-map-pin"></i>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" role="button" class="btn btn-md" onclick="logout()"> Logout </a>
-                                {% else %}
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#register-modal" >Register</a>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#login-modal" >Login</a>
-                                {% endif %}
-                            </ul>
-                            
-                        </div>
-                    </li>
+                            <a class="mypin text-muted" role="button" style="text-transform: capitalize;" href="/mypin" id="category-pin" style="margin-right:12px;">
+                                my pin
+                                <i class="fa fa-map-pin"></i>
+                            </a>
+                        </li>
+                        <li role="separator" class="dropdown-divider"></li>
+                        <li class="nav-item">
+                                <a href="#" role="button" class="feedback text-muted" data-toggle="modal" data-target="#feedback-model" >Feedback</a>
+                            </li>
+                        <li role="separator" class="dropdown-divider"></li>
+                        <li class="nav-item">
+                                <a href="#" role="button" class="logout text-muted" onclick="logout()"> Logout </a>
+                            </li>
+                        {% else %}
+                        <li role="separator" class="dropdown-divider"></li>
+                        <li class="nav-item">
+                                <a class="register text-muted" href="#"  data-toggle="modal" data-target="#register-modal" role="button" style="margin-right:12px;">Sign Up</a>
+                            </li>
+                        <li role="separator" class="dropdown-divider"></li>
+                            <li class="nav-item">
+                                    <a class="on-tagged signin" href="#" data-toggle="modal" data-target="#login-modal" role="button" >Sign In</a>
+                                </li>
+                        {% endif %}
                     <li class="nav-item"></li>
 
                     </ul>
                 </div>
             </nav>
+    <!--
     <div class"container-descript" style="margin-top:5rem;margin-bottom:-5.2rem;">
-        <div class="descript" align="center" style="display:block;;background-color:#FFA300;color:white;"> แหล่งรวมบทความสำหรับชาว Millennials เพื่อเปิดมุมมองใหม่ๆ </div>
+        <div class="descript" align="center" style="display:block;background-color:#FFA300;color:white;"> แหล่งรวมบทความสำหรับชาว Millennials เพื่อเปิดมุมมองใหม่ๆ </div>
     </div>
-	<div class="container">
+    -->
     {% block content %}
     {% endblock %}
 <div id="footer">

@@ -1,13 +1,13 @@
 {% load el_pagination_tags %}
 {% load staticfiles %}
 {% load apis_extra %}
-<div class="row">
+<div class="row blog-row">
 {% lazy_paginate 21 blogs %}
 {% for blog in blogs %}
 <div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
-  <div class="item card" style="width:302px;">
+  <div class="item card" style="width:352px;">
     <a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
-					<img src="{{blog.img_url}}" height="180" style="max-width: 300px;">
+					<img src="{{blog.img_url}}" height="206.329px" style="max-width: 350px;">
 				</a>
 			<div class="card-body">
 		<h5 class="card-title">
@@ -42,7 +42,7 @@
 </div>
 {% if forloop.counter|divisibleby:"3" and not forloop.last %}
 	</div>
-	<div class="row">
+	<div class="row blog-row">
   {% endif %}
 	{% endfor %}
 </div>

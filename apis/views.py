@@ -17,13 +17,15 @@ from django.core import serializers
 from django.contrib.postgres.search import SearchVector
 from django.db.models import F
 from rest_framework.decorators import api_view
+from django.db.models import Count
 # Create your views here.
 @csrf_exempt
 @page_template('blog_list.html')
 def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
     categories = Category.objects.order_by('created_on')
-    tags = Tag.objects.order_by('-created_on')
+    #tags = Tag.objects.order_by('-created_on')
+    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
     trending_blogs = Blog.objects.order_by('-total_views')[:7]
     pin_blogs=None
     if request.user.is_authenticated:
@@ -54,7 +56,8 @@ def list_by_category(request,category_title,template='index.html', extra_context
     blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
     trending_blogs = Blog.objects.order_by('-total_views')[:5]
-    tags = Tag.objects.order_by('-created_on')
+    #tags = Tag.objects.order_by('-created_on')
+    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
@@ -82,7 +85,8 @@ def list_by_category(request,category_title,template='index.html', extra_context
 def list_by_tag(request,tag_name,template='index.html', extra_context=None):
     blogs = Blog.objects.filter(tags__tag_name__startswith=tag_name).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
-    tags = Tag.objects.order_by('-created_on')
+    #tags = Tag.objects.order_by('-created_on')
+    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
@@ -108,7 +112,8 @@ def list_by_tag(request,tag_name,template='index.html', extra_context=None):
 def list_by_pin(request,template='index.html', extra_context=None):
     blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
     categories = Category.objects.order_by('created_on')
-    tags = Tag.objects.order_by('-created_on')
+    #tags = Tag.objects.order_by('-created_on')
+    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
     pin_blogs=None
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
