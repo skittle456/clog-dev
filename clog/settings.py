@@ -27,6 +27,16 @@ SECRET_KEY = 'g(*6d6b!*-o2htu2!jd=*g*(^a3c2ig1bo2(i8buif0(z2%lo='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# secure proxy SSL header and secure cookies
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# session expire at browser close
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# wsgi scheme
+os.environ['wsgi.url_scheme'] = 'https'
 ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'accounts.User'
 
