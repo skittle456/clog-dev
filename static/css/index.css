@@ -60,6 +60,7 @@ span.date {
     color: grey;
     outline: 0;
     margin-left:90px;
+    cursor: pointer;
 }
 .on-selected {
     font-family: Cloud-Bold;
