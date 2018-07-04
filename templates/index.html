@@ -57,13 +57,14 @@
 <div class="nav-scroller nav-category nav navbar-nav navbar-right ml-auto" style="background-color:white;">
         <nav class="nav" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
     padding-bottom: 1rem;margin-top: -1px;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;height:45px;">
-    <div class="p-2 category-title on-selected" id="feed">feed</div>
+    <ul class="navbar-nav mr-auto"></ul>
+    <div class="p-2 category-title on-selected" align="center" id="feed">feed</div>
     <div style='width: 1px; top: 0px; bottom: 50%; left: 0px; 
     background-color: lightgrey; overflow: hidden'>
 &nbsp;
 </div>
-		{% for category in categories %}
-		  <div class="p-2 category-title" id="{{category.title}}">
+    {% for category in categories %}
+		  <div class="p-2 category-title" align="left" id="{{category.title}}">
         {{category.title}}
       </div>
       <div style='width: 1px; top: 0px; bottom: 50%; left: 0px; 
@@ -86,7 +87,7 @@
       </nav>
   </div>
 <div class="loading" align="center" style="margin-top:40px;display:none;">
-    <i class="fa fa-circle-o-notch fa-spin fa-4x" style="color:#FFA300"></i>
+    <i class="fa fa-circle-o-notch fa-spin fa-4x" style="color:#f9a11d"></i>
 </div>
 <div id="blog-container">
 	{% include page_template %}

@@ -10,8 +10,26 @@
 body {
     font-family: Cloud-Light,'Mitr';
     margin-left:0px;
-    padding-top:74px;
+    padding-top:76px;
     z-index:1;
+}
+.navbar-expand-custom {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+.navbar-expand-custom .navbar-nav {
+    flex-direction: row;
+}
+.navbar-expand-custom .navbar-nav .nav-link {
+    padding-right: .5rem;
+    padding-left: .5rem;
+}
+.navbar-expand-custom .navbar-collapse {
+    display: flex!important;
+}
+.navbar-expand-custom .navbar-toggler {
+    display: none;
 }
 .navbar-brand{
     width:53.69px;
@@ -32,7 +50,7 @@ span.text-logo {
     margin-left: 4.8px;
 }
 a.btn.btn-md, a.btn, button.btn.btn-md, button.btn {
-    background: #FFA300;
+    background: #f9a11d;
     color:#ffff;
     border-radius: 24px;
 }
@@ -79,8 +97,11 @@ input.searchbar:focus {
     width: 400.643px;
 }
 @media(max-width: 690px) {
+    body{
+        padding-top: 47px;
+    }
     .navbar-brand{
-        margin-top: -22px;
+        margin-top: -10px;
         width:32.2px;
         height:32.2px;
     }

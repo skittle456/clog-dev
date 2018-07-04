@@ -134,9 +134,12 @@
                 </div>
             </div>
             <!-- End Register popup Modal -->
-
+        {% if user.is_authenticated %}
         <nav class="navbar mainbar">
-                <a class="navbar-brand" style="color:#FFA300;" href="/">
+        {% else %}
+        <nav class="navbar mainbar navbar-expand-md">
+        {% endif %}
+                <a class="navbar-brand" style="color:#f9a11d;" href="/">
                     <img class="brand" src="{% static "favicon.ico" %}">
                     <span class="text-logo">The CLOG<span style="font-size:-40%;">.co</span></span>
                     <span class="subtext-logo"> Discover New Perspective</span>
@@ -152,7 +155,7 @@
                     <span class="navbar-toggler-icon"> <i class="fa fa-user-circle-o fa-lg" style="margin-right:-19px;"></i> </span>
                 </button>
                 <div class="collapse navbar-collapse" id="narbars">
-                    <ul class="nav navbar-nav navbar-right ml-auto" style="margin-right:40px;">
+                    <ul class="nav navbar-nav navbar-right ml-auto" >
                         <!--
                         <li role="separator" class="dropdown-divider"></li>
                         <li class="nav-item">
@@ -176,16 +179,13 @@
                                 <a href="#" role="button" class="logout text-muted" onclick="logout()"> Logout </a>
                             </li>
                         {% else %}
-                        <li role="separator" class="dropdown-divider"></li>
                         <li class="nav-item">
                                 <a class="register text-muted" href="#"  data-toggle="modal" data-target="#register-modal" role="button" style="margin-right:12px;">Sign Up</a>
-                            </li>
-                        <li role="separator" class="dropdown-divider"></li>
+                        </li>
                             <li class="nav-item">
-                                    <a class="on-tagged signin" href="#" data-toggle="modal" data-target="#login-modal" role="button" >Sign In</a>
-                                </li>
+                                    <a class="signin" style="color:#f9a11d" href="#" data-toggle="modal" data-target="#login-modal" role="button" >Sign In</a>
+                            </li>
                         {% endif %}
-                    <li class="nav-item"></li>
 
                     </ul>
                 </div>

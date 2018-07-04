@@ -1,4 +1,10 @@
-
+$(document).ready(function (){
+    if ($(window).width() < 690) {
+        console.log('moblie');
+        return $('.mainbar').addClass('navbar-expand-md');
+    }
+    $('.mainbar').removeClass('mobile');
+});
 function post_feedback(){
     console.log($('textarea#message-text.form-control').val());
     console.log($('input#email.form-control').val());
