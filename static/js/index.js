@@ -89,11 +89,22 @@ function reload_elements(){
     }
     else if (pathName.search("tag") != -1){
         let tagName = pathName.substring(pathName.lastIndexOf('/') + 1);
+        $('#feed').addClass('on-selected');
         $("#"+tagName).addClass( "on-tagged");
         $("#tag-"+tagName).prependTo(".tag-bar");
         $(".nav-tag").animate({ scrollLeft: 0 }, "slow");
         return false;
       }
+}
+function resetNav(){
+    var nav = $('.mainbar');
+    var nav_category = $('.nav-category');
+    var nav_tag = $('.nav-tag');
+    nav.fadeIn(1);
+    nav_category.removeClass('fixed');
+    nav_tag.removeClass('tag-fixed');
+    nav_category.removeClass('nav-ontop-category');
+    nav_tag.removeClass('nav-ontop-tag');
 }
 $(document).ready(function() {
     // Highlight selected category  for category pages
@@ -116,6 +127,7 @@ $(document).ready(function() {
             $("html, body").animate({ scrollTop: 0 }, "slow");
             return false;
         }
+        resetNav();
         $('#blog-container').fadeOut();
         $('.loading').css("display", "block");
         var path = '/category/'+category_path;
@@ -131,14 +143,18 @@ $(document).ready(function() {
     });
     $('span.blog-tag').click(function() {
         var tag_path = $(this).attr('id');
+        resetNav();
         $('#blog-container').fadeOut();
         $('.loading').css("display", "block");
         var path = '/tag/'+tag_path;
+        if (location.pathname == "/tag/"+tag_path){
+            path = "/"
+        }
         $('#blog-container').load(path, function() {
             $('.loading').css("display", "none");
             $(this).fadeIn();
           });
-        history.pushState(null, null, '/tag/'+tag_path);
+        history.pushState(null, null, path);
         reload_elements();
     });
     $(".nav-tag").click(function(e) {
