@@ -75,6 +75,8 @@ function reload_elements(){
     pathName = window.location.pathname;
     var element = $('.on-selected');
     element.removeClass('on-selected');
+    var element = $(".on-tagged");
+    element.removeClass("on-tagged");
     if (location.pathname == "/") {
         $('#feed').addClass('on-selected');
     }
@@ -87,10 +89,10 @@ function reload_elements(){
     }
     else if (pathName.search("tag") != -1){
         let tagName = pathName.substring(pathName.lastIndexOf('/') + 1);
-        var element = $(".on-tagged");
-        element.removeClass("on-tagged");
         $("#tag-"+tagName).addClass( "on-tagged");
         $("#"+tagName).prependTo(".tag-bar");
+        $(".nav-tag").animate({ scrollLeft: 0 }, "slow");
+        return false;
       }
 }
 $(document).ready(function() {
