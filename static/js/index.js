@@ -89,8 +89,8 @@ function reload_elements(){
     }
     else if (pathName.search("tag") != -1){
         let tagName = pathName.substring(pathName.lastIndexOf('/') + 1);
-        $("#tag-"+tagName).addClass( "on-tagged");
-        $("#"+tagName).prependTo(".tag-bar");
+        $("#"+tagName).addClass( "on-tagged");
+        $("#tag-"+tagName).prependTo(".tag-bar");
         $(".nav-tag").animate({ scrollLeft: 0 }, "slow");
         return false;
       }
@@ -129,7 +129,7 @@ $(document).ready(function() {
         history.pushState(null, null, path);
         reload_elements();
     });
-    $('div.tag-title').click(function() {
+    $('span.blog-tag').click(function() {
         var tag_path = $(this).attr('id');
         $('#blog-container').fadeOut();
         $('.loading').css("display", "block");
@@ -140,6 +140,20 @@ $(document).ready(function() {
           });
         history.pushState(null, null, '/tag/'+tag_path);
         reload_elements();
+    });
+    $(".nav-tag").click(function(e) {
+        var position = e.pageX;
+        if(event.target.nodeName.toLowerCase() == 'div' ) {
+            // code
+            var x = $(".nav-tag").scrollLeft();
+            if (position > $(window).width()/2){
+                x+=180;
+            }
+            else if (position < $(window).width()/2){
+                x-=180;
+            }
+            $(".nav-tag").animate({ scrollLeft: x }, "slow");
+            }
     });
     // $("#search-form").on("change keyup paste", function(){
     //     console.log($(this).val())
