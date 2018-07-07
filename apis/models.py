@@ -1,5 +1,15 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 # Create your models here.
+
+class Photo(models.Model):
+    file = models.ImageField(upload_to='images/')
+    description = models.CharField(max_length=255, null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'photo'
+        verbose_name_plural = 'photos'
 
 class Provider(models.Model):
     provider_id = models.AutoField(max_length=10,primary_key=True)
@@ -34,8 +44,7 @@ class Blog(models.Model):
     img_url = models.URLField(null=True,blank=True)
     url = models.URLField(null=True,blank=True)
     title = models.CharField(max_length=255)
-    author = models.CharField(max_length=70)
-    wrote_on = models.DateTimeField(blank=True,null=True)
+    author = models.CharField(max_length=70, null=True,blank=True)
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     total_views = models.IntegerField(null=True,blank=True,default=0)
@@ -46,7 +55,16 @@ class Blog(models.Model):
         time = time[0:11]
         return "%s, %s" %  (self.title, self.provider.provider_name)
 
-
+class Insource(models.Model):
+    #insource_id = models.AutoField(max_length=10, primary_key=True)
+    blog = models.OneToOneField(
+        Blog,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    #slug = models.SlugField()
+    blog_content = models.TextField()
+    
 class Feedback(models.Model):
     feedback_id = models.AutoField(max_length=10,primary_key=True)
     feedback_message = models.TextField()

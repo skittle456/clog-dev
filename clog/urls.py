@@ -18,7 +18,8 @@ from django.urls import path,include
 from django.conf.urls import url
 from apis import views
 from django.views.generic.base import RedirectView
-
+from django.conf.urls.static import static
+from django.conf import settings
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
 urlpatterns = [
@@ -29,4 +30,8 @@ urlpatterns = [
     url(r'^category/(?P<category_title>[\w]+)$',views.list_by_category,name='list_by_category'),
     url(r'^tag/(?P<tag_name>[\w]+)$',views.list_by_tag,name='list_by_tag'),
     url(r'^mypin',views.list_by_pin,name='list_by_pin'),
+    url(r'^blog/(?P<blog_id>[\w-]+)/$', views.get_insource_blog, name='get_insource_blog'),
+    url(r'^clog',views.editor,name='editor'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

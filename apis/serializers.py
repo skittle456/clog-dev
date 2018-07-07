@@ -12,8 +12,37 @@ class BlogSerializer(serializers.ModelSerializer):
         'title',
         'author',
         'created_on',
-        'provider')
+        'provider',
+        'category',
+        'tags')
         
+class InsourceSerializer(serializers.ModelSerializer):
+    blog = BlogSerializer(required=True)
+    class Meta:
+        model = Insource
+        fields = ('blog',
+        'blog_content')
+    
+    def create(self, validated_data):
+        print(validated_data)
+        blog_data = validated_data.pop('blog')
+        blog = Blog(title=blog_data['title'],
+            provider=blog_data['provider'],
+            category=blog_data['category'],
+            img_url=blog_data['img_url'])
+        # blog.provider= Provider.objects.get(provider_name=blog_data['provider'])
+        # blog.category = Category.objects.get(category_name=blog_data['category'])
+        blog.save()
+        #blog.img_url='/media/images/'+blog_data['img']
+        link = blog.img_url
+        link = '/media/images/'+ link[8::]
+        blog.img_url = link
+        blog.url = "/blog/"+ str(blog.blog_id)
+        blog.tags.set(blog_data['tags'])
+        blog.save()
+        insource, created = Insource.objects.update_or_create(blog=blog,blog_content=validated_data['blog_content'])
+        return insource
+
 class ProviderSerializer(serializers.ModelSerializer):
 
     class Meta:

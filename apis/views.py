@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.parsers import JSONParser
@@ -18,7 +18,27 @@ from django.contrib.postgres.search import SearchVector
 from django.db.models import F
 from rest_framework.decorators import api_view
 from django.db.models import Count
+from apis.forms import PostForm, BlogForm
+from django.conf import settings
 # Create your views here.
+@csrf_exempt
+def editor(request):
+    form = PostForm()   
+    blog_form = BlogForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            initial_obj = form.save(commit=False)
+            initial_obj.save()
+            
+            form.save()
+            # blog_form.img_url = settings.MEDIA_ROOT + form.file
+            # blog = blog_form.save()
+            # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
+            # blog = blog.save()
+            # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
+            return redirect('/')
+    return render(request,'editor.html',{'form':form,'blog_form':blog_form})
 @csrf_exempt
 @page_template('blog_list.html')
 def index(request,template='index.html', extra_context=None):
@@ -82,8 +102,12 @@ def list_by_category(request,category_title,template='index.html', extra_context
     return render(request,template, context=data )
 
 @page_template('blog_list.html')
-def list_by_tag(request,tag_name,template='index.html', extra_context=None):
+def list_by_tag(request,tag_name,category_title='feed',template='index.html', extra_context=None):
     blogs = Blog.objects.filter(tags__tag_name__startswith=tag_name).order_by('-created_on')
+    if category != 'feed':
+        for blog in blogs:
+            if blog.category is not category:
+                blogs.remove(blog)
     categories = Category.objects.order_by('created_on')
     #tags = Tag.objects.order_by('-created_on')
     tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
@@ -169,10 +193,27 @@ class BlogList(APIView):
                 blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def get_insource_blog(request, blog_id):
+    blog = get_object_or_404(Insource, blog=blog_id)
+    return render(request, 'insource.html', {'blog':blog})
+
+class InsourceList(APIView):
+    def post(self,request, format=None):
+        serializer = InsourceSerializer(data=request.data)
+        if serializer.is_valid():
+            blog = serializer.save()
+            #link = link.split('\')
+            #blog.img_url = '/media/images/'+link[-1]
+            blog.save()
+            return Response("Success", status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 def add_view(request,blog_id):
     blog = Blog.objects.filter(blog_id=blog_id)
     blog.update(total_views=F('total_views')+1)
+    pass
     # if request.user.is_authenticated:
     #     user = User.objects.get(id=request.user.id)
     #     user.pin_blog.add(blog)
