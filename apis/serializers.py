@@ -35,7 +35,7 @@ class InsourceSerializer(serializers.ModelSerializer):
         blog.save()
         #blog.img_url='/media/images/'+blog_data['img']
         link = blog.img_url
-        link = '/media/images/'+ link[8::]
+        link = '/static/upload/images/'+ link[8::]
         blog.img_url = link
         blog.url = "/blog/"+ str(blog.blog_id)
         blog.tags.set(blog_data['tags'])

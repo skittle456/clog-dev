@@ -182,7 +182,6 @@ def editor(request):
             initial_obj = form.save(commit=False)
             initial_obj.save()
             
-            form.save()
             # blog_form.img_url = settings.MEDIA_ROOT + form.file
             # blog = blog_form.save()
             # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
