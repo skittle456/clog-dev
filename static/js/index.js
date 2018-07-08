@@ -108,6 +108,7 @@ function resetNav(){
 }
 $(document).ready(function() {
     // Highlight selected category  for category pages
+    console.log('loaded');
     reload_elements();
     
     $('input.form-control').keypress(function (e) {

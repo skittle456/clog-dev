@@ -1,9 +1,9 @@
 $(document).ready(function (){
-    if ($(window).width() < 690) {
-        console.log('moblie');
-        return $('.mainbar').addClass('navbar-expand-md');
-    }
-    $('.mainbar').removeClass('mobile');
+    // if ($(window).width() < 690) {
+    //     console.log('moblie');
+    //     return $('.mainbar').addClass('navbar-expand-md');
+    // }
+   // $('.mainbar').removeClass('mobile');
 });
 function post_feedback(){
     console.log($('textarea#message-text.form-control').val());
@@ -41,7 +41,7 @@ function login(){
             "password":$('#login-password').val()
         }),
     }).done(function(){
-        location.href = "/"
+        document.location.reload(true);
     })
     .fail(function() {
         alert("authentication fail")

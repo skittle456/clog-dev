@@ -19,27 +19,9 @@ from django.db.models import F
 from rest_framework.decorators import api_view
 from django.db.models import Count
 from apis.forms import PostForm, BlogForm
-from django.conf import settings
+#from django.conf import settings
 # Create your views here.
-@csrf_exempt
-def editor(request):
-    form = PostForm()   
-    blog_form = BlogForm()
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            initial_obj = form.save(commit=False)
-            initial_obj.save()
-            
-            form.save()
-            # blog_form.img_url = settings.MEDIA_ROOT + form.file
-            # blog = blog_form.save()
-            # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
-            # blog = blog.save()
-            # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
-            return redirect('/')
-    return render(request,'editor.html',{'form':form,'blog_form':blog_form})
-@csrf_exempt
+
 @page_template('blog_list.html')
 def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
@@ -48,6 +30,7 @@ def index(request,template='index.html', extra_context=None):
     tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
     trending_blogs = Blog.objects.order_by('-total_views')[:7]
     pin_blogs=None
+    print(request.user)
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
     search_query = request.GET.get('search')
@@ -102,12 +85,8 @@ def list_by_category(request,category_title,template='index.html', extra_context
     return render(request,template, context=data )
 
 @page_template('blog_list.html')
-def list_by_tag(request,tag_name,category_title='feed',template='index.html', extra_context=None):
+def list_by_tag(request,tag_name,template='index.html', extra_context=None):
     blogs = Blog.objects.filter(tags__tag_name__startswith=tag_name).order_by('-created_on')
-    if category != 'feed':
-        for blog in blogs:
-            if blog.category is not category:
-                blogs.remove(blog)
     categories = Category.objects.order_by('created_on')
     #tags = Tag.objects.order_by('-created_on')
     tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
@@ -193,6 +172,24 @@ class BlogList(APIView):
                 blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@csrf_exempt
+def editor(request):
+    form = PostForm()   
+    blog_form = BlogForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            initial_obj = form.save(commit=False)
+            initial_obj.save()
+            
+            form.save()
+            # blog_form.img_url = settings.MEDIA_ROOT + form.file
+            # blog = blog_form.save()
+            # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
+            # blog = blog.save()
+            # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
+            return redirect('/')
+    return render(request,'editor.html',{'form':form,'blog_form':blog_form})
 
 def get_insource_blog(request, blog_id):
     blog = get_object_or_404(Insource, blog=blog_id)
@@ -213,7 +210,6 @@ class InsourceList(APIView):
 def add_view(request,blog_id):
     blog = Blog.objects.filter(blog_id=blog_id)
     blog.update(total_views=F('total_views')+1)
-    pass
     # if request.user.is_authenticated:
     #     user = User.objects.get(id=request.user.id)
     #     user.pin_blog.add(blog)
@@ -320,8 +316,12 @@ class Login(APIView):
         if user is not None:
             if user.is_active:
                 login(request,user)
+                print(user, 'logged in')
                 if request.user.is_authenticated:
+                    print('signed in')
                     return Response({"success"}, status=200)
+                else:
+                    print('unexpected error occur')
                     #return JsonResponse(json_data, safe=False,status=200)    
         return Response({"detail": "Invalid credentials"}, status=401)
 

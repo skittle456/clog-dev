@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load apis_extra %}
+{% load el_pagination_tags %}
+{% block title %}<title>The CLOG</title>{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static "/css/insource.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "/css/index.css" %}" />
+<link href="//cdn.quilljs.com/1.3.6/quill.core.css" rel="stylesheet">
+<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+{% endblock %}
+{% block js %}
+<script src="//cdn.quilljs.com/1.3.6/quill.core.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div id="headline" align="center">
+        
+    </div>
+    <div class="content">
+
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+        //var quill = new Quill('#content');
+        //quill.html("{{blog.blog_content|safe}}");
+        // $('#content').html(quill.root.innerHTML);
+        // var delta = quill.root.innerHTML;
+        //var html = $.parseHTML(content);
+        var justHtmlContent = document.getElementById('content');
+        justHtmlContent.innerHTML = "{{blog.blog_content|escapejs}}";
+    })
+</script>
+{% endblock %}
+</html>
