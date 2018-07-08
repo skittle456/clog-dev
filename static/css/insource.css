@@ -7,3 +7,13 @@ container {
 div#headline {   
     padding-bottom: 30px;
 }
+
+#blog_link{
+    color:black;
+    font-family:Cloud-Bold;
+    font-size: 18px;
+}
+
+span.provider_name, span.date {
+    font-size: 0.9rem;;
+}
