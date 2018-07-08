@@ -18,7 +18,11 @@
 {% block content %}
 <div class="container">
     <div id="headline" align="center">
-        
+        <div class="form-in-line">
+            <span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
+            <span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
+            <span class="provider_name"> {{blog.provider.provider_name}} </span>
+        </div>
     </div>
     <div class="content">
 
@@ -33,7 +37,8 @@
         // $('#content').html(quill.root.innerHTML);
         // var delta = quill.root.innerHTML;
         //var html = $.parseHTML(content);
-        var justHtmlContent = document.getElementById('content');
+        //var justHtmlContent = document.getElementById('content');
+        var justHtmlContent = $(".container > #content");
         justHtmlContent.innerHTML = "{{blog.blog_content|escapejs}}";
     })
 </script>
