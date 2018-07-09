@@ -12,7 +12,6 @@ var quill = new Quill('#editor-container', {
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
       
         [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-        [{ 'font': [] }],
         [{ 'align': [] }],
       
         ['clean']        
@@ -25,6 +24,9 @@ function postBlog(){
     //var form = document.querySelector('form');
     //var content = document.querySelector('input[name=content]');
     var content = quill.root.innerHTML;
+    //alert(content);
+    //var temp = quill.getContents();
+    //alert(JSON.stringify(temp));
     //console.log(text);
     //console.log("Submitted", $(form).serialize(), $(form).serializeArray());
     var path = $('#id_file').val();

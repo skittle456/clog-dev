@@ -25,21 +25,19 @@
         </div>
     </div>
     <div id="content">
-
+            {{blog.blog_content|keep_blockquote}}
     </div>
 </div>
 {% endblock %}
 {% block javascript %}
 <script>
     $(document).ready(function() {
-        //var quill = new Quill('#content');
-        //quill.html("{{blog.blog_content|safe}}");
-        // $('#content').html(quill.root.innerHTML);
-        // var delta = quill.root.innerHTML;
-        //var html = $.parseHTML(content);
+
+        var temp = $('#content').text();
+        $('#content').text('');
         var justHtmlContent = document.getElementById('content');
-        justHtmlContent.innerHTML = "{{blog.blog_content|escapejs}}";
-    })
-</script>
+        $('#content').html(temp);
+    });
+    </script>
 {% endblock %}
 </html>
