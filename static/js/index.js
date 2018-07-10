@@ -77,9 +77,6 @@ function reload_elements(){
     var element_tagged = $(".on-tagged");
     element_tagged.removeClass("on-tagged");
     //use as bug should be fixed later
-    if (pathName.search("?search") != -1){
-        return false;
-    }
     if (location.pathname == "/") {
         $('#feed').addClass('on-selected');
     }
