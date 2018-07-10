@@ -7,8 +7,8 @@ container {
 .container {
     margin-top:35px;
 }
-row {
-    margin-bottom: 20px;
+.row {
+    padding-bottom:40px;
 }
 .container a {
     text-transform:capitalize;

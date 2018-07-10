@@ -22,7 +22,7 @@
     </div>
     <div id="headline" align="center">
         <div class="form-in-line">
-            <h3 class="text-muted d-block"> {{blog.blog.title}} </h3>
+            <div class="d-block" style="font-family:Cloud-Bold;font-size:22px;color:black;"> {{blog.blog.title}} </div>
             <span class="date">{{blog.blog.created_on|timesince|upto:','}} ago</span>
             <a class="text-muted"> | </a>
             <span class="provider_img"><img width="16"height="16" src="{{blog.blog.provider.favicon_url}}" ></span>
@@ -47,9 +47,8 @@
             </a>
             {% endfor %}
         </div>
-    <hr style="margin-bottom:25px;">
-    <hr>
-    <h5 class="text-muted d-block" style="padding:2px;margin-bottom:20px;">Read Next</h5>
+    <hr style="margin-bottom:15px;">
+    <div class="d-block" style="font-size:22px;padding:2px;margin-bottom:20px;">Read Next</div>
     <div class="row justify-content-center">
         {% for blog in trending_blogs %}
         <div class="col-lg-4 col-md-4 col-sm-12" style="margin-left:50px;margin-right:50px;">
