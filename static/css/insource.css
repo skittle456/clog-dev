@@ -10,7 +10,7 @@ container {
 row {
     margin-bottom: 20px;
 }
-a {
+.container a {
     text-transform:capitalize;
     margin-left: 5px;
     margin-right: 5px;

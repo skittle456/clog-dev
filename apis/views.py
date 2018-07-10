@@ -15,9 +15,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.contrib.postgres.search import SearchVector
-from django.db.models import F
+from django.db.models import F, Q, Count
 from rest_framework.decorators import api_view
-from django.db.models import Count
 from apis.forms import PostForm, BlogForm
 #from django.conf import settings
 # Create your views here.
@@ -38,6 +37,7 @@ def index(request,template='index.html', extra_context=None):
     elif search_query is not None:
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
+        blogs = blogs[::-1]
     #json_blogs = serializers.serialize("json", blogs)
     data = {
         "blogs": blogs,
@@ -70,6 +70,7 @@ def list_by_category(request,category_title,template='index.html', extra_context
         #redirect('/')
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
+        blogs = blogs[::-1]
     data = {
         "blogs": blogs,
         "categories": categories,
@@ -99,6 +100,7 @@ def list_by_tag(request,tag_name,template='index.html', extra_context=None):
         #redirect('/')
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
+        blogs = blogs[::-1]
     data = {
         "blogs": blogs,
         "pin_blogs": pin_blogs,
@@ -125,6 +127,7 @@ def list_by_pin(request,template='index.html', extra_context=None):
     elif search_query is not None:
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
+        blogs = blogs[::-1]
     data = {
         "blogs": blogs,
         "categories": categories,
@@ -191,7 +194,7 @@ def editor(request):
 
 def get_insource_blog(request, blog_id):
     blog = get_object_or_404(Insource, blog=blog_id)
-    trending_blogs = Blog.objects.order_by('-total_views')[:4]
+    trending_blogs = Blog.objects.filter(~Q(blog_id=blog_id)).order_by('-total_views')[:4]
     data = {
         'blog':blog,
         'trending_blogs': trending_blogs
