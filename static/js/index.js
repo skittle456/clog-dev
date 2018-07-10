@@ -7,7 +7,6 @@
 // });
 var blogs = null;
 $('div#demo').on('slide.bs.carousel', function (e) {
-        console.log('sliding');
         var $e = $(e.relatedTarget);
         var idx = $e.index();
         var itemsPerSlide = 4;
@@ -73,10 +72,14 @@ $('div#demo').on('slide.bs.carousel', function (e) {
     });
 function reload_elements(){
     pathName = window.location.pathname;
-    var element = $('.on-selected');
-    element.removeClass('on-selected');
-    var element = $(".on-tagged");
-    element.removeClass("on-tagged");
+    var element_selected = $('.on-selected');
+    element_selected.removeClass('on-selected');
+    var element_tagged = $(".on-tagged");
+    element_tagged.removeClass("on-tagged");
+    //use as bug should be fixed later
+    if (pathName.search("?search") != -1){
+        return false;
+    }
     if (location.pathname == "/") {
         $('#feed').addClass('on-selected');
     }
@@ -108,7 +111,6 @@ function resetNav(){
 }
 $(document).ready(function() {
     // Highlight selected category  for category pages
-    console.log('loaded');
     reload_elements();
     
     $('input.form-control').keypress(function (e) {
@@ -120,7 +122,7 @@ $(document).ready(function() {
       });
     $('div.category-title').click(function() {
         var category_path = $(this).attr('id');
-        if(location.pathname == "/" && category_path == "feed") {
+        if(location.pathname == "/" && category_path == "feed" && window.location.pathname.search("search") == -1 ) {
             $("html, body").animate({ scrollTop: 0 }, "slow");
             return false;
         }
