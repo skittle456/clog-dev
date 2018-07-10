@@ -24,8 +24,11 @@
             <span class="provider_name"> {{blog.blog.provider.provider_name}} </span>
         </div>
     </div>
-    <div id="content">
+    <div id="blank" hidden>
             {{blog.blog_content|keep_blockquote}}
+    </div>
+    <div id="content">
+            
     </div>
 </div>
 {% endblock %}
@@ -33,8 +36,7 @@
 <script>
     $(document).ready(function() {
 
-        var temp = $('#content').text();
-        $('#content').text('');
+        var temp = $('#blank').text();
         var justHtmlContent = document.getElementById('content');
         $('#content').html(temp);
     });

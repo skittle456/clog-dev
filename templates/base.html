@@ -16,7 +16,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120276567-1"></script>
     <script>
         var host = window.location.hostname;
-        if(host != "localhost") {
+        if(host != "localhost" || host != "127.0.0.1") {
         // your google analytics code goes here
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
