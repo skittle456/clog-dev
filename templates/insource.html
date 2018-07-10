@@ -17,19 +17,36 @@
 {% endblock %}
 {% block content %}
 <div class="container">
+    <div id="directory">
+        <a class="text-muted" href="/"> Feed </a> > <a class="text-muted" href="/category/{{blog.blog.category}}"> {{blog.blog.category}} </a> > <a class="text-muted"> {{blog.blog.title}} </a>
+    </div>
     <div id="headline" align="center">
         <div class="form-in-line">
+            <h3 class="text-muted d-block"> {{blog.blog.title}} </h3>
             <span class="date">{{blog.blog.created_on|timesince|upto:','}} ago</span>
+            <a class="text-muted"> | </a>
             <span class="provider_img"><img width="16"height="16" src="{{blog.blog.provider.favicon_url}}" ></span>
             <span class="provider_name"> {{blog.blog.provider.provider_name}} </span>
         </div>
+        <img src="{{blog.blog.img_url}}">
     </div>
     <div id="blank" hidden>
             {{blog.blog_content|keep_blockquote}}
     </div>
     <div id="content">
-            
     </div>
+    <div class="tag-bar" style="margin-top:20px;">
+            {% for tag in blog.blog.tags.all %}
+            {% if forloop.first and tag %}
+            <i class="fa fa-tag" aria-hidden="true"></i>
+            {% endif %}
+            <a href="/tag/{{tag.tag_name}}" style="color:black;text-transform:capitalize;">
+                <span class="badge badge-pill tag-pill">
+                        {{ tag.tag_name }}
+                </span>
+            </a>
+            {% endfor %}
+        </div>
 </div>
 {% endblock %}
 {% block javascript %}

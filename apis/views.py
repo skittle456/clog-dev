@@ -30,7 +30,6 @@ def index(request,template='index.html', extra_context=None):
     tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
     trending_blogs = Blog.objects.order_by('-total_views')[:7]
     pin_blogs=None
-    print(request.user)
     if request.user.is_authenticated:
         pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
     search_query = request.GET.get('search')
@@ -209,6 +208,7 @@ class InsourceList(APIView):
 def add_view(request,blog_id):
     blog = Blog.objects.filter(blog_id=blog_id)
     blog.update(total_views=F('total_views')+1)
+    return Response("Success", status=200)
     # if request.user.is_authenticated:
     #     user = User.objects.get(id=request.user.id)
     #     user.pin_blog.add(blog)
