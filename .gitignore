@@ -55,7 +55,8 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
-
+.history/
+static/upload/
 # Flask stuff:
 instance/
 .webassets-cache
