@@ -47,6 +47,25 @@
             </a>
             {% endfor %}
         </div>
+    <hr style="margin-bottom:25px;">
+    <hr>
+    <h5 class="text-muted d-block" style="padding:2px;margin-bottom:20px;">Read Next</h5>
+    <div class="row justify-content-center">
+        {% for blog in trending_blogs %}
+        <div class="col-lg-4 col-md-4 col-sm-12" style="margin-left:50px;margin-right:50px;">
+                <a align="center" id="blog_link d-block" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
+                    <img src="{{blog.img_url}}" style="width: 300px;max-height:206.329px;">
+                </a>
+                <div align="center"
+                <a id="blog_link" href="{{blog.url}}" style="color:black;">{{blog.title}}</a>
+                </div>
+        </div>
+        {% if forloop.counter|divisibleby:"2" %}
+            </div>
+            <div class="row justify-content-center">
+        {% endif %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
 {% block javascript %}
@@ -58,5 +77,6 @@
         $('#content').html(temp);
     });
     </script>
+    <script src="{% static "/js/blog_list.js" %}"></script>
 {% endblock %}
 </html>

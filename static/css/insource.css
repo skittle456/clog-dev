@@ -7,6 +7,9 @@ container {
 .container {
     margin-top:35px;
 }
+row {
+    margin-bottom: 20px;
+}
 a {
     text-transform:capitalize;
     margin-left: 5px;

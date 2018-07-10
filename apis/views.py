@@ -191,7 +191,12 @@ def editor(request):
 
 def get_insource_blog(request, blog_id):
     blog = get_object_or_404(Insource, blog=blog_id)
-    return render(request, 'insource.html', {'blog':blog})
+    trending_blogs = Blog.objects.order_by('-total_views')[:4]
+    data = {
+        'blog':blog,
+        'trending_blogs': trending_blogs
+    }
+    return render(request, 'insource.html', data)
 
 class InsourceList(APIView):
     def post(self,request, format=None):
