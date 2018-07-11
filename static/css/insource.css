@@ -31,7 +31,10 @@ div#headline {
     margin-right: auto;
 }
 #content p {
-    font-size: 135%;
+    font-size: 130%;
+}
+#content a {
+    font-size: 100%;
 }
 #blog_link{
     color:black;
@@ -45,5 +48,11 @@ span.provider_name, span.date {
 @media(max-width: 690px) {
     #content {
         width:100%;
+    }
+    #content p {
+        font-size: 105%;
+    }
+    #content a {
+        font-size: 80%;
     }
 }

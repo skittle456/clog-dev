@@ -64,6 +64,8 @@ class Insource(models.Model):
     )
     #slug = models.SlugField()
     blog_content = models.TextField()
+    def __str__(self):
+        return "%s, %s" %  (self.blog.title, self.blog.provider.provider_name)
     
 class Feedback(models.Model):
     feedback_id = models.AutoField(max_length=10,primary_key=True)
