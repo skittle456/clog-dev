@@ -1,5 +1,5 @@
 from django.db import models
-from django.template.defaultfilters import slugify
+from django.utils.text import slugify
 # Create your models here.
 
 class Photo(models.Model):
@@ -41,7 +41,7 @@ class Tag(models.Model):
         return "%s" %  (self.tag_name)
 class Blog(models.Model):
     blog_id = models.AutoField(max_length=10,primary_key=True)
-    img_url = models.URLField(null=True,blank=True)
+    img_url = models.CharField(max_length=255,null=True,blank=True)
     url = models.URLField(null=True,blank=True)
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=70, null=True,blank=True)
@@ -62,8 +62,12 @@ class Insource(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-    #slug = models.SlugField()
+    slug = models.SlugField(max_length=255,unique=True,allow_unicode=True)
     blog_content = models.TextField()
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.blog.title,allow_unicode=True)
+        super(Insource, self).save(*args, **kwargs)
+
     def __str__(self):
         return "%s, %s" %  (self.blog.title, self.blog.provider.provider_name)
     

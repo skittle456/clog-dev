@@ -192,9 +192,9 @@ def editor(request):
             return redirect('/')
     return render(request,'editor.html',{'form':form,'blog_form':blog_form})
 
-def get_insource_blog(request, blog_id):
-    blog = get_object_or_404(Insource, blog=blog_id)
-    trending_blogs = Blog.objects.filter(~Q(blog_id=blog_id)).order_by('-total_views')[:4]
+def get_insource_blog(request, slug):
+    blog = get_object_or_404(Insource, slug=slug)
+    trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
     data = {
         'blog':blog,
         'trending_blogs': trending_blogs

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from apis.models import *
 from accounts.models import User
+from django.utils.text import slugify
 
 class BlogSerializer(serializers.ModelSerializer):
 
@@ -37,7 +38,7 @@ class InsourceSerializer(serializers.ModelSerializer):
         link = blog.img_url
         link = '/static/upload/images/'+ link[8::]
         blog.img_url = link
-        blog.url = "/blog/"+ str(blog.blog_id)
+        blog.url = "/blog/"+ slugify(blog_data['title'], allow_unicode=True)
         blog.tags.set(blog_data['tags'])
         blog.save()
         insource, created = Insource.objects.update_or_create(blog=blog,blog_content=validated_data['blog_content'])
