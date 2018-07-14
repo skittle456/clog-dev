@@ -125,6 +125,7 @@ $(document).ready(function() {
       });
     $('div.category-title').click(function() {
         var category_path = $(this).attr('id');
+        $('.searchbar').val('');
         if(location.pathname == "/" && category_path == "feed" && window.location.pathname.search("search") == -1 ) {
             $("html, body").animate({ scrollTop: 0 }, "slow");
             return false;
@@ -148,6 +149,7 @@ $(document).ready(function() {
         reload_elements();
     });
     $('span.blog-tag').click(function() {
+        $('.searchbar').val("")
         var tag_path = $(this).attr('id');
         resetNav();
         $('#blog-container').fadeOut();
