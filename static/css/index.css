@@ -58,12 +58,13 @@ span.date {
 }
 .category-title {
     text-transform: capitalize;
-    width: 180px;
+    /* width: 180px; */
     height: 41px;
     color: grey;
     outline: 0;
     margin-left:90px;
     cursor: pointer;
+    width: 12%;
 }
 .on-selected {
     font-family: Cloud-Bold;
@@ -71,7 +72,11 @@ span.date {
     text-transform: capitalize;
     color: #f9a11d;
     /* border-bottom:3px solid #FFA300; */
-    width: 420px;
+    /* width: 420px; */
+    width: 30%;
+    text-align: center;
+    margin-left:auto;
+    margin-right:auto;
 }
 .tag-title {
     background: linear-gradient(#e9e9e9, white,white,white);

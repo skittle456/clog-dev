@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^category/(?P<category_title>[\w]+)$',views.list_by_category,name='list_by_category'),
     url(r'^tag/(?P<tag_name>[\w]+)$',views.list_by_tag,name='list_by_tag'),
     url(r'^mypin',views.list_by_pin,name='list_by_pin'),
-    url(r'^blog/(?P<slug>[\w-]+)/$', views.get_insource_blog, name='get_insource_blog'),
+    url(r'^blog/(?P<slug>.*)/$', views.get_insource_blog, name='get_insource_blog'),
     url(r'^clog',views.editor,name='editor'),
 ]
 if settings.DEBUG:

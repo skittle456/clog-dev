@@ -95,6 +95,12 @@ function reload_elements(){
         $(".nav-tag").animate({ scrollLeft: 0 }, "slow");
         return false;
       }
+      if($('.searchbar').val() != ""){
+        var element_selected = $('.on-selected');
+        element_selected.removeClass('on-selected');
+        var element_tagged = $(".on-tagged");
+        element_tagged.removeClass("on-tagged");
+      }
 }
 function resetNav(){
     var nav = $('.mainbar');

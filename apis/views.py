@@ -38,12 +38,15 @@ def index(request,template='index.html', extra_context=None):
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
         blogs = blogs[::-1]
+    else:
+        search_query="" 
     #json_blogs = serializers.serialize("json", blogs)
     data = {
         "blogs": blogs,
         "categories": categories,
         "pin_blogs": pin_blogs,
         "tags":tags,
+        "search_query":search_query,
         #"json_blogs": json_blogs,
         "trending_blogs": trending_blogs,
     }
@@ -71,11 +74,14 @@ def list_by_category(request,category_title,template='index.html', extra_context
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
         blogs = blogs[::-1]
+    else:
+        search_query="" 
     data = {
         "blogs": blogs,
         "categories": categories,
         "pin_blogs": pin_blogs,
         "this_title": category_title,
+        "search_query":search_query,
         "tags":tags,
         "trending_blogs": trending_blogs,
     }
@@ -101,10 +107,13 @@ def list_by_tag(request,tag_name,template='index.html', extra_context=None):
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
         blogs = blogs[::-1]
+    else:
+        search_query="" 
     data = {
         "blogs": blogs,
         "pin_blogs": pin_blogs,
         "categories": categories,
+        "search_query":search_query,
         "tags": tags
     }
     if extra_context is not None:
@@ -128,10 +137,13 @@ def list_by_pin(request,template='index.html', extra_context=None):
         blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
         blogs = list(set(blogs))
         blogs = blogs[::-1]
+    else:
+        search_query="" 
     data = {
         "blogs": blogs,
         "categories": categories,
         "pin_blogs": pin_blogs,
+        "search_query":search_query,
         "tags": tags
     }
     if extra_context is not None:
