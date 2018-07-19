@@ -26,3 +26,12 @@
 #editor-container a {
   font-size: 18px;
 }
+
+.btn-postblog {
+  float:right;
+  margin:20px;
+  margin-right: 12.5%;
+  background: #f9a11d;
+  color:#ffff;
+  border-radius: 24px;
+}
