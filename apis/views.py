@@ -86,7 +86,7 @@ def list_by_pin(request,template='index.html', extra_context=None):
 def list_by_provider(request,provider,template='provider_page.html', extra_context=None):
     blogs = Blog.objects.filter(provider__provider_name__iexact=provider).order_by('-created_on')
     data = base.core(request,blogs,extra_context)
-    provider = Provider.objects.filter(provider_name=provider)
+    provider = Provider.objects.filter(provider_name__iexact=provider)[0]
     data['provider'] = provider
     return render(request,template, context=data )
 

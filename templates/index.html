@@ -88,13 +88,13 @@
 <div class="loading" align="center" style="margin-top:40px;display:none;">
     <i class="fa fa-circle-o-notch fa-spin fa-4x" style="color:#f9a11d"></i>
 </div>
+{% endblock %}
+{% block blogcontent %}
 <div id="blog-container">
 	{% include page_template %}
 </div>
-
-{% endblock %}
 </body>
-
+{% endblock %}
 {% block javascript %}
 <script src="{% static "/js/index.js" %}"></script>
 <script src="{% static "/js/el-pagination.js" %}"></script>

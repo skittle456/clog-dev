@@ -15,7 +15,7 @@ class Photo(models.Model):
 class Provider(models.Model):
     provider_id = models.AutoField(max_length=10,primary_key=True)
     provider_name = models.CharField(max_length=60)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True,blank=True)
     url = models.URLField(null=True,blank=True)
     favicon_url = models.URLField(default=None,null=True,blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
