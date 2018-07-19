@@ -31,7 +31,9 @@ urlpatterns = [
     url(r'^tag/(?P<tag_name>[\w]+)$',views.list_by_tag,name='list_by_tag'),
     url(r'^mypin',views.list_by_pin,name='list_by_pin'),
     url(r'^blog/(?P<slug>.*)/$', views.get_insource_blog, name='get_insource_blog'),
-    url(r'^clog',views.editor,name='editor'),
+    url(r'^provider/(?P<provider>[\w]+)/$', views.list_by_provider, name='list_by_provider'),
+    url(r'^clog/(?P<blog_id>[0-9]+)/(?P<slug>.*)/$', views.get_insource_unique, name='get_insource_unique'),
+    url(r'^editor',views.editor,name='editor'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

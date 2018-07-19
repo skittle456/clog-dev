@@ -18,137 +18,86 @@ from django.contrib.postgres.search import SearchVector
 from django.db.models import F, Q, Count
 from rest_framework.decorators import api_view
 from apis.forms import PostForm, BlogForm
+import time
 #from django.conf import settings
 # Create your views here.
+class Base(object):
+    def __init__(self):
+        pass
+    def core(self,request,blogs,extra_context=None):
+        categories = Category.objects.order_by('created_on')
+        #tags = Tag.objects.order_by('-created_on')
+        tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
+        trending_blogs = Blog.objects.order_by('-total_views')[:7]
+        pin_blogs=None
+        if request.user.is_authenticated:
+            pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+        search_query = request.GET.get('search')
+        if search_query == "":
+            return redirect('/')
+        elif search_query is not None:
+            blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
+            blogs = list(set(blogs))
+            blogs = blogs[::-1]
+        else:
+            search_query=""
+        #json_blogs = serializers.serialize("json", blogs)
+        data = {
+            "blogs": blogs,
+            "categories": categories,
+            "pin_blogs": pin_blogs,
+            "tags":tags,
+            "search_query":search_query,
+            #"json_blogs": json_blogs,
+            "trending_blogs": trending_blogs,
+        }
+        if extra_context is not None:
+            data.update(extra_context)
+        return data
+
+base = Base()
 
 @page_template('blog_list.html')
 def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
-    categories = Category.objects.order_by('created_on')
-    #tags = Tag.objects.order_by('-created_on')
-    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
-    trending_blogs = Blog.objects.order_by('-total_views')[:7]
-    pin_blogs=None
-    if request.user.is_authenticated:
-        pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
-    search_query = request.GET.get('search')
-    if search_query == "":
-        return redirect('/')
-    elif search_query is not None:
-        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
-        blogs = list(set(blogs))
-        blogs = blogs[::-1]
-    else:
-        search_query="" 
-    #json_blogs = serializers.serialize("json", blogs)
-    data = {
-        "blogs": blogs,
-        "categories": categories,
-        "pin_blogs": pin_blogs,
-        "tags":tags,
-        "search_query":search_query,
-        #"json_blogs": json_blogs,
-        "trending_blogs": trending_blogs,
-    }
-    if extra_context is not None:
-        data.update(extra_context)
-        print('show more', extra_context)
+    data = base.core(request,blogs,extra_context)
     return render(request,template, context=data )
 
 @page_template('blog_list.html')
 def list_by_category(request,category_title,template='index.html', extra_context=None):
     catagory = Category.objects.filter(title=category_title)
     blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
-    categories = Category.objects.order_by('created_on')
-    trending_blogs = Blog.objects.order_by('-total_views')[:5]
-    #tags = Tag.objects.order_by('-created_on')
-    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
-    pin_blogs=None
-    if request.user.is_authenticated:
-        pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
-    search_query = request.GET.get('search')
-    if search_query == "":
-        return redirect('/')
-    elif search_query is not None:
-        #redirect('/')
-        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
-        blogs = list(set(blogs))
-        blogs = blogs[::-1]
-    else:
-        search_query="" 
-    data = {
-        "blogs": blogs,
-        "categories": categories,
-        "pin_blogs": pin_blogs,
-        "this_title": category_title,
-        "search_query":search_query,
-        "tags":tags,
-        "trending_blogs": trending_blogs,
-    }
-    if extra_context is not None:
-        data.update(extra_context)
-        print('show more', extra_context)
+    data = base.core(request,blogs,extra_context)
     return render(request,template, context=data )
 
 @page_template('blog_list.html')
 def list_by_tag(request,tag_name,template='index.html', extra_context=None):
     blogs = Blog.objects.filter(tags__tag_name__startswith=tag_name).order_by('-created_on')
-    categories = Category.objects.order_by('created_on')
-    #tags = Tag.objects.order_by('-created_on')
-    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
-    pin_blogs=None
-    if request.user.is_authenticated:
-        pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
-    search_query = request.GET.get('search')
-    if search_query == "":
-        return redirect('/')
-    elif search_query is not None:
-        #redirect('/')
-        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
-        blogs = list(set(blogs))
-        blogs = blogs[::-1]
-    else:
-        search_query="" 
-    data = {
-        "blogs": blogs,
-        "pin_blogs": pin_blogs,
-        "categories": categories,
-        "search_query":search_query,
-        "tags": tags
-    }
-    if extra_context is not None:
-        data.update(extra_context)
-        print('show more', extra_context)
+    data = base.core(request,blogs,extra_context)
     return render(request,template, context=data )
 
 @page_template('blog_list.html')
 def list_by_pin(request,template='index.html', extra_context=None):
     blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
-    categories = Category.objects.order_by('created_on')
-    #tags = Tag.objects.order_by('-created_on')
-    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
-    pin_blogs=None
-    if request.user.is_authenticated:
-        pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
-    search_query = request.GET.get('search')
-    if search_query == "":
-        return redirect('/')
-    elif search_query is not None:
-        blogs = Blog.objects.annotate(search=SearchVector('category__title','tags__tag_name','provider__provider_name','title'),).filter(search=search_query)
-        blogs = list(set(blogs))
-        blogs = blogs[::-1]
-    else:
-        search_query="" 
-    data = {
-        "blogs": blogs,
-        "categories": categories,
-        "pin_blogs": pin_blogs,
-        "search_query":search_query,
-        "tags": tags
-    }
-    if extra_context is not None:
-        data.update(extra_context)
-        print('show more', extra_context)
+    data = base.core(request,blogs,extra_context)
+    return render(request,template, context=data )
+
+@page_template('blog_list.html')
+def list_by_provider(request,provider,template='provider_page.html', extra_context=None):
+    blogs = Blog.objects.filter(provider__provider_name__iexact=provider).order_by('-created_on')
+    data = base.core(request,blogs,extra_context)
+    provider = Provider.objects.filter(provider_name=provider)
+    data['provider'] = provider
+    return render(request,template, context=data )
+
+@page_template('blog_list.html')
+def list_by_follow(request,template='index.html', extra_context=None):
+    providers = Provider.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+    blogs = []
+    for provider in providers:
+        blogs_provider = Blog.objects.filter(provider__provider_name__iexact=provider).order_by('-created_on')
+        blogs.append(blogs_provider)
+    data = base.core(request,blogs,extra_context)
     return render(request,template, context=data )
 
 class CategoryList(APIView):
@@ -192,10 +141,17 @@ def editor(request):
     blog_form = BlogForm()
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
+        blog_form = BlogForm(request.POST)
+        if form.is_valid() and blog_form.is_valid():
             initial_obj = form.save(commit=False)
+            random_str = str(time.time())
+            initial_obj.file.name = random_str[:10]
             initial_obj.save()
-            
+            #title = slugify(blog_form.cleaned_data['title'],allow_unicode=True)
+            time.sleep(2)
+            blog = Blog.objects.get(title=blog_form.cleaned_data['title'],provider__provider_id=blog_form.cleaned_data['provider'].provider_id)
+            blog.img_url = '/static/upload/images/' + random_str[:10]
+            blog.save()
             # blog_form.img_url = settings.MEDIA_ROOT + form.file
             # blog = blog_form.save()
             # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
@@ -203,6 +159,15 @@ def editor(request):
             # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
             return redirect('/')
     return render(request,'editor.html',{'form':form,'blog_form':blog_form})
+
+def get_insource_unique(request, blog_id,slug):
+    blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
+    trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
+    data = {
+        'blog':blog,
+        'trending_blogs': trending_blogs
+    }
+    return render(request, 'insource.html', data)
 
 def get_insource_blog(request, slug):
     blog = get_object_or_404(Insource, slug=slug)
@@ -212,8 +177,20 @@ def get_insource_blog(request, slug):
         'trending_blogs': trending_blogs
     }
     return render(request, 'insource.html', data)
-
+##must fix
 class InsourceList(APIView):
+    def patch(self, request,format=None):
+        #title = slugify(request.data['title'])
+        title = request.data['title'].replace(" ","-").lower()
+        blog = Insource.objects.get(slug=title)
+        serializer = InsourceSerializer(blog,data=request.data,partial=True)
+        print(serializer.errors)
+        if serializer.is_valid():
+            print('valid')
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def post(self,request, format=None):
         serializer = InsourceSerializer(data=request.data)
         if serializer.is_valid():
@@ -315,6 +292,32 @@ class Pin(APIView):
         blog = self.get_object(blog_id)
         user = User.objects.get(id=request.user.id)
         user.pin_blog.remove(blog)
+        user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class Follow(APIView):
+    @method_decorator(csrf_exempt)
+    def get_object(self,provider_id):
+        try:
+            return Provider.objects.get(provider_id=provider_id)
+        except Provider.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self,request,provider_id,format=None):
+        provider = self.get_object(provider_id)
+        if request.user.is_authenticated:
+            user = User.objects.get(id=request.user.id)
+            user.follow_provider.add(provider)
+            user.save()
+            return Response("success, %s follow"%provider.name, status=200)
+        #ask for register
+        return Response("must authenicate", status=401)
+    
+    def delete(self, request, provider_id, format=None):
+        print('deleting')
+        provider = self.get_object(provider_id)
+        user = User.objects.get(id=request.user.id)
+        user.follow_provider.remove(provider)
         user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

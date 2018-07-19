@@ -95,6 +95,12 @@ function reload_elements(){
         $(".nav-tag").animate({ scrollLeft: 0 }, "slow");
         return false;
       }
+    else if (pathName.search("provider") != -1){
+        $('.nav-category').addClass('fixed');
+        $('.nav-tag').addClass('tag-fixed');
+        $('.nav-category').addClass('nav-ontop-category');
+        $('.nav-tag').addClass('nav-ontop-tag');
+    }
       if($('.searchbar').val() != ""){
         var element_selected = $('.on-selected');
         element_selected.removeClass('on-selected');

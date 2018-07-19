@@ -3,6 +3,7 @@ from django.utils.text import slugify
 # Create your models here.
 
 class Photo(models.Model):
+    id = models.AutoField(max_length=10,primary_key=True)
     file = models.ImageField(upload_to='images/')
     description = models.CharField(max_length=255, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -14,6 +15,7 @@ class Photo(models.Model):
 class Provider(models.Model):
     provider_id = models.AutoField(max_length=10,primary_key=True)
     provider_name = models.CharField(max_length=60)
+    description = models.TextField(null=True)
     url = models.URLField(null=True,blank=True)
     favicon_url = models.URLField(default=None,null=True,blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -65,7 +67,8 @@ class Insource(models.Model):
     slug = models.SlugField(max_length=255,unique=True,allow_unicode=True)
     blog_content = models.TextField()
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.blog.title,allow_unicode=True)
+        #self.slug = slugify(self.blog.title,allow_unicode=True)
+        self.slug = self.blog.title.replace(" ","-").lower()
         super(Insource, self).save(*args, **kwargs)
 
     def __str__(self):

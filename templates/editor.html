@@ -17,7 +17,7 @@
 {% endblock %}
 {% block content %}
 <div class="container" style="padding:40px;">
-    <form method="post" enctype="multipart/form-data" id="formUpload" {% csrf_token %}
+    <form id="form-content" method="post" enctype="multipart/form-data" id="formUpload" {% csrf_token %}
         <div class="form-group">
                 {{ form.as_p }}
             </div>
@@ -25,9 +25,11 @@
                 {{ blog_form.as_p }}
             </div>
 </div>
+<div class="container">
 <div id="editor-container">
 </div>
-    <button type="submit" role="button" onclick="postBlog()">Upload</button>
+</div>
+    <button role="button" onclick="postBlog()">Upload</button>
 </form>
 
 {% endblock %}

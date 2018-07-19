@@ -17,7 +17,7 @@ var quill = new Quill('#editor-container', {
         ['clean']        
         ]
     },
-    placeholder: 'Compose an epic...',
+    placeholder: 'Write something...',
     theme: 'snow'
     });
 function postBlog(){
@@ -30,8 +30,8 @@ function postBlog(){
     //console.log(text);
     //console.log("Submitted", $(form).serialize(), $(form).serializeArray());
     var path = $('#id_file').val();
-    path = path.replace(/^.*[\\\/]/, '')
-    var link = "https://" + encodeURIComponent(path);
+    // path = path.replace(/^.*[\\\/]/, '')
+    // var link = "https://" + encodeURIComponent(path);
     var request = $.ajax({
         url: "/apis/post",
         method: "POST",
@@ -40,7 +40,7 @@ function postBlog(){
         data: JSON.stringify({
             "blog_content":content,
             "blog":{
-                "img_url":link,
+                "img_url":path,
                 "title": $('#id_title').val(),
                 "provider":$('#id_provider').val(),
                 "category":$('#id_category').val(),

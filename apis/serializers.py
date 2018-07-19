@@ -35,12 +35,12 @@ class InsourceSerializer(serializers.ModelSerializer):
         # blog.category = Category.objects.get(category_name=blog_data['category'])
         blog.save()
         #blog.img_url='/media/images/'+blog_data['img']
-        link = blog.img_url
-        link = '/static/upload/images/'+ link[8::]
-        blog.img_url = link
-        blog.url = "/blog/"+ slugify(blog_data['title'], allow_unicode=True)
+        blog.img_url = '/static/upload/images/'+ blog.img_url
+        #blog.url = "/blog/"+ slugify(blog_data['title'], allow_unicode=True)
+        blog.url = "/clog/"+ str(blog.blog_id) + "/" + blog_data['title'].replace(" ","-").lower()
         blog.tags.set(blog_data['tags'])
         blog.save()
+        print('serializer',blog_data['title'])
         insource, created = Insource.objects.update_or_create(blog=blog,blog_content=validated_data['blog_content'])
         return insource
 

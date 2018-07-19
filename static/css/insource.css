@@ -31,10 +31,10 @@ div#headline {
     margin-right: auto;
 }
 #content p {
-    font-size: 130%;
+    font-size: 22px;
 }
 #content a {
-    font-size: 100%;
+    font-size: 18px;
 }
 #blog_link{
     color:black;

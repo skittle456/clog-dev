@@ -178,6 +178,12 @@
                         <li class="nav-item">
                                 <a href="#" role="button" class="logout text-muted" onclick="logout()"> Logout </a>
                             </li>
+                        {% if user.is_staff %}
+                        <li role="separator" class="dropdown-divider"></li>
+                        <li class="nav-item">
+                                <a href="/editor" role="button" class="editor text-muted"> <i class="fas fa-pen"></i> New story  </a>
+                            </li>
+                        {% endif %}
                         {% else %}
                         <li class="nav-item">
                                 <a class="register text-muted" href="#"  data-toggle="modal" data-target="#register-modal" role="button" style="margin-right:12px;">Sign Up</a>

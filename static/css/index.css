@@ -212,4 +212,8 @@ div.tag {
     .on-selected {
         width: 120px;
     }
+    .img-fluid {
+        width: 264;
+        height: auto;
+    }
 }
