@@ -157,12 +157,16 @@ $(document).ready(function() {
     $('span.blog-tag').click(function() {
         $('.searchbar').val("")
         var tag_path = $(this).attr('id');
+        var category_path = $('.on-selected').attr('id');
         resetNav();
         $('#blog-container').fadeOut();
         $('.loading').css("display", "block");
         var path = '/tag/'+tag_path;
         if (location.pathname == "/tag/"+tag_path){
             path = "/"
+        }
+        else if(category_path != "feed"){
+            path = "/category/"+category_path+"/tag/"+tag_path
         }
         $('#blog-container').load(path, function() {
             $('.loading').css("display", "none");

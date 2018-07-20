@@ -44,7 +44,7 @@ class Tag(models.Model):
 class Blog(models.Model):
     blog_id = models.AutoField(max_length=10,primary_key=True)
     img_url = models.CharField(max_length=255,null=True,blank=True)
-    url = models.URLField(null=True,blank=True)
+    url = models.CharField(max_length=255,null=True,blank=True)
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=70, null=True,blank=True)
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, blank=True)

@@ -65,8 +65,13 @@ def index(request,template='index.html', extra_context=None):
 
 @page_template('blog_list.html')
 def list_by_category(request,category_title,template='index.html', extra_context=None):
-    catagory = Category.objects.filter(title=category_title)
-    blogs = Blog.objects.filter(category=catagory[0]).order_by('-created_on')
+    blogs = Blog.objects.filter(category__title__startswith=category_title).order_by('-created_on')
+    data = base.core(request,blogs,extra_context)
+    return render(request,template, context=data )
+
+@page_template('blog_list.html')
+def list_by_category_tag(request,category_title,tag_name,template='index.html', extra_context=None):
+    blogs = Blog.objects.filter(category__title__startswith=category_title,tags__tag_name__startswith=tag_name).order_by('-created_on')
     data = base.core(request,blogs,extra_context)
     return render(request,template, context=data )
 
@@ -85,6 +90,22 @@ def list_by_pin(request,template='index.html', extra_context=None):
 @page_template('blog_list.html')
 def list_by_provider(request,provider,template='provider_page.html', extra_context=None):
     blogs = Blog.objects.filter(provider__provider_name__iexact=provider).order_by('-created_on')
+    data = base.core(request,blogs,extra_context)
+    provider = Provider.objects.filter(provider_name__iexact=provider)[0]
+    data['provider'] = provider
+    return render(request,template, context=data )
+
+@page_template('blog_list.html')
+def list_by_provider_tag(request,provider,tag_name,template='provider_page.html', extra_context=None):
+    blogs = Blog.objects.filter(provider__provider_name__iexact=provider,tags__tag_name__startswith=tag_name).order_by('-created_on')
+    data = base.core(request,blogs,extra_context)
+    provider = Provider.objects.filter(provider_name__iexact=provider)[0]
+    data['provider'] = provider
+    return render(request,template, context=data )
+
+@page_template('blog_list.html')
+def list_by_provider_category(request,provider,category_title,template='provider_page.html', extra_context=None):
+    blogs = Blog.objects.filter(provider__provider_name__iexact=provider,category__title__startswith=category_title).order_by('-created_on')
     data = base.core(request,blogs,extra_context)
     provider = Provider.objects.filter(provider_name__iexact=provider)[0]
     data['provider'] = provider
@@ -144,14 +165,13 @@ def editor(request):
         blog_form = BlogForm(request.POST)
         if form.is_valid() and blog_form.is_valid():
             initial_obj = form.save(commit=False)
-            random_str = str(time.time())
-            initial_obj.file.name = random_str[:10]
+            ##random_str = str(time.time())
+            ##initial_obj.file.name = random_str[:10]
             initial_obj.save()
             #title = slugify(blog_form.cleaned_data['title'],allow_unicode=True)
-            time.sleep(2)
-            blog = Blog.objects.get(title=blog_form.cleaned_data['title'],provider__provider_id=blog_form.cleaned_data['provider'].provider_id)
-            blog.img_url = '/static/upload/images/' + random_str[:10]
-            blog.save()
+            ##blog = Blog.objects.get(title=blog_form.cleaned_data['title'],provider__provider_id=blog_form.cleaned_data['provider'].provider_id)
+            ##blog.img_url = '/static/upload/images/' + random_str[:10]
+            ###blog.save()
             # blog_form.img_url = settings.MEDIA_ROOT + form.file
             # blog = blog_form.save()
             # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)

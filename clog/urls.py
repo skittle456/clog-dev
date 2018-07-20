@@ -28,10 +28,13 @@ urlpatterns = [
     url(r'^favicon\.ico$', favicon_view),
     url(r'^$',views.index,name='index'),
     url(r'^category/(?P<category_title>[\w]+)$',views.list_by_category,name='list_by_category'),
+    url(r'^category/(?P<category_title>[\w]+)/tag/(?P<tag_name>[\w]+)/$', views.list_by_category_tag, name='list_by_provider_category_tag'),
     url(r'^tag/(?P<tag_name>[\w]+)$',views.list_by_tag,name='list_by_tag'),
     url(r'^mypin',views.list_by_pin,name='list_by_pin'),
     url(r'^blog/(?P<slug>.*)/$', views.get_insource_blog, name='get_insource_blog'),
     url(r'^provider/(?P<provider>[\w]+)/$', views.list_by_provider, name='list_by_provider'),
+    url(r'^provider/(?P<provider>[\w]+)/tag/(?P<tag_name>[\w]+)/$', views.list_by_provider_tag, name='list_by_provider_tag'),
+    url(r'^provider/(?P<provider>[\w]+)/category/(?P<category_title>[\w]+)/$', views.list_by_provider_category, name='list_by_provider_category'),
     url(r'^clog/(?P<blog_id>[0-9]+)/(?P<slug>.*)/$', views.get_insource_unique, name='get_insource_unique'),
     url(r'^editor',views.editor,name='editor'),
 ]
