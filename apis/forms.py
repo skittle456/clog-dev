@@ -8,6 +8,8 @@ class PostForm(forms.ModelForm):
             "file",
             "description"
         ]
+        widgets = {'description': forms.TextInput(
+                attrs={'placeholder': '(Optional)'})}
 
 class BlogForm(forms.ModelForm):
     class Meta:
