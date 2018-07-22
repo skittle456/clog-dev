@@ -39,7 +39,7 @@ class InsourceSerializer(serializers.ModelSerializer):
         # from django.utils import timezone
         # now = timezone.now()
         now = datetime.now()
-        blog.img_url = '/static/upload/images/'+str(now.year)+'/'+str(now.month)+'/'+str(now.day)+'/'+ blog.img_url
+        blog.img_url = '/static/upload/images/'+now.strftime('%Y')+'/'+now.strftime('%m')+'/'+now.strftime('%d')+'/'+ blog.img_url
         #blog.url = "/blog/"+ slugify(blog_data['title'], allow_unicode=True)
         blog.url = "/clog/"+ str(blog.blog_id) + "/" + blog_data['title'].replace(" ","-").lower()
         blog.tags.set(blog_data['tags'])
