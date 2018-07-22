@@ -48,8 +48,6 @@ function postBlog(){
                 "tags":$('#id_tags').val()
             }
         }),
-    }).done(function(){
-        location.href = "/"
     })
     // No back end to actually submit to!
     //alert('Open the console to see the submit data!')
