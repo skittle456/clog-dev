@@ -129,9 +129,10 @@ $(document).ready(function() {
             method: "GET",
         }).done(function(){
             //$('.fa-map-pin').css("color", "red");
-            $(this).css("color", "#FFA300");
-            $(this).css("background-color", "white");
-            $(this).attr("name","unfollow")
+            $(this).css("color", "white");
+            $(this).css("background-color", "#FFA300");
+            $(this).css("border", "1px solid #FFA300");
+            $(this).attr("name","followed")
             $(this).text("Unfollow");
             //document.location.reload(true)
         })
@@ -146,9 +147,10 @@ $(document).ready(function() {
             type: 'DELETE',
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
-            $(this).css("color", "white");
-            $(this).css("background-color", "#FFA300");
-            $(this).attr("name","followed");
+            $(this).css("color", "#FFA300");
+            $(this).css("background-color", "white");
+            $(this).css("border", "1px solid white");
+            $(this).attr("name","unfollow");
             $(this).text("Follow");
             //document.location.reload(true)
         })
