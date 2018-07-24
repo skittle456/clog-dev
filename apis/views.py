@@ -32,6 +32,7 @@ class Base(object):
         pin_blogs=None
         if request.user.is_authenticated:
             pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
+            follow_list = Provider.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
         search_query = request.GET.get('search')
         if search_query == "":
             return redirect('/')
@@ -48,6 +49,7 @@ class Base(object):
             "pin_blogs": pin_blogs,
             "tags":tags,
             "search_query":search_query,
+            "follow_list":follow_list,
             #"json_blogs": json_blogs,
             "trending_blogs": trending_blogs,
         }
@@ -111,6 +113,7 @@ def list_by_provider_tag(request,provider,tag_name,template='provider_page.html'
             if tag not in tags:
                 tags.append(tag)
     data['tags'] = tags
+    
     provider = Provider.objects.filter(provider_name__iexact=provider)[0]
     data['provider'] = provider
     return render(request,template, context=data )
