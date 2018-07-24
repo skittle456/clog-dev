@@ -125,7 +125,7 @@ $(document).ready(function() {
         if ($(this).attr("name") == "unfollow"){
         console.log('following');
         var request = $.ajax({
-            url: "/apis/follow/"+$(this).val(),
+            url: "/apis/follow/"+$(this).attr("id"),
             method: "GET",
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
@@ -140,11 +140,12 @@ $(document).ready(function() {
     else if ($(this).attr("name") == "followed"){
         console.log('unfollowing')
         var request = $.ajax({
-            url: "/apis/follow/"+$(this).val(),
+            url: "/apis/follow/"+$(this).attr("id"),
             type: 'DELETE',
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
-            $(this).css("color", "grey");
+            $(this).css("color", "#FFA300");
+            $(this).css("background-color", "white");
             $(this).attr("name","unfollow")
             document.location.reload(true)
         })

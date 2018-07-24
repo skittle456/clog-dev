@@ -12,10 +12,10 @@
     <div class="form-in-line" align="center">
       <span class="pro_name" id="{{provider.provider_name}}"> {{provider.provider_name}} </span>
       <span style="color:#e4e4e4;margin-left:20px;margin-right:20px">|</span>
-      {% if  provider not in follow_list %}
-      <div class="btn follow-btn" name="unfollow" value="{{provider.provider_id}}">
+      {% if provider not in follow_list %}
+      <div class="btn follow-btn" name="unfollow" id="{{provider.provider_id}}">
       {% else %}
-      <div class="btn follow-btn" name="followed" value="{{provider.provider_id}}">
+      <div class="btn follow-btn" name="followed" id="{{provider.provider_id}}">
       {% endif %}
           Follow
       </div>
