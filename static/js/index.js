@@ -76,14 +76,22 @@ function reload_elements(){
     element_selected.removeClass('on-selected');
     var element_tagged = $(".on-tagged");
     element_tagged.removeClass("on-tagged");
-    //use as bug should be fixed later
+    var category_name  = $('.nav-category').val();
     if (location.pathname == "/") {
         $('#feed').addClass('on-selected');
     }
     // else {
     //     $('#trending-container').hide();
     // }
-    if (pathName.search("category") != -1){
+    if (pathName.search("/category/"+category_name+"/tag/") != -1){
+        let tagName = pathName.substring(pathName.lastIndexOf('/') + 1);
+        $( "#"+category_name ).addClass( "on-selected" );
+        $("#"+tagName).addClass( "on-tagged");
+        $("#tag-"+tagName).prependTo(".tag-bar");
+        $(".nav-tag").animate({ scrollLeft: 0 }, "slow");
+        return false;
+    }
+    else if (pathName.search("/category/"+category_name) != -1){
       let categoryName = pathName.substring(pathName.lastIndexOf('/') + 1);
       $( "#"+categoryName ).addClass( "on-selected" );
     }
@@ -152,6 +160,7 @@ $(document).ready(function() {
             $(this).fadeIn();
           });
         history.pushState(null, null, path);
+        $('.nav-category').val(category_path);
         reload_elements();
     });
     $('span.blog-tag').click(function() {
@@ -164,9 +173,14 @@ $(document).ready(function() {
         var path = '/tag/'+tag_path;
         if (location.pathname == "/tag/"+tag_path){
             path = "/"
+            $('.nav-category').val('feed');
+        }
+        else if(location.pathname == "/category/"+category_path+"/tag/"+tag_path){
+            path = "/category/"+category_path;
         }
         else if(category_path != "feed"){
             path = "/category/"+category_path+"/tag/"+tag_path
+            $('.nav-category').val(category_path);
         }
         $('#blog-container').load(path, function() {
             $('.loading').css("display", "none");

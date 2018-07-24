@@ -21,9 +21,11 @@
 					</div>
 			</h5>
     <div class="form-in-line">
-      <span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
+			<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
+			<a class="text-muted" href="/provider/{{blog.provider.provider_name|lower}}">
       <span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
-	  <span class="provider_name"> {{blog.provider.provider_name}} </span>
+		<span class="provider_name"> {{blog.provider.provider_name}} </span>
+		</a>
 	</div>
 	</div>
 	<div class="tag card-text" align="left">

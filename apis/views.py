@@ -91,6 +91,12 @@ def list_by_pin(request,template='index.html', extra_context=None):
 def list_by_provider(request,provider,template='provider_page.html', extra_context=None):
     blogs = Blog.objects.filter(provider__provider_name__iexact=provider).order_by('-created_on')
     data = base.core(request,blogs,extra_context)
+    tags = []
+    for blog in blogs:
+        for tag in blog.tags.all():
+            if tag not in tags:
+                tags.append(tag)
+    data['tags'] = tags
     provider = Provider.objects.filter(provider_name__iexact=provider)[0]
     data['provider'] = provider
     return render(request,template, context=data )
@@ -99,6 +105,12 @@ def list_by_provider(request,provider,template='provider_page.html', extra_conte
 def list_by_provider_tag(request,provider,tag_name,template='provider_page.html', extra_context=None):
     blogs = Blog.objects.filter(provider__provider_name__iexact=provider,tags__tag_name__startswith=tag_name).order_by('-created_on')
     data = base.core(request,blogs,extra_context)
+    tags = []
+    for blog in blogs:
+        for tag in blog.tags.all():
+            if tag not in tags:
+                tags.append(tag)
+    data['tags'] = tags
     provider = Provider.objects.filter(provider_name__iexact=provider)[0]
     data['provider'] = provider
     return render(request,template, context=data )
@@ -107,6 +119,12 @@ def list_by_provider_tag(request,provider,tag_name,template='provider_page.html'
 def list_by_provider_category(request,provider,category_title,template='provider_page.html', extra_context=None):
     blogs = Blog.objects.filter(provider__provider_name__iexact=provider,category__title__startswith=category_title).order_by('-created_on')
     data = base.core(request,blogs,extra_context)
+    tags = []
+    for blog in blogs:
+        for tag in blog.tags.all():
+            if tag not in tags:
+                tags.append(tag)
+    data['tags'] = tags
     provider = Provider.objects.filter(provider_name__iexact=provider)[0]
     data['provider'] = provider
     return render(request,template, context=data )
@@ -163,7 +181,7 @@ def editor(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         blog_form = BlogForm(request.POST)
-        if form.is_valid() and blog_form.is_valid():
+        if form.is_valid():
             initial_obj = form.save(commit=False)
             ##random_str = str(time.time())
             ##initial_obj.file.name = random_str[:10]
