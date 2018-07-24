@@ -128,11 +128,12 @@ $(document).ready(function() {
             url: "/apis/follow/"+$(this).attr("id"),
             method: "GET",
         }).done(function(){
-            // $('.fa-map-pin').css("color", "red");
-            // $(this).css("color", "white");
-            // $(this).css("background-color", "#FFA300");
-            // $(this).attr("name","followed")
-            document.location.reload(true)
+            //$('.fa-map-pin').css("color", "red");
+            $(this).css("color", "white");
+            $(this).css("background-color", "#FFA300");
+            $(this).attr("name","followed");
+            $(this).text("Unfollow");
+            //document.location.reload(true)
         })
         .fail(function() {
             $('#login-modal').modal();
@@ -145,10 +146,11 @@ $(document).ready(function() {
             type: 'DELETE',
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
-            // $(this).css("color", "#FFA300");
-            // $(this).css("background-color", "white");
-            // $(this).attr("name","unfollow")
-            document.location.reload(true)
+            $(this).css("color", "#FFA300");
+            $(this).css("background-color", "white");
+            $(this).attr("name","unfollow")
+            $(this).text("Follow");
+            //document.location.reload(true)
         })
         .fail(function() {
             $('#login-modal').modal();
