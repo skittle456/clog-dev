@@ -30,6 +30,7 @@ class Base(object):
         tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
         trending_blogs = Blog.objects.order_by('-total_views')[:7]
         pin_blogs=None
+        follow_list = None
         if request.user.is_authenticated:
             pin_blogs = Blog.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
             follow_list = Provider.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
