@@ -351,7 +351,7 @@ class Follow(APIView):
             user = User.objects.get(id=request.user.id)
             user.follow_provider.add(provider)
             user.save()
-            return Response("success, %s follow"%provider.name, status=200)
+            return Response("success, %s follow"%provider.provider_name, status=200)
         #ask for register
         return Response("must authenicate", status=401)
     

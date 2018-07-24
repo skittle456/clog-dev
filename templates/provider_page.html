@@ -13,12 +13,15 @@
       <span class="pro_name" id="{{provider.provider_name}}"> {{provider.provider_name}} </span>
       <span style="color:#e4e4e4;margin-left:20px;margin-right:20px">|</span>
       {% if provider not in follow_list %}
-      <div class="btn follow-btn" name="unfollow" id="{{provider.provider_id}}">
-      {% else %}
-      <div class="btn follow-btn" name="followed" id="{{provider.provider_id}}">
-      {% endif %}
+      <div class="btn follow-btn" style="color:#FFA300;background-color:white;border: 1px solid #FFA300;" name="unfollow" id="{{provider.provider_id}}">
           Follow
-      </div>
+        </div>
+      {% else %}
+      <div class="btn follow-btn" style="color:white;background-color:#FFA300;border: 1px solid white;" name="followed" id="{{provider.provider_id}}">
+          Unfollow
+        </div>
+      {% endif %}
+          
     </div>
 </div>
 <div id="bg-tag" style="background: linear-gradient(#e9e9e9, white,white,white);">
