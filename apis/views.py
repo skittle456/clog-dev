@@ -138,8 +138,9 @@ def list_by_follow(request,template='index.html', extra_context=None):
     providers = Provider.objects.filter(user__id__startswith=request.user.id).order_by('-created_on')
     blogs = []
     for provider in providers:
-        blogs_provider = Blog.objects.filter(provider__provider_name__iexact=provider).order_by('-created_on')
-        blogs.append(blogs_provider)
+        blogs_provider = Blog.objects.filter(provider=provider).order_by('-created_on')
+        for blog in blogs_provider:
+            blogs.append(blog)
     data = base.core(request,blogs,extra_context)
     return render(request,template, context=data )
 
