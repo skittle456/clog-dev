@@ -131,7 +131,6 @@ $(document).ready(function() {
             //$('.fa-map-pin').css("color", "red");
             $('.follow-btn').css("color", "white");
             $('.follow-btn').css("background-color", "#FFA300");
-            $('.follow-btn').css("border", "1px solid #FFA300");
             $('.follow-btn').attr("name","followed")
             $('.follow-btn').text("Unfollow");
             //document.location.reload(true)
@@ -149,7 +148,6 @@ $(document).ready(function() {
             // $('.fa-map-pin').css("color", "red");
             $('.follow-btn').css("color", "#FFA300");
             $('.follow-btn').css("background-color", "white");
-            $('.follow-btn').css("border", "1px solid white");
             $('.follow-btn').attr("name","unfollow");
             $('.follow-btn').text("Follow");
             //document.location.reload(true)

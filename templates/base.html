@@ -163,6 +163,13 @@
                         </li>
                         -->
                         {% if user.is_authenticated %}
+                        <li class="nav-item">
+                                <a class="mypin text-muted" role="button" style="text-transform: capitalize;" href="/myfollow" id="category-follow" style="margin-right:12px;">
+                                    My Follow
+                                    <i class="fa fa-fire"></i>
+                                </a>
+                            </li>
+                            <li role="separator" class="dropdown-divider"></li>
                         <li role="separator" class="dropdown-divider"></li>
                         <li class="nav-item">
                             <a class="mypin text-muted" role="button" style="text-transform: capitalize;" href="/mypin" id="category-pin" style="margin-right:12px;">
