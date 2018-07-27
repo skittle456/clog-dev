@@ -20,10 +20,32 @@ var quill = new Quill('#editor-container', {
     placeholder: 'Write something...',
     theme: 'snow'
     });
+var content = "";
+function submitContent() {
+    content = quill.root.innerHTML;
+    $('#content-container').hide();
+    $('#form-container').fadeIn();
+}
+function preview() {
+    $('#form-container').fadeOut();
+    $('#preview-content').html(content);
+    $('#preview-container').fadeIn();
+}
+function back() {
+    $('#form-container').hide();
+    $('#preview-container').hide();
+    // quill.setContents({
+    //     "ops":[
+    //         {"insert":content}
+    //     ]
+    // });
+    quill.root.innerHTML = content;
+    $('#content-container').fadeIn();
+}
 function postBlog(){
     //var form = document.querySelector('form');
     //var content = document.querySelector('input[name=content]');
-    var content = quill.root.innerHTML;
+    //var content = quill.root.innerHTML;
     //alert(content);
     //var temp = quill.getContents();
     //alert(JSON.stringify(temp));
@@ -53,3 +75,7 @@ function postBlog(){
     //alert('Open the console to see the submit data!')
     return false;
 }
+$(document).ready(function(){
+    $('#form-container').hide();
+    $('#preview-container').hide();
+});

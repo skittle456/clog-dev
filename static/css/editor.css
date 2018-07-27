@@ -6,6 +6,14 @@
   font-family: Cloud-Bold;
   src: url('/static/fonts/Cloud-LightBold/Cloud-Bold.otf') format("woff"), url("'/static/fonts/Cloud-LightBold/Cloud-Bold.otf'")  format("truetype");
 }
+input[type="text"] {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  box-shadow: none;
+  border-radius: 0;
+  text-align: center;
+}
 #form-container {
     width: 500px;
   }
@@ -27,11 +35,23 @@
   font-size: 18px;
 }
 
-.btn-postblog {
+.btn {
   float:right;
   margin:20px;
   margin-right: 12.5%;
   background: #f9a11d;
   color:#ffff;
   border-radius: 24px;
+}
+#preview-container {
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+}
+#preview-container img, #editor-container img {
+  max-width: 100%;
+  max-height: 440px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
