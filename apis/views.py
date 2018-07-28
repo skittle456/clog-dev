@@ -384,7 +384,7 @@ class Register(APIView):
 
 class Login(APIView):
     def post(self,request):
-        user = authenticate(username=request.data['username'],password=request.data['password'])
+        user = authenticate(email=request.data['username'],password=request.data['password'])
         if user is not None:
             if user.is_active:
                 login(request,user)
