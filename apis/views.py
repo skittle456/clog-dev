@@ -60,6 +60,9 @@ class Base(object):
 
 base = Base()
 
+def privacy_policy(request):
+    return render(request,'privacy_policy.html')
+
 @page_template('blog_list.html')
 def index(request,template='index.html', extra_context=None):
     blogs = Blog.objects.order_by('-created_on')
@@ -240,6 +243,10 @@ class InsourceList(APIView):
             blog = serializer.save()
             #link = link.split('\')
             #blog.img_url = '/media/images/'+link[-1]
+            # provider = Provider.objects.get(writer__id=request.user.id)
+            # print(provider)
+            # if request.user in provider.writer:
+            #     blog.provider = provider
             blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
