@@ -25,6 +25,7 @@ favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/',include('apis.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')), 
     url(r'^favicon\.ico$', favicon_view),
     url(r'^$',views.index,name='index'),
     url(r'^category/(?P<category_title>[\w]+)$',views.list_by_category,name='list_by_category'),

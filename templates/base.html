@@ -47,27 +47,27 @@
         }
     </script>
     <!-- facebook login -->
-<!-- <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '251982945408281',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v3.1'
-          });
-            
-          FB.AppEvents.logPageView();   
-            
-        };
-      
-        (function(d, s, id){
-           var js, fjs = d.getElementsByTagName(s)[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement(s); js.id = id;
-           js.src = "https://connect.facebook.net/en_US/sdk.js";
-           fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
-      </script> -->
+    <script>
+            window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '251982945408281',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v3.1'
+            });
+                
+            FB.AppEvents.logPageView();   
+                
+            };
+        
+            (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
     
     {% block css %}{% endblock %}
     {% block js %}{% endblock %}
@@ -116,7 +116,7 @@
                     <div class="modal-body">
                         <form action="" method="POST">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="login-username" placeholder="Email">
+                                <input type="text" class="form-control" id="login-username" placeholder="Username">
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" id="login-password" placeholder="Password">
@@ -127,7 +127,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <!-- <div class="fb-login-button" style="float:left;" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
+                        <div class="fb-login-button" style="float:left;" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                         <button type="button" role="button" class="btn" onclick="login()">Login</button>
                     </div>
                     </div>
