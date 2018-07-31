@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+#from accounts.models import User
 # Create your models here.
 
 class Photo(models.Model):
@@ -19,7 +20,7 @@ class Provider(models.Model):
     url = models.URLField(null=True,blank=True)
     favicon_url = models.URLField(default=None,null=True,blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-
+    #writer = models.ManyToManyField(User)
     def __str__(self):
         time = str(self.created_on)
         time = time[0:11]
@@ -50,6 +51,7 @@ class Blog(models.Model):
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     total_views = models.IntegerField(null=True,blank=True,default=0)
+    total_likes = models.IntegerField(null=True,blank=True,default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     def __str__(self):

@@ -256,6 +256,12 @@ def add_view(request,blog_id):
     blog = Blog.objects.filter(blog_id=blog_id)
     blog.update(total_views=F('total_views')+1)
     return Response("Success", status=200)
+
+@api_view(['GET'])
+def add_like(request,blog_id):
+    blog = Blog.objects.filter(blog_id=blog_id)
+    blog.update(total_views=F('total_likes')+1)
+    return Response("Success", status=200)
     # if request.user.is_authenticated:
     #     user = User.objects.get(id=request.user.id)
     #     user.pin_blog.add(blog)
