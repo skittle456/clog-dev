@@ -31,7 +31,7 @@
 	<div class="tag card-text" align="left">
 		{% for tag in blog.tags.all %}
 		{% if forloop.first and tag %}
-		<i class="fa fa-tag" aria-hidden="true"></i>
+		<i class="fa fa-tag" style="color:lightgrey;" aria-hidden="true"></i>
 		{% endif %}
 		<a href="/tag/{{tag.tag_name}}" style="color:black;text-transform:capitalize;">
 			<span class="badge badge-pill tag-pill">
