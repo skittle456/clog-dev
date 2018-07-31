@@ -40,6 +40,8 @@ os.environ['wsgi.url_scheme'] = 'https'
 ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'accounts.User'
 
+SOCIAL_AUTH_FACEBOOK_KEY = '251982945408281'
+SOCIAL_AUTH_FACEBOOK_SECRET = '2172931d31e3433af0ae0ed77a2aa694'
 # Application definition
 
 INSTALLED_APPS = [
