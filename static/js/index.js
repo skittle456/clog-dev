@@ -130,13 +130,6 @@ $(document).ready(function() {
     // Highlight selected category  for category pages
     reload_elements();
     
-    $('input.form-control').keypress(function (e) {
-        if (e.which == 13) {
-            console.log('hit enter');
-          $('#search-form').submit();
-          return false;
-        }
-      });
     $('div.category-title').click(function() {
         var category_path = $(this).attr('id');
         $('.searchbar').val('');
