@@ -215,9 +215,9 @@ def get_insource_unique(request, blog_id,slug):
     if request.user.is_authenticated:
         user_pin = User.objects.filter(pin_blog__blog_id=blog.blog_id)
         user_like = User.objects.filter(like_blog__blog_id=blog.blog_id)
-        if request.user not in user_pin:
+        if request.user in user_pin:
             pinned = True
-        if request.user not in user_like:
+        if request.user in user_like:
             like_blog = True
     data = {
         'blog':blog,
