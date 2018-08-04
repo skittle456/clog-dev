@@ -26,7 +26,6 @@ class InsourceSerializer(serializers.ModelSerializer):
         'blog_content')
     
     def create(self, validated_data):
-        print(validated_data)
         blog_data = validated_data.pop('blog')
         blog = Blog(title=blog_data['title'],
             provider=blog_data['provider'],

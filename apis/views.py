@@ -194,6 +194,7 @@ def editor(request):
             ##random_str = str(time.time())
             ##initial_obj.file.name = random_str[:10]
             initial_obj.save()
+            time.sleep(6)
             #title = slugify(blog_form.cleaned_data['title'],allow_unicode=True)
             ##blog = Blog.objects.get(title=blog_form.cleaned_data['title'],provider__provider_id=blog_form.cleaned_data['provider'].provider_id)
             ##blog.img_url = '/static/upload/images/' + random_str[:10]
@@ -209,9 +210,20 @@ def editor(request):
 def get_insource_unique(request, blog_id,slug):
     blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
     trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
+    pinned = False
+    like_blog = False
+    if request.user.is_authenticated:
+        user_pin = User.objects.filter(pin_blog__blog_id=blog.blog_id)
+        user_like = User.objects.filter(like_blog__blog_id=blog.blog_id)
+        if request.user not in user_pin:
+            pinned = True
+        if request.user not in user_like:
+            like_blog = True
     data = {
         'blog':blog,
-        'trending_blogs': trending_blogs
+        'trending_blogs': trending_blogs,
+        'pinned':pinned,
+        'like_blog': like_blog
     }
     return render(request, 'insource.html', data)
 
@@ -256,16 +268,6 @@ def add_view(request,blog_id):
     blog = Blog.objects.filter(blog_id=blog_id)
     blog.update(total_views=F('total_views')+1)
     return Response("Success", status=200)
-
-@api_view(['GET'])
-def add_like(request,blog_id):
-    blog = Blog.objects.filter(blog_id=blog_id)
-    blog.update(total_views=F('total_likes')+1)
-    return Response("Success", status=200)
-    # if request.user.is_authenticated:
-    #     user = User.objects.get(id=request.user.id)
-    #     user.pin_blog.add(blog)
-    #     user.save()
 
 class BlogDetail(APIView):
     def get_object(self,blog_id):
@@ -375,6 +377,34 @@ class Follow(APIView):
         user = User.objects.get(id=request.user.id)
         user.follow_provider.remove(provider)
         user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class Like(APIView):
+    @method_decorator(csrf_exempt)
+    def get_object(self,blog_id):
+        try:
+            return Insource.objects.get(blog_id=blog_id)
+        except Insource.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self,request,blog_id,format=None):
+        blog = self.get_object(blog_id)
+        if request.user.is_authenticated:
+            user = User.objects.get(id=request.user.id)
+            user.like_blog.add(blog)
+            user.save()
+            blog.update(total_views=F('total_likes')+1)
+            return Response("success, %s liked"%blog.title, status=200)
+        #ask for register
+        return Response("must authenicate", status=401)
+    
+    def delete(self, request, blog_id, format=None):
+        print('deleting')
+        blog = self.get_object(blog_id)
+        user = User.objects.get(id=request.user.id)
+        user.like_blog.remove(blog)
+        user.save()
+        blog.update(total_views=F('total_likes')-1)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 #formregister
