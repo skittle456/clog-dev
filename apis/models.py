@@ -51,7 +51,6 @@ class Blog(models.Model):
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     total_views = models.IntegerField(null=True,blank=True,default=0)
-    total_likes = models.IntegerField(null=True,blank=True,default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     def __str__(self):
@@ -66,7 +65,8 @@ class Insource(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-    slug = models.SlugField(max_length=255,unique=True,allow_unicode=True)
+    total_likes = models.IntegerField(null=True,blank=True,default=0)
+    slug = models.SlugField(max_length=255,allow_unicode=True)
     blog_content = models.TextField()
     def save(self, *args, **kwargs):
         #self.slug = slugify(self.blog.title,allow_unicode=True)
