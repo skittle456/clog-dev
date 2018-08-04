@@ -393,7 +393,8 @@ class Like(APIView):
             user = User.objects.get(id=request.user.id)
             user.like_blog.add(blog)
             user.save()
-            blog.update(total_likes=F('total_likes')+1)
+            blog.total_likes+=1
+            blog.save()
             return Response("success, %s liked"%blog.title, status=200)
         #ask for register
         return Response("must authenicate", status=401)
@@ -404,7 +405,8 @@ class Like(APIView):
         user = User.objects.get(id=request.user.id)
         user.like_blog.remove(blog)
         user.save()
-        blog.update(total_likes=F('total_likes')-1)
+        blog.total_likes-=1
+        blog.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 #formregister

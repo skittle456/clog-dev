@@ -37,8 +37,9 @@ $(document).ready(function() {
                 //$('.fa-map-pin').css("color", "red");
                 $('.pin-item').css("color", "white");
                 $('.pin-item').css("background-color", "#f9a11d");
+                $('.pin-item').css("border", "1px solid #f9a11d");
                 $('.pin-item').attr("name","pinned")
-                $('.pin-item').text("Unpin");
+                $('.pin-item').text("Pinned");
             })
             .fail(function() {
                 $('#login-modal').modal();
@@ -50,8 +51,8 @@ $(document).ready(function() {
                 method: "DELETE",
             }).done(function(){
                 //$('.fa-map-pin').css("color", "red");
-                $('.pin-item').css("color", "#f9a11d");
-                $('.pin-item').css("background-color", "white");
+                $('.pin-item').css("background-color", "grey");
+                $('.pin-item').css("border", "1px solid white");
                 $('.pin-item').attr("name","unpin")
                 $('.pin-item').text("Pin this post");
             })
