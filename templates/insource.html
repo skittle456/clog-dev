@@ -16,10 +16,38 @@
 <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 {% endblock %}
 {% block content %}
+<div id="vert-menu" style="position:fixed;">
+        <div class="nav-item vt back" align="center" onclick="javascript:history.go(-1)">
+            <i class="fa fa-chevron-left" aria-hidden="true" style="color:#999999"></i> Back
+        </div>
+        {% if not user.is_authenticated or pinned is not True %}
+        <div class="nav-item vt pin-item" algin="center" name="unpin" style="background-color:grey;color:white;transform:rotate(270deg);padding: 8px;border: 1px solid #f9a11d;border-radius: 6px;">
+            <img src="{% static "/images/pin_white.png" %}" width="24" height="24">
+            Pin this post
+        </div>
+        {% else %}
+        <div class="nav-item vt pin-item" algin="center" name="pinned" style="background-color:#f9a11d;color:white;transform:rotate(270deg);padding: 8px;border: 1px solid #f9a11d;border-radius: 6px;">
+                <img src="{% static "/images/pin_white.png" %}" width="24" height="24">
+                Pinned
+            </div>
+        {% endif %}
+        <div class="nav-item vt like-item" style="margin-bottom:10px;" align="center">
+        {% if not user.is_authecated or liked is not True %}
+        <i class="fa fa-heart fa-2x like-btn" name="unlike" style="border:1px solid lightgrey;border-radius: 24px;padding: 6.5px;color:white;background-color:lightgrey;" aria-hidden="true"></i>
+        {% else %}
+        <i class="fa fa-heart fa-2x like-btn" name="liked" style="border:1px solid lightgrey;border-radius: 24px;padding: 6.5px;color:#f9a11d;background-color:white;" aria-hidden="true"></i>
+        {% endif %}
+        </div>
+        <div clsas="nav-item vt text-muted" align="center">
+            {{blog.total_likes}}
+        </div>
+    </div>
 <div class="container">
-    <div id="directory">
+    <!-- <div id="directory">
         <a class="text-muted" href="/"> Feed </a> > <a class="text-muted" href="/category/{{blog.blog.category}}"> {{blog.blog.category}} </a> > <a class="text-muted"> {{blog.blog.title}} </a>
     </div>
+-->
+    
     <div id="headline" align="center">
         <div class="form-in-line" style="margin-bottom:35px;">
             <div class="d-block" style="font-family:Cloud-Bold;font-size:22px;color:black;"> {{blog.blog.title}} </div>
@@ -35,7 +63,7 @@
     </div>
     <div id="content">
     </div>
-    <div class="tag-bar" style="margin-top:20px;">
+    <div class="tag-bar d-block" style="margin-top:20px;float:right;">
             {% for tag in blog.blog.tags.all %}
             {% if forloop.first and tag %}
             <i class="fa fa-tag" aria-hidden="true"></i>
@@ -47,6 +75,18 @@
             </a>
             {% endfor %}
         </div>
+    <div class="credit-container">
+        <span class="provider_img postimg"><img width="60"height="60" src="{{blog.blog.provider.favicon_url}}" style="float: left;margin-right: 15px;" ></span>
+        <div class="form-in-line">
+        <div class="text-muted"> Posted by<span class="provider_name" style="font-size:18px;font-family:Cloud-Bold;"> {{blog.blog.provider.provider_name}} </span>              
+            <span style="color:#e4e4e4;margin-left:20px;margin-right:20px">|</span>
+            <div class="btn follow-btn" style="color:#FFA300;background-color:white;border: 1px solid #FFA300;" name="unfollow" id="{{provider.provider_id}}">
+                Follow
+                </div>
+    </div>
+</div>
+</div>
+
     <hr style="margin-bottom:15px;">
     <div class="d-block" style="font-size:22px;padding:2px;margin-bottom:20px;">Read Next</div>
     <div class="row justify-content-center">
@@ -77,5 +117,6 @@
     });
     </script>
     <script src="{% static "/js/blog_list.js" %}"></script>
+    <script src="{% static "/js/insource.js" %}"></script>
 {% endblock %}
 </html>

@@ -61,6 +61,11 @@ function getBlog(url,blog_id){
         url: 'apis/add_view/'+blog_id,
         type: 'GET',
     });
-    window.open(url,'_blank');
+    if(url.search('/clog/'+blog_id) == 0){
+        window.location.href = url;
+    }
+    else {
+        window.open(url,'_blank');
+    }
     return false;
 }
