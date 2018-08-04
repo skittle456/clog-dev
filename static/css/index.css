@@ -118,7 +118,7 @@ div.tag {
     right:-10%;
 }
 .img-fluid {
-    max-width: 264;
+    max-width: 264px;
     height: 139.45px;
 }
 @media (min-width: 768px) {
@@ -213,7 +213,7 @@ div.tag {
         width: 120px;
     }
     .img-fluid {
-        width: 264;
+        width: 264px;
         height: auto;
     }
 }
