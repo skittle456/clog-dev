@@ -47,7 +47,7 @@ $(document).ready(function() {
             console.log('unpinning');
             var request = $.ajax({
                 url: "/apis/pin/"+$(this).attr("id"),
-                method: "PATCH",
+                method: "DELETE",
             }).done(function(){
                 //$('.fa-map-pin').css("color", "red");
                 $('.pin-item').css("color", "#f9a11d");
@@ -71,6 +71,9 @@ $(document).ready(function() {
                 $('.like-btn').css("color", "white");
                 $('.like-btn').css("background-color", "#f9a11d");
                 $('.like-btn').attr("name","liked")
+                var count = parseInt($('.like-num').text());
+                count=count+1;
+                $('.like-num').text(count);
             })
             .fail(function() {
                 $('#login-modal').modal();
@@ -85,6 +88,9 @@ $(document).ready(function() {
                 $('.like-btn').css("color", "#f9a11d");
                 $('.like-btn').css("background-color", "white");
                 $('.like-btn').attr("name","unlike")
+                var count = parseInt($('.like-num').text());
+                count=count-1;
+                $('.like-num').text(count);
             })
             .fail(function() {
                 $('#login-modal').modal();
