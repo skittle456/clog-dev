@@ -391,6 +391,9 @@ class Like(APIView):
         blog = self.get_object(blog_id)
         if request.user.is_authenticated:
             user = User.objects.get(id=request.user.id)
+            user_like = User.objects.filter(like_blog__blog_id=blog.blog_id)
+            if user in user_like:
+                return Response("success", status=200)
             user.like_blog.add(blog)
             user.save()
             blog.total_likes+=1

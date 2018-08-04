@@ -69,10 +69,11 @@ $(document).ready(function() {
                 method: "GET",
             }).done(function(){
                 //$('.fa-map-pin').css("color", "red");
-                $('.like-btn').css("color", "white");
-                $('.like-btn').css("background-color", "#f9a11d");
+                $('.like-btn').css("color", "#f9a11d");
+                $('.like-btn').css("background-color", "white");
                 $('.like-btn').attr("name","liked")
                 var count = parseInt($('.like-num').text());
+                console.log(count);
                 count=count+1;
                 $('.like-num').text(count);
             })
@@ -86,10 +87,11 @@ $(document).ready(function() {
                 method: "DELETE",
             }).done(function(){
                 //$('.fa-map-pin').css("color", "red");
-                $('.like-btn').css("color", "#f9a11d");
-                $('.like-btn').css("background-color", "white");
+                $('.like-btn').css("color", "white");
+                $('.like-btn').css("background-color", "lightgrey");
                 $('.like-btn').attr("name","unlike")
                 var count = parseInt($('.like-num').text());
+                console.log(count);
                 count=count-1;
                 $('.like-num').text(count);
             })
