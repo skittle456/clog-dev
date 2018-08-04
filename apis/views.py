@@ -395,7 +395,7 @@ class Like(APIView):
             user.save()
             blog.total_likes+=1
             blog.save()
-            return Response("success, %s liked"%blog.title, status=200)
+            return Response("success", status=200)
         #ask for register
         return Response("must authenicate", status=401)
     
