@@ -21,43 +21,41 @@ $.ajaxSetup({
         }
     } 
 });
-function onpin() {
-    $('.pin').click(function(){
-        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-        var blog_name = $(".pin").attr("name");
-        var pin = '#pin'+blog_name;
-        if ($(pin).attr("name") == "unpin"){
-        console.log('pinning');
-        var request = $.ajax({
-            url: "/apis/pin/"+blog_name,
-            method: "GET",
-        }).done(function(){
-            // $('.fa-map-pin').css("color", "red");
-            $(pin).attr("src","/static/images/pin_orange.png");
-            //$(pin).css("color", "red");
-            $(pin).attr("name","pinned")
-        })
-        .fail(function() {
-            $('#login-modal').modal();
-        });
-    }
-    else if ($(pin).attr("name") == "pinned"){
-        console.log('unpinning')
-        var request = $.ajax({
-            url: "/apis/pin/"+blog_name,
-            type: 'DELETE',
-        }).done(function(){
-            // $('.fa-map-pin').css("color", "red");
-            //$(pin).css("color", "grey");
-            $(pin).attr("src","/static/images/pin_grey.png");
-            $(pin).attr("name","unpin")
-        })
-        .fail(function() {
-            $('#login-modal').modal();
-        });
-    }
+$('.pin').click(function(){
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    var blog_name = $(this).attr("name");
+    var pin = '#pin'+blog_name;
+    if ($(pin).attr("name") == "unpin"){
+    console.log('pinning');
+    var request = $.ajax({
+        url: "/apis/pin/"+blog_name,
+        method: "GET",
+    }).done(function(){
+        // $('.fa-map-pin').css("color", "red");
+        $(pin).attr("src","/static/images/pin_orange.png");
+        //$(pin).css("color", "red");
+        $(pin).attr("name","pinned")
+    })
+    .fail(function() {
+        $('#login-modal').modal();
     });
 }
+else if ($(pin).attr("name") == "pinned"){
+    console.log('unpinning')
+    var request = $.ajax({
+        url: "/apis/pin/"+blog_name,
+        type: 'DELETE',
+    }).done(function(){
+        // $('.fa-map-pin').css("color", "red");
+        //$(pin).css("color", "grey");
+        $(pin).attr("src","/static/images/pin_grey.png");
+        $(pin).attr("name","unpin")
+    })
+    .fail(function() {
+        $('#login-modal').modal();
+    });
+}
+});
 function getBlog(url,blog_id){
     console.log('getting blog');
     var request = $.ajax({
