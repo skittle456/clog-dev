@@ -39,7 +39,7 @@ $(document).ready(function() {
                 $('.pin-item').css("background-color", "#f9a11d");
                 $('.pin-item').css("border", "1px solid #f9a11d");
                 $('.pin-item').attr("name","pinned")
-                $('.pin-item').text("Pinned");
+                $('#pin-text').text("Unpin this post");
             })
             .fail(function() {
                 $('#login-modal').modal();
@@ -54,7 +54,7 @@ $(document).ready(function() {
                 $('.pin-item').css("background-color", "grey");
                 $('.pin-item').css("border", "1px solid white");
                 $('.pin-item').attr("name","unpin")
-                $('.pin-item').text("Pin this post");
+                $('#pin-text').text("Pin this post");
             })
             .fail(function() {
                 $('#login-modal').modal();

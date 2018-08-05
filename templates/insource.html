@@ -23,12 +23,12 @@
         {% if not user.is_authenticated or  pinned is not True %}
         <div class="nav-item vt pin-item" align="center" id="{{ blog.blog_id }}" name="unpin" style="background-color:grey;color:white;transform:rotate(270deg);padding: 8px;border: 1px solid white;border-radius: 6px;">
             <img src="{% static "/images/pin_white.png" %}" width="24" height="24">
-            Pin this post
+            <span id="pin-text">Pin this post</span>
         </div>
         {% else %}
         <div class="nav-item vt pin-item" align="center" id="{{ blog.blog_id }}" name="pinned" style="background-color:#f9a11d;color:white;transform:rotate(270deg);padding: 8px;border: 1px solid #f9a11d;border-radius: 6px;">
                 <img src="{% static "/images/pin_white.png" %}" width="24" height="24">
-                Pinned
+                <span id="pin-text">Pinned</span>
             </div>
         {% endif %}
         <div class="nav-item vt like-item" style="margin-bottom:10px;" align="center">
