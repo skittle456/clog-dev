@@ -211,7 +211,7 @@ def get_insource_unique(request, blog_id,slug):
     blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
     trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
     pinned = False
-    like_blog = False
+    liked = False
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
         user_pin = User.objects.filter(pin_blog__blog_id=blog_id)
@@ -219,12 +219,12 @@ def get_insource_unique(request, blog_id,slug):
         if user in user_pin:
             pinned = True
         if user in user_like:
-            like_blog = True
+            liked = True
     data = {
         'blog':blog,
         'trending_blogs': trending_blogs,
         'pinned':pinned,
-        'like_blog': like_blog
+        'liked': liked
     }
     return render(request, 'insource.html', data)
 
