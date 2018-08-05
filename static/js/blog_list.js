@@ -25,7 +25,6 @@ function onpin() {
     $('.pin').click(function(){
         var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
         var blog_name = $(".pin").attr("name");
-        console.log("name: "+blog_name);
         var pin = '#pin'+blog_name;
         if ($(pin).attr("name") == "unpin"){
         console.log('pinning');
@@ -34,7 +33,7 @@ function onpin() {
             method: "GET",
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
-            $("#pin-img").attr("src","/static/images/pin_orange.png");
+            $(".pin-img").attr("src","/static/images/pin_orange.png");
             //$(pin).css("color", "red");
             $(pin).attr("name","pinned")
         })
@@ -50,7 +49,7 @@ function onpin() {
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
             //$(pin).css("color", "grey");
-            $("#pin-img").attr("src","/static/images/pin_grey.png");
+            $(".pin-img").attr("src","/static/images/pin_grey.png");
             $(pin).attr("name","unpin")
         })
         .fail(function() {
