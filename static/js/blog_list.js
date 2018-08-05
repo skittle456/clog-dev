@@ -21,10 +21,11 @@ $.ajaxSetup({
         }
     } 
 });
-$(document).ready(function() {
-    $(document).on("click",".pin",function(){
+function onpin() {
+    $('.pin').click(function(){
         var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-        var blog_name = $(this).attr("name");
+        var blog_name = $(".pin").attr("name");
+        console.log("name: "+blog_name);
         var pin = '#pin'+blog_name;
         if ($(pin).attr("name") == "unpin"){
         console.log('pinning');
@@ -57,7 +58,7 @@ $(document).ready(function() {
         });
     }
     });
-});
+}
 function getBlog(url,blog_id){
     console.log('getting blog');
     var request = $.ajax({
