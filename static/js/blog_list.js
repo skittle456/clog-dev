@@ -33,7 +33,7 @@ function onpin() {
             method: "GET",
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
-            $(".pin-img").attr("src","/static/images/pin_orange.png");
+            $(pin).attr("src","/static/images/pin_orange.png");
             //$(pin).css("color", "red");
             $(pin).attr("name","pinned")
         })
@@ -49,7 +49,7 @@ function onpin() {
         }).done(function(){
             // $('.fa-map-pin').css("color", "red");
             //$(pin).css("color", "grey");
-            $(".pin-img").attr("src","/static/images/pin_grey.png");
+            $(pin).attr("src","/static/images/pin_grey.png");
             $(pin).attr("name","unpin")
         })
         .fail(function() {
