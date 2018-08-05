@@ -21,40 +21,42 @@ $.ajaxSetup({
         }
     } 
 });
-$('.pin').click(function(){
-    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-    var blog_name = $(this).attr("name");
-    var pin = '#pin'+blog_name;
-    if ($(pin).attr("name") == "unpin"){
-    console.log('pinning');
-    var request = $.ajax({
-        url: "/apis/pin/"+blog_name,
-        method: "GET",
-    }).done(function(){
-        // $('.fa-map-pin').css("color", "red");
-        $("#pin-img").attr("src","/static/images/pin_orange.png");
-        //$(pin).css("color", "red");
-        $(pin).attr("name","pinned")
-    })
-    .fail(function() {
-        $('#login-modal').modal();
+$(document).ready(function() {
+    $(document).on("click",".pin",function(){
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        var blog_name = $(this).attr("name");
+        var pin = '#pin'+blog_name;
+        if ($(pin).attr("name") == "unpin"){
+        console.log('pinning');
+        var request = $.ajax({
+            url: "/apis/pin/"+blog_name,
+            method: "GET",
+        }).done(function(){
+            // $('.fa-map-pin').css("color", "red");
+            $("#pin-img").attr("src","/static/images/pin_orange.png");
+            //$(pin).css("color", "red");
+            $(pin).attr("name","pinned")
+        })
+        .fail(function() {
+            $('#login-modal').modal();
+        });
+    }
+    else if ($(pin).attr("name") == "pinned"){
+        console.log('unpinning')
+        var request = $.ajax({
+            url: "/apis/pin/"+blog_name,
+            type: 'DELETE',
+        }).done(function(){
+            // $('.fa-map-pin').css("color", "red");
+            //$(pin).css("color", "grey");
+            $("#pin-img").attr("src","/static/images/pin_grey.png");
+            $(pin).attr("name","unpin")
+        })
+        .fail(function() {
+            $('#login-modal').modal();
+        });
+    }
     });
-}
-else if ($(pin).attr("name") == "pinned"){
-    console.log('unpinning')
-    var request = $.ajax({
-        url: "/apis/pin/"+blog_name,
-        type: 'DELETE',
-    }).done(function(){
-        // $('.fa-map-pin').css("color", "red");
-        //$(pin).css("color", "grey");
-        $("#pin-img").attr("src","/static/images/pin_grey.png");
-        $(pin).attr("name","unpin")
-    })
-    .fail(function() {
-        $('#login-modal').modal();
-    });
-}
 });
 function getBlog(url,blog_id){
     console.log('getting blog');
