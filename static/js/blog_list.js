@@ -32,7 +32,8 @@ $('.pin').click(function(){
         method: "GET",
     }).done(function(){
         // $('.fa-map-pin').css("color", "red");
-        $(pin).css("color", "red");
+        $("#pin-img").attr("src","/static/images/pin_orange.png");
+        //$(pin).css("color", "red");
         $(pin).attr("name","pinned")
     })
     .fail(function() {
@@ -46,9 +47,9 @@ else if ($(pin).attr("name") == "pinned"){
         type: 'DELETE',
     }).done(function(){
         // $('.fa-map-pin').css("color", "red");
-        $(pin).css("color", "grey");
+        //$(pin).css("color", "grey");
+        $("#pin-img").attr("src","/static/images/pin_grey.png");
         $(pin).attr("name","unpin")
-        document.location.reload(true)
     })
     .fail(function() {
         $('#login-modal').modal();
