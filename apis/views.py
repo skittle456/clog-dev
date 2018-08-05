@@ -207,6 +207,13 @@ def editor(request):
             return redirect('/')
     return render(request,'editor.html',{'form':form,'blog_form':blog_form})
 
+def load_editor(request,blog_id):
+    blog = get_object_or_404(Insource,blog_id=blog_id)
+    data = {
+        "blog": blog,
+    }
+    return render(request,'load_editor.html',data)
+
 def get_insource_unique(request, blog_id,slug):
     blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
     trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
@@ -236,20 +243,17 @@ def get_insource_blog(request, slug):
         'trending_blogs': trending_blogs
     }
     return render(request, 'insource.html', data)
-##must fix
-class InsourceList(APIView):
-    def patch(self, request,format=None):
-        #title = slugify(request.data['title'])
-        title = request.data['title'].replace(" ","-").lower()
-        blog = Insource.objects.get(slug=title)
+
+class InsourcePatch(APIView):
+    def patch(self, request,blog_id,format=None):
+        blog = Insource.objects.get(blog_id=blog_id)
         serializer = InsourceSerializer(blog,data=request.data,partial=True)
-        print(serializer.errors)
         if serializer.is_valid():
-            print('valid')
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class InsourceList(APIView):
     def post(self,request, format=None):
         serializer = InsourceSerializer(data=request.data)
         if serializer.is_valid():
@@ -286,7 +290,7 @@ class BlogDetail(APIView):
 
     def patch(self,request,record_id,format=None):
         blog = self.get_object(blog_id)
-        serializer = DailySerializer(blog,data=request.data,partial=True)
+        serializer = BlogSerializer(blog,data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
