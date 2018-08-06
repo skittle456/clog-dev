@@ -25,6 +25,7 @@ $('.pin').click(function(){
     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
     var blog_name = $(this).attr("name");
     var pin = '#pin'+blog_name;
+    console.log(pin)
     if ($(pin).attr("name") == "unpin"){
     console.log('pinning');
     var request = $.ajax({
