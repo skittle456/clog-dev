@@ -9,12 +9,12 @@
 {% endblock %}
 {% block blogcontent %}
 <div id="provider-container" style="margin-top:55px;">
-    <img src="{{provider.favicon_url}}" width=134 height="134" style="display:block;margin-left:auto;margin-right:auto;margin-top:20px;margin-bottom:20px;">
+    <img src="{{blog.provider.favicon_url}}" width=134 height="134" style="display:block;margin-left:auto;margin-right:auto;margin-top:20px;margin-bottom:20px;">
     <div class="form-in-line" align="center">
-      <span class="pro_name" id="{{provider.provider_name}}"> {{provider.provider_name}} </span>
+      <span class="pro_name" id="{{blog.provider.provider_name}}"> {{blog.provider.provider_name}} </span>
     </div>
     <div class="d-block" align="center">
-        {{provider.description}}
+        {{blog.provider.description}}
     </div>
 </div>
 <div id="blog-container" style="background: linear-gradient(#e9e9e9, white,white,white);">
