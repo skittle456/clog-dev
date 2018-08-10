@@ -222,7 +222,7 @@ def provider_editor(request,extra_context=None):
 def load_editor(request,blog_id):
     blog = get_object_or_404(Insource,blog_id=blog_id)
     provider = Provider.objects.get(writer__id=request.user.id)
-    if provider is None or provider is not blog.blog.provider:
+    if provider is None or provider != blog.blog.provider:
         return redirect('/')
     data = {
         "blog": blog,
