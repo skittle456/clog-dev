@@ -6,17 +6,15 @@ class PostForm(forms.ModelForm):
         model = Photo
         fields = [
             "file",
-            "description"
         ]
-        widgets = {'description': forms.TextInput(
-                attrs={'placeholder': '(Optional)'})}
+        # widgets = {'description': forms.TextInput(
+        #         attrs={'placeholder': '(Optional)'})}
 
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = [
             "title",
-            "provider",
             "category",
             "tags",
             "img_url"
