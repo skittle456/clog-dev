@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-#from accounts.models import User
+from django.conf import settings
 # Create your models here.
 
 class Photo(models.Model):
@@ -20,7 +20,7 @@ class Provider(models.Model):
     url = models.URLField(null=True,blank=True)
     favicon_url = models.URLField(default=None,null=True,blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    #writer = models.ManyToManyField(User)
+    writer = models.ManyToManyField(settings.AUTH_USER_MODEL)
     def __str__(self):
         time = str(self.created_on)
         time = time[0:11]

@@ -28,7 +28,6 @@ class InsourceSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         blog_data = validated_data.pop('blog')
         blog = Blog(title=blog_data['title'],
-            provider=blog_data['provider'],
             category=blog_data['category'],
             img_url=blog_data['img_url'])
         # blog.provider= Provider.objects.get(provider_name=blog_data['provider'])
@@ -37,6 +36,11 @@ class InsourceSerializer(serializers.ModelSerializer):
         #blog.img_url='/media/images/'+blog_data['img']
         # from django.utils import timezone
         # now = timezone.now()
+        provider = Provider.objects.get(writer__id=validated_data['user']['id'])
+        print(provider)
+        if provider is None:
+            return 
+        blog.provider = provider
         now = datetime.now()
         blog.img_url = '/static/upload/images/'+now.strftime('%Y')+'/'+now.strftime('%m')+'/'+now.strftime('%d')+'/'+ blog.img_url
         #blog.url = "/blog/"+ slugify(blog_data['title'], allow_unicode=True)

@@ -206,9 +206,21 @@ def editor(request):
             # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
             return redirect('/')
     return render(request,'editor.html',{'form':form,'blog_form':blog_form})
+@page_template('provider_blog_list.html')
+def provider_editor(request,extra_context=None):
+    blogs = Blog.objects.filter(provider__writer__id=request.user.id)
+    data = {
+        "blogs": blogs,
+    }
+    if extra_context is not None:
+        data.update(extra_context)
+    return render(request,'provider_editor.html',data)
 
 def load_editor(request,blog_id):
     blog = get_object_or_404(Insource,blog_id=blog_id)
+    provider = Provider.objects.get(writer__id=request.user.id)
+    if provider is None or provider is not blog.provider:
+        return redirect('/')
     data = {
         "blog": blog,
     }
@@ -260,10 +272,9 @@ class InsourceList(APIView):
             blog = serializer.save()
             #link = link.split('\')
             #blog.img_url = '/media/images/'+link[-1]
-            # provider = Provider.objects.get(writer__id=request.user.id)
-            # print(provider)
-            # if request.user in provider.writer:
-            #     blog.provider = provider
+            provider = Provider.objects.get(writer__id=request.user.id)
+            if request.user in provider.writer:
+                blog.provider = provider
             blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
