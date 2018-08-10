@@ -8,9 +8,7 @@
   <div class="item card" style="width:95%;height:220px;padding:20px;">
 		<div class="form-in-line">
     <a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;" style="float:left;">
-				<div style="width:400px;height:206.329px;overflow:hidden;">
-					<img src="{{blog.img_url}}" style="max-width:400px;margin:0 -100%;">
-				</div>
+					<img src="{{blog.img_url}}" style="width:400px;height:206.329px;overflow:hidden;">
 				</a>
 				<h5><a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;" style="color:black;">{{blog.title}}</a></h5>
 			<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>

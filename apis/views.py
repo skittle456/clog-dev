@@ -208,6 +208,8 @@ def editor(request):
     return render(request,'editor.html',{'form':form,'blog_form':blog_form})
 @page_template('provider_blog_list.html')
 def provider_editor(request,extra_context=None):
+    if not request.user.is_authenticated:
+        return redirect('/')
     blogs = Blog.objects.filter(provider__writer__id=request.user.id)
     data = {
         "blogs": blogs,
@@ -216,10 +218,11 @@ def provider_editor(request,extra_context=None):
         data.update(extra_context)
     return render(request,'provider_editor.html',data)
 
+
 def load_editor(request,blog_id):
     blog = get_object_or_404(Insource,blog_id=blog_id)
     provider = Provider.objects.get(writer__id=request.user.id)
-    if provider is None or provider is not blog.provider:
+    if provider is None or provider is not blog.blog.provider:
         return redirect('/')
     data = {
         "blog": blog,
@@ -267,6 +270,7 @@ class InsourcePatch(APIView):
 
 class InsourceList(APIView):
     def post(self,request, format=None):
+        request.data['user']['id'] = request.user.id
         serializer = InsourceSerializer(data=request.data)
         if serializer.is_valid():
             blog = serializer.save()
