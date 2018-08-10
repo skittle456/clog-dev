@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^clog/(?P<blog_id>[0-9]+)/(?P<slug>.*)/$', views.get_insource_unique, name='get_insource_unique'),
     url(r'^editor',views.editor,name='editor'),
     url(r'^load_editor/(?P<blog_id>[0-9]+)$', views.load_editor, name='load_editor'),
+    url(r'^provider_editor', views.provider_editor, name='provider_editor'),
     url(r'^terms/privacy',views.privacy_policy,name='privacy_policy'),
 ]
 if settings.DEBUG:

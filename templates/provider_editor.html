@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load apis_extra %}
+{% load el_pagination_tags %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static "/css/provider_page.css" %}" />
+{% endblock %}
+{% block content %}
+{% endblock %}
+{% block blogcontent %}
+<div id="provider-container" style="margin-top:55px;">
+    <img src="{{provider.favicon_url}}" width=134 height="134" style="display:block;margin-left:auto;margin-right:auto;margin-top:20px;margin-bottom:20px;">
+    <div class="form-in-line" align="center">
+      <span class="pro_name" id="{{provider.provider_name}}"> {{provider.provider_name}} </span>
+    </div>
+    <div class="d-block" align="center">
+        {{provider.description}}
+    </div>
+</div>
+<div id="blog-container" style="background: linear-gradient(#e9e9e9, white,white,white);">
+  {% include page_template %}
+</div>
+</body>
+{% endblock %}
+{% block javascript %}
+
+<script src="{% static "/js/el-pagination.js" %}"></script>
+<script>$.endlessPaginate({
+  paginateOnScroll: true,
+});
+</script>
+{% endblock %}
+</html>
+

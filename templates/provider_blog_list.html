@@ -1,0 +1,32 @@
+{% load el_pagination_tags %}
+{% load staticfiles %}
+{% load apis_extra %}
+<div class="row blog-row" style="margin:30px;">
+{% lazy_paginate 9 blogs %}
+{% for blog in blogs %}
+<div class="col-12" style="margin-left:40px;margin-top:35px;">
+  <div class="item card" style="width:95%;height:220px;padding:20px;">
+		<div class="form-in-line">
+    <a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;" style="float:left;">
+				<div style="width:400px;height:206.329px;overflow:hidden;">
+					<img src="{{blog.img_url}}" style="max-width:400px;margin:0 -100%;">
+				</div>
+				</a>
+				<h5><a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;" style="color:black;">{{blog.title}}</a></h5>
+			<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
+			<a class="text-muted" href="/provider/{{blog.provider.provider_name|lower}}">
+      <span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
+		<span class="provider_name"> {{blog.provider.provider_name}} </span>
+		</a>
+	</div>
+  </div>
+</div>
+{% if forloop.counter|divisibleby:"1" %}
+	</div>
+	<div class="row blog-row" style="margin:30px;">
+  {% endif %}
+	{% endfor %}
+</div>
+{% show_more " " " " %}
+{% csrf_token %}
+<script src="{% static "/js/provider_blog_list.js" %}"></script>
