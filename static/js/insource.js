@@ -27,6 +27,43 @@ $(document).ready(function() {
         console.log('moblie');
         return $('#vert-menu').hide();
     }
+    $('.follow-btn').click(function(){
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        if ($(this).attr("name") == "unfollow"){
+        console.log('following');
+        var request = $.ajax({
+            url: "/apis/follow/"+$(this).attr("id"),
+            method: "GET",
+        }).done(function(){
+            //$('.fa-map-pin').css("color", "red");
+            $('.follow-btn').css("color", "white");
+            $('.follow-btn').css("background-color", "#FFA300");
+            $('.follow-btn').attr("name","followed")
+            $('.follow-btn').text("Unfollow");
+            //document.location.reload(true)
+        })
+        .fail(function() {
+            $('#login-modal').modal();
+        });
+    }
+    else if ($(this).attr("name") == "followed"){
+        console.log('unfollowing')
+        var request = $.ajax({
+            url: "/apis/follow/"+$(this).attr("id"),
+            type: 'DELETE',
+        }).done(function(){
+            // $('.fa-map-pin').css("color", "red");
+            $('.follow-btn').css("color", "#FFA300");
+            $('.follow-btn').css("background-color", "white");
+            $('.follow-btn').attr("name","unfollow");
+            $('.follow-btn').text("Follow");
+            //document.location.reload(true)
+        })
+        .fail(function() {
+            $('#login-modal').modal();
+        });
+    }
+    });
     $('.pin-item').click(function(){
         if ($(this).attr("name") == "unpin"){
             console.log('pinning');
