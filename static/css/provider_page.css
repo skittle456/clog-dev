@@ -11,3 +11,6 @@ div.follow-btn {
     font-size:18px;
     font-family: Cloud-Bold;
 }
+div.label, span.label {
+    margin: 5px;
+}
