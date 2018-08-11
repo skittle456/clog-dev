@@ -14,6 +14,18 @@
 					<h5><a id="blog_link" href="{{blog.blog.url}}" onclick="getBlog('{{blog.blog.url}}','{{blog.blog.blog_id}}');return false;" style="color:black;">{{blog.blog.title}}</a>
 						<a href="/load_editor/{{blog.blog.blog_id}}"><span class="badge" style="background-color:#FFA300;color:white;margin-left:3px;">Edit</span></a></h5>
 				</div>
+				<div class="tag" align="left">
+						{% for tag in blog.blog.tags.all %}
+						{% if forloop.first and tag %}
+						<i class="fa fa-tag" style="color:lightgrey;" aria-hidden="true"></i>
+						{% endif %}
+						<a href="/tag/{{tag.tag_name}}" style="color:black;text-transform:capitalize;">
+							<span class="badge badge-pill tag-pill">
+									{{ tag.tag_name }}
+							</span>
+						</a>
+						{% endfor %}
+					</div>
 			<span class="date">{{blog.blog.created_on|timesince|upto:','}} ago</span>
 			<div>Total view {{ blog.blog.total_views }}</div>
 			<div>Total like {{blog.total_likes}}</div>
