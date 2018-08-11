@@ -194,7 +194,7 @@ def editor(request):
             ##random_str = str(time.time())
             ##initial_obj.file.name = random_str[:10]
             initial_obj.save()
-            time.sleep(6)
+            time.sleep(20)
             #title = slugify(blog_form.cleaned_data['title'],allow_unicode=True)
             ##blog = Blog.objects.get(title=blog_form.cleaned_data['title'],provider__provider_id=blog_form.cleaned_data['provider'].provider_id)
             ##blog.img_url = '/static/upload/images/' + random_str[:10]
@@ -210,7 +210,7 @@ def editor(request):
 def provider_editor(request,extra_context=None):
     if not request.user.is_authenticated:
         return redirect('/')
-    blogs = Blog.objects.filter(provider__writer__id=request.user.id)
+    blogs = Insource.objects.filter(blog__provider__writer__id=request.user.id)
     data = {
         "blogs": blogs,
     }

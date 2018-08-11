@@ -81,11 +81,11 @@
         <div class="text-muted"> Posted by<span class="provider_name" style="font-size:18px;font-family:Cloud-Bold;"> {{blog.blog.provider.provider_name}} </span>              
             <span style="color:#e4e4e4;margin-left:20px;margin-right:20px">|</span>
             {% if not user.is_authenticated or provider not in follow_list %}
-            <div class="btn follow-btn" style="color:#FFA300;background-color:white;border: 1px solid #FFA300;" name="unfollow" id="{{provider.provider_id}}">
+            <div class="btn follow-btn" style="color:#FFA300;background-color:white;border: 1px solid #FFA300;" name="unfollow" id="{{blog.blog.provider.provider_id}}">
                 Follow
               </div>
             {% else %}
-            <div class="btn follow-btn" style="color:white;background-color:#FFA300;border: 1px solid white;" name="followed" id="{{provider.provider_id}}">
+            <div class="btn follow-btn" style="color:white;background-color:#FFA300;border: 1px solid white;" name="followed" id="{{blog.blog.provider.provider_id}}">
                 Unfollow
               </div>
             {% endif %}
