@@ -17,6 +17,7 @@ class BlogForm(forms.ModelForm):
             "title",
             "category",
             "tags",
-            "img_url"
+            "img_url",
+            "provider"
         ]
         widgets = {'img_url': forms.HiddenInput()}
