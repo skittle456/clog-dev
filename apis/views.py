@@ -210,7 +210,7 @@ def editor(request):
 def provider_editor(request,extra_context=None):
     if not request.user.is_authenticated:
         return redirect('/')
-    blogs = Insource.objects.filter(blog__provider__writer__id=request.user.id)
+    blogs = Insource.objects.filter(blog__provider__writer__id=request.user.id).order_by('-created_on')
     data = {
         "blogs": blogs,
     }
