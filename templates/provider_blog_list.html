@@ -10,8 +10,13 @@
     <a id="blog_link" href="{{blog.blog.url}}" onclick="getBlog('{{blog.blog.url}}','{{blog.blog.blog_id}}');return false;" style="float:left;">
 					<img src="{{blog.blog.img_url}}" style="max-width:310px;max-height:206.329px;overflow:hidden;margin-right:40px;">
 				</a>
-				<h5><a id="blog_link" href="{{blog.blog.url}}" onclick="getBlog('{{blog.blog.url}}','{{blog.blog.blog_id}}');return false;" style="color:black;">{{blog.blog.title}}</a></h5>
+				<div>
+					<h5><a id="blog_link" href="{{blog.blog.url}}" onclick="getBlog('{{blog.blog.url}}','{{blog.blog.blog_id}}');return false;" style="color:black;">{{blog.blog.title}}</a>
+						<a href="/load_editor/{{blog.blog.blog_id}}"><span class="badge" style="background-color:#FFA300;color:white;margin-left:3px;">Edit</span></a></h5>
+				</div>
 			<span class="date">{{blog.blog.created_on|timesince|upto:','}} ago</span>
+			<div>Total view {{ blog.blog.total_views }}</div>
+			<div>Total like {{blog.total_likes}}</div>
 			<a class="text-muted" href="/provider/{{blog.blog.provider.provider_name|lower}}">
       <span class="provider_img"><img width="16"height="16" src="{{blog.blog.provider.favicon_url}}" ></span>
 		<span class="provider_name"> {{blog.blog.provider.provider_name}} </span>

@@ -28,7 +28,12 @@ function submitContent(){
         dataType: "json",
         data: JSON.stringify({
             "blog_content":content,
-        }),
+        }).done(function(){
+            location.href = "/";
+        })
+        .fail(function() {
+            alert('fail');
+        })
     })
 }
 
