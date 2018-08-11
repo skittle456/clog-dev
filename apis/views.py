@@ -270,7 +270,7 @@ class InsourcePatch(APIView):
 
 class InsourceList(APIView):
     def post(self,request, format=None):
-        request.data['user']['id'] = request.user.id
+        request.data['user'] = request.user.id
         serializer = InsourceSerializer(data=request.data)
         if serializer.is_valid():
             blog = serializer.save()

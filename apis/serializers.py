@@ -36,7 +36,7 @@ class InsourceSerializer(serializers.ModelSerializer):
         #blog.img_url='/media/images/'+blog_data['img']
         # from django.utils import timezone
         # now = timezone.now()
-        provider = Provider.objects.get(writer__id=validated_data['user']['id'])
+        provider = Provider.objects.get(writer__id=validated_data['user'])
         print(provider)
         if provider is None:
             return 
