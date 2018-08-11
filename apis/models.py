@@ -56,6 +56,8 @@ class Blog(models.Model):
     def __str__(self):
         time = str(self.created_on)
         time = time[0:11]
+        if self.provider is None:
+            return "%s" %  (self.title)
         return "%s, %s" %  (self.title, self.provider.provider_name)
 
 class Insource(models.Model):
