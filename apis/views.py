@@ -210,7 +210,7 @@ def editor(request):
 def provider_editor(request,extra_context=None):
     if not request.user.is_authenticated:
         return redirect('/')
-    blogs = Insource.objects.filter(blog__provider__writer__id=request.user.id).order_by('-created_on')
+    blogs = list(Insource.objects.filter(blog__provider__writer__id=request.user.id))[::-1]
     data = {
         "blogs": blogs,
     }
@@ -221,9 +221,9 @@ def provider_editor(request,extra_context=None):
 
 def load_editor(request,blog_id):
     blog = get_object_or_404(Insource,blog_id=blog_id)
-    provider = Provider.objects.get(writer__id=request.user.id)
-    if provider is None or provider != blog.blog.provider:
-        return redirect('/')
+    # provider = Provider.objects.get(writer__id=request.user.id)
+    # if provider is None or provider != blog.blog.provider:
+    #     return redirect('/')
     data = {
         "blog": blog,
     }
