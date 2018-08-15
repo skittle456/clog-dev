@@ -1,5 +1,6 @@
 div#trending-container {
-    background: linear-gradient(#e9e9e9, white,white,white);
+    /* background: linear-gradient(#e9e9e9, white,rgb(255, 255, 255),white); */
+    background-color: grey;
     padding-bottom: 30px;
 }
 .fixed {
@@ -38,8 +39,7 @@ div.nav-scroller {
     display: none; 
 }
 #blog_link{
-    color:black;
-    font-family:Cloud-Bold;
+    color:white;
     font-size: 18px;
 }
 .blog-row{
