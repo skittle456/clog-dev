@@ -337,6 +337,15 @@ class ProviderList(APIView):
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class ProviderDetail(APIView):
+    def patch(self, request,provider_id,format=None):
+        provider = Provider.objects.get(provider_id=provider_idblog_id)
+        serializer = ProviderSerializer(blog,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class FeedbackList(APIView):
     def get(self,request):
         rest_list = Feedback.objects.order_by('created_on')

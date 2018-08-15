@@ -21,6 +21,14 @@ div#footer {
     background-color: #f9f9f9;
     border-top: .05rem solid #e5e5e5;
 }
+#register-modal input[type="text"], #register-modal input[type="password"], #register-modal input[type="email"] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
 .navbar-expand-custom {
     flex-direction: row;
     flex-wrap: nowrap;
