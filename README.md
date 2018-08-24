@@ -1,5 +1,5 @@
 # clog-dev
-TheClog.co Discover New Perspective. 
+[TheClog.co])(https://theclog.co/) Discover New Perspective. 
 
 
 ## Tools uses
