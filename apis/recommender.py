@@ -1,34 +1,26 @@
 from apis.models import *
-import datetime
+from datetime import datetime, timedelta
 
 class Recommender:
     
     def __init__(self):
         pass
     
-    ## Get most view blog in the last 7 days
+    ## Get most view blog in the last 7 days to 30 days 
     ## size of return blog =  number_of_content (default = 7)
-    ## TODO: Check if this actually work
     def getTrendingInTheLast7days(self,number_of_content = 7):
-        now = datetime.datetime.now()
-        blog_list = Blog.objects.order_by('-total_views')
-        if len(blog_list) == 0:
-            return []
-        tz_info = blog_list[0].created_on.tzinfo
-        now = datetime.datetime.now(tz_info)
+        time_zone_info = Blog.objects.order_by('-total_views')[0].created_on.tzinfo
+        now = datetime.now(time_zone_info)
+        dateEnd = now.isoformat()
         trending_list = []
-        count = 0
-        for blog in blog_list:
-            if len(trending_list) == number_of_content:
+        days = 7
+        while (len(trending_list) < number_of_content):
+            dateStart = (now - timedelta(days=days)).isoformat()
+            trending_list = Blog.objects.filter(created_on__range=[dateStart, dateEnd]) \
+                                        .order_by('-total_views')[:number_of_content]
+            days += 1
+            if days > 30:
                 break
-                
-            time_difference = now - blog.created_on
-            if abs(time_difference.days) < 7:
-                trending_list.append(blog)
-
-        list_size = len(trending_list)
-        if list_size < 7:
-            trending_list += blog_list[:7-list_size]
         return trending_list
 
     
