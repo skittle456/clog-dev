@@ -26,6 +26,9 @@ class Recommender:
             if abs(time_difference.days) < 7:
                 trending_list.append(blog)
 
+        list_size = len(trending_list)
+        if list_size < 7:
+            trending_list += blog_list[:7-list_size]
         return trending_list
 
     
