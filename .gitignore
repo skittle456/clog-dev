@@ -106,6 +106,6 @@ venv.bak/
 
 ## Migration folder
 **/migrations/
-
+/migrations/
 # vscode
 .vscode/
