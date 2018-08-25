@@ -18,6 +18,7 @@ from django.contrib.postgres.search import SearchVector
 from django.db.models import F, Q, Count
 from rest_framework.decorators import api_view
 from apis.forms import PostForm, BlogForm
+from apis.forms import ProviderForm
 import time
 #from django.conf import settings
 # Create your views here.
@@ -206,6 +207,25 @@ def editor(request):
             # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
             return redirect('/')
     return render(request,'editor.html',{'form':form,'blog_form':blog_form})
+
+def edit_provider_profile(request):
+    form = PostForm()   
+    provider_form = ProviderForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        provider_form = ProviderForm(request.POST)
+        if form.is_valid() and provider_form.is_valid:
+            initial_obj = form.save(commit=False)
+            initial_obj.save()
+            # form_data = {
+            #     "provider_name":provider_form.cleaned_data['provider_name'],
+            #     "description":provider_form.cleaned_data['description'],
+            # }
+            provider = Provider.objects.get(provider_id=request.data['provider_id'])
+            serializer = ProviderSerializer(provider,data=provider_form.cleaned_data,partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                
 @page_template('provider_blog_list.html')
 def provider_editor(request,extra_context=None):
     if not request.user.is_authenticated:
@@ -263,6 +283,14 @@ def get_insource_blog(request, slug):
         'trending_blogs': trending_blogs
     }
     return render(request, 'insource.html', data)
+
+class PhotoList(APIView):
+    def post(self,request,format=None):
+        serializer = FeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            photo = serializer.save()
+            return Response("Success", status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class InsourcePatch(APIView):
     def patch(self, request,blog_id,format=None):
