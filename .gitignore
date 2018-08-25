@@ -103,3 +103,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+## Migration folder
+**/migrations/
+
+# vscode
+.vscode/

@@ -11,6 +11,7 @@
 # manage.py: 8
 # url.py: 2
 Django == 2.0.3
+Pillow
 djangorestframework
 gunicorn == 19.7.0
 psycopg2

@@ -20,16 +20,19 @@ from rest_framework.decorators import api_view
 from apis.forms import PostForm, BlogForm
 from apis.forms import ProviderForm
 import time
+from apis.recommender import Recommender
 #from django.conf import settings
 # Create your views here.
 class Base(object):
     def __init__(self):
-        pass
+        self.recommender = Recommender()
+
     def core(self,request,blogs,extra_context=None):
         categories = Category.objects.order_by('created_on')
         #tags = Tag.objects.order_by('-created_on')
         tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
-        trending_blogs = Blog.objects.order_by('-total_views')[:7]
+        # trending_blogs = Blog.objects.order_by('-total_views')[:7]
+        trending_blogs = self.recommender.getTrendingPosts(7)
         pin_blogs=None
         follow_list = None
         if request.user.is_authenticated:
