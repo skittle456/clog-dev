@@ -8,7 +8,7 @@ class Recommender:
     
     ## Get most view blog in the last 2 days to 30 days 
     ## size of return blog =  number_of_content (default = 7)
-    def getTrendingPosts(self,number_of_content = 7):
+    def get_trending_blog(self,number_of_content = 7):
         time_zone_info = Blog.objects.order_by('-total_views')[0].created_on.tzinfo
         now = datetime.now(time_zone_info)
         date_end = now.isoformat()
@@ -22,5 +22,6 @@ class Recommender:
             if days > 30:
                 break
         return trending_list
+
 
     
