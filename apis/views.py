@@ -17,8 +17,7 @@ from django.core import serializers
 from django.contrib.postgres.search import SearchVector
 from django.db.models import F, Q, Count
 from rest_framework.decorators import api_view
-from apis.forms import PostForm, BlogForm
-from apis.forms import ProviderForm
+from apis.forms import PostForm, BlogForm, ProviderForm
 import time
 from apis.recommender import Recommender
 #from django.conf import settings
