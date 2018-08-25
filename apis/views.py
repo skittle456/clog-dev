@@ -31,7 +31,7 @@ class Base(object):
         #tags = Tag.objects.order_by('-created_on')
         tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
         # trending_blogs = Blog.objects.order_by('-total_views')[:7]
-        trending_blogs = self.recommender.getTrendingPost()
+        trending_blogs = self.recommender.getTrendingPost(7)
         pin_blogs=None
         follow_list = None
         if request.user.is_authenticated:
