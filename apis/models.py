@@ -61,16 +61,6 @@ class Blog(models.Model):
             return "%s" %  (self.title)
         return "%s, %s" %  (self.title, self.provider.provider_name)
     
-# class Comment(models.Model):
-#     comment_id = models.AutoField(max_length=10,primary_key=True)
-#     message = models.TextField()
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     reply_to = models.ForeignKey(Comment, on_delete=models.CASCADE,null=True,blank=True)
-#     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-#     created_on = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return "%s" %  (self.message)
     
 class Insource(models.Model):
     #insource_id = models.AutoField(max_length=10, primary_key=True)
@@ -89,6 +79,17 @@ class Insource(models.Model):
 
     def __str__(self):
         return "%s, %s" %  (self.blog.title, self.blog.provider.provider_name)
+    
+class Comment(models.Model):
+    comment_id = models.AutoField(max_length=10,primary_key=True)
+    message = models.TextField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    reply_to = models.ForeignKey('self', on_delete=models.CASCADE,null=True,blank=True)
+    insource = models.ForeignKey(Insource, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "%s" %  (self.message)
     
 class Feedback(models.Model):
     feedback_id = models.AutoField(max_length=10,primary_key=True)
