@@ -42,6 +42,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return "%s" %  (self.tag_name)
+
 class Blog(models.Model):
     blog_id = models.AutoField(max_length=10,primary_key=True)
     img_url = models.CharField(max_length=255,null=True,blank=True)
@@ -59,7 +60,18 @@ class Blog(models.Model):
         if self.provider is None:
             return "%s" %  (self.title)
         return "%s, %s" %  (self.title, self.provider.provider_name)
+    
+# class Comment(models.Model):
+#     comment_id = models.AutoField(max_length=10,primary_key=True)
+#     message = models.TextField()
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     reply_to = models.ForeignKey(Comment, on_delete=models.CASCADE,null=True,blank=True)
+#     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+#     created_on = models.DateTimeField(auto_now_add=True)
 
+#     def __str__(self):
+#         return "%s" %  (self.message)
+    
 class Insource(models.Model):
     #insource_id = models.AutoField(max_length=10, primary_key=True)
     blog = models.OneToOneField(
