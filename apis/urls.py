@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^register', views.Register.as_view(),name='register'),
     url(r'^login', views.Login.as_view(), name='login'),
     url(r'^logout',views.Logout.as_view(), name='logout'),
-    url(r'^comment_list',views.CommentList.as_view(),name='comment_list')
+    url(r'^comment_list',views.CommentList.as_view(),name='comment_list'),
+    url(r'^comment_detail/(?P<comment_id>[0-9]+)$',views.CommentDetail.as_view(),name='comment_detail')
 ]

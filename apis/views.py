@@ -515,15 +515,7 @@ class Logout(APIView):
 
 
 class CommentList(APIView):
-    def get_object(self,comment_id):
-        try:
-            return Comment.objects.get(comment_id = comment_id)
-        except Comment.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-    # Retrieve all
     def get(self,requests,format=None):
-        # comment = self.get_object(comment_id)
         comments = Comment.objects.all()
         serializer = CommentSerializer(comments,many=True)
         json_data = {}
@@ -537,16 +529,30 @@ class CommentList(APIView):
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # def patch(self,request,comment_id,format=None):
-    #     comment = self.get_object(comment_id)
-    #     serializer = CommentSerializer(comment,data=request.data,partial=True)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class CommentDetail(APIView):
+    def get_object(self,comment_id):
+        try:
+            return Comment.objects.get(comment_id = comment_id)
+        except Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-    # def delete(self,request,comment_id,format=None):
-    #     comment = self.get_object(comment_id)
-    #     comment.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    def get(self,requests,comment_id,format=None):
+        comments = Comment.objects.get(comment_id=comment_id)
+        serializer = CommentSerializer(comments)
+        json_data = {}
+        json_data['data'] = serializer.data
+        return JsonResponse(json_data, safe=False)
+
+    def patch(self,request,comment_id,format=None):
+        comment = self.get_object(comment_id)
+        serializer = CommentSerializer(comment,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self,request,comment_id,format=None):
+        comment = self.get_object(comment_id)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
