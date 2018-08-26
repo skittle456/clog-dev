@@ -19,14 +19,14 @@ These instructions will get you a copy of the project up and running on your loc
 Use pip to install required dependencies
 
 ```
-pip3 install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 
 ### Installing
 Start running local server by 
 ```
-$ python manage.py runserver
+$ python3 manage.py runserver
 ```
 
 
