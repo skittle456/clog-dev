@@ -88,6 +88,9 @@ class Comment(models.Model):
     insource = models.ForeignKey(Insource, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
 
+    def get_replies(self):
+        return Comment.objects.filter(reply_to = self.comment_id).order_by('created_on')
+
     def __str__(self):
         return "%s" %  (self.message)
     

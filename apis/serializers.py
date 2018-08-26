@@ -93,3 +93,13 @@ class UserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'email')
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('comment_id',
+            'message',
+            'user',
+            'reply_to',
+            'insource',
+            'created_on')

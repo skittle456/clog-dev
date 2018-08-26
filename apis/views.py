@@ -253,6 +253,7 @@ def load_editor(request,blog_id):
     }
     return render(request,'load_editor.html',data)
 
+# TODO: return comments
 def get_insource_unique(request, blog_id,slug):
     blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
     trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
@@ -268,12 +269,14 @@ def get_insource_unique(request, blog_id,slug):
             pinned = True
         if user in user_like:
             liked = True
+    comments = Comment.objects.filter(insource=blog_id, reply_to=None).order_by('created_on')
     data = {
         'blog':blog,
         'trending_blogs': trending_blogs,
         'pinned':pinned,
         'liked': liked,
-        'follow_list': follow_list
+        'follow_list': follow_list,
+        # 'comments': comments
     }
     return render(request, 'insource.html', data)
 
@@ -508,3 +511,42 @@ class Logout(APIView):
         if request.user.is_authenticated:
             return Response("Unable to logout",status=401)
         return Response({"success"}, status=200)
+
+
+
+class CommentList(APIView):
+    def get_object(self,comment_id):
+        try:
+            return Comment.objects.get(comment_id = comment_id)
+        except Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # Retrieve all
+    def get(self,requests,format=None):
+        # comment = self.get_object(comment_id)
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments,many=True)
+        json_data = {}
+        json_data['data'] = serializer.data
+        return JsonResponse(json_data, safe=False)
+        
+    def post(self,request):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response("Success", status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def patch(self,request,comment_id,format=None):
+    #     comment = self.get_object(comment_id)
+    #     serializer = CommentSerializer(comment,data=request.data,partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def delete(self,request,comment_id,format=None):
+    #     comment = self.get_object(comment_id)
+    #     comment.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
