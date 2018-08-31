@@ -29,6 +29,7 @@ class ProviderForm(forms.ModelForm):
             "provider_name",
             "description",
             "url",
+            "favicon_url",
         ]
         # widgets = {'url': forms.TextInput(
         #         attrs={'placeholder': '(Optional)'})}

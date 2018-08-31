@@ -8,6 +8,24 @@
 {% block content %}
 {% endblock %}
 {% block blogcontent %}
+<div class="modal fade" id="edit-provider-profile" role="dialog" style="z-index:5000;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Provider Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                    {% csrf_token %}
+                    {{provider_form.as_p}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Send</button>
+            </div>
+            </div>
+        </div>
+    </div>
 <div id="provider-container" style="margin-top:55px;margin-bottom:55px;">
     <a class="provider-profile text-muted" href="#" data-toggle="modal" data-target="#edit-provider-profile" role="button" >
     <img src="{{blogs.1.blog.provider.favicon_url}}" width="100" height="100" style="display:block;margin-left:auto;margin-right:auto;margin-top:20px;margin-bottom:20px;">
@@ -24,27 +42,6 @@
   {% include page_template %}
 </div>
 </body>
-<div class="modal fade" id="edit-provider-profile" role="dialog" style="z-index:5000;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Provider Profile</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form id="form-content" method="post" enctype="multipart/form-data" id="formUpload">
-                {% csrf_token %}
-                <div class="form-group">
-                        {{provider_form.as_p}}
-                    </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Send</button>
-        </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 {% block javascript %}
 
