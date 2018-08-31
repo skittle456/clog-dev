@@ -5,9 +5,9 @@
 {% lazy_paginate 9 blogs %}
 {% for blog in blogs %}
 <div class="col-lg-3 col-sm-12 offset-lg-1" align="center">
-  <div class="item card" style="width:352px;">
+  <div class="item card" width="352">
     <a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
-				<div style="width:352px;height:206.329px;overflow:hidden;">
+				<div class="img-container" width="352" style="height:206.329px;overflow:hidden;">
 					<img src="{{blog.img_url}}" style="max-width:400px;margin:0 -100%;">
 				</div>
 				</a>
