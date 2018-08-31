@@ -231,7 +231,7 @@ def edit_provider_profile(request):
 @page_template('provider_blog_list.html')
 def provider_editor(request,extra_context=None):
     
-    blogs = list(Insource.objects.filter(blog__provider__writer__id=3))[::-1]
+    blogs = list(Insource.objects.filter(blog__provider__writer__id=request.user.id))[::-1]
     provider_form = ProviderForm(instance=blogs[0].blog.provider)
     if request.method == 'POST':
         provider_form = ProviderForm(request.POST)
