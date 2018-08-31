@@ -8,8 +8,8 @@
 {% block content %}
 {% endblock %}
 {% block blogcontent %}
-<div id="provider-container" style="margin-top:55px;margin-botton:55px;">
-    <a class="provider-profile" href="#" data-toggle="modal" data-target="#edit-provider-profile" role="button" >
+<div id="provider-container" style="margin-top:55px;margin-bottom:55px;">
+    <a class="provider-profile text-muted" href="#" data-toggle="modal" data-target="#edit-provider-profile" role="button" >
     <img src="{{blogs.1.blog.provider.favicon_url}}" width="100" height="100" style="display:block;margin-left:auto;margin-right:auto;margin-top:20px;margin-bottom:20px;">
     <div class="form-in-line" align="center">
       <span class="pro_name" id="{{blogs.1.blog.provider.provider_name}}"> {{blogs.1.blog.provider.provider_name}} </span>
@@ -35,16 +35,12 @@
             <form id="form-content" method="post" enctype="multipart/form-data" id="formUpload">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="provider_name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="provider_name" value="{{blogs.1.blog.provider_name}}">
-                </div>
-                <div class="form-group">
-                        {{ form.as_p }}
+                        {{provider_form.as_p}}
                     </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="edit_provider_profile({{user.id}})">Send</button>
+            <button type="button" class="btn btn-primary">Send</button>
         </div>
         </div>
     </div>

@@ -233,8 +233,19 @@ def provider_editor(request,extra_context=None):
     if not request.user.is_authenticated:
         return redirect('/')
     blogs = list(Insource.objects.filter(blog__provider__writer__id=request.user.id))[::-1]
+    #form = PostForm()   
+    provider_form = ProviderForm(blogs[0].blog.provider)
+    if request.method == 'POST':
+        provider_form = ProviderForm(request.POST)
+        if provider_form.is_valid:
+            initial_obj = form.save(commit=False)
+            initial_obj.save()
+            return redirect('/')
+        
     data = {
         "blogs": blogs,
+        #"form": form,
+        "provider_form": provider_form,
     }
     if extra_context is not None:
         data.update(extra_context)
