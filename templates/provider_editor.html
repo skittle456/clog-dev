@@ -8,7 +8,8 @@
 {% block content %}
 {% endblock %}
 {% block blogcontent %}
-<div id="provider-container" style="margin-top:55px;">
+<div id="provider-container" style="margin-top:55px;margin-botton:55px;">
+    <a class="provider-profile" href="#" data-toggle="modal" data-target="#edit-provider-profile" role="button" >
     <img src="{{blogs.1.blog.provider.favicon_url}}" width="100" height="100" style="display:block;margin-left:auto;margin-right:auto;margin-top:20px;margin-bottom:20px;">
     <div class="form-in-line" align="center">
       <span class="pro_name" id="{{blogs.1.blog.provider.provider_name}}"> {{blogs.1.blog.provider.provider_name}} </span>
@@ -16,9 +17,10 @@
     <div class="d-block" align="center">
         {{blogs.1.blog.provider.description}}
     </div>
+    </a>
 </div>
 <div id="blog-container" style="background: linear-gradient(#e9e9e9, white,white,white);">
-    <h3> Post Performance</h3>
+    <h3 style="font-family:Cloud-Bold;padding:30px;"> Post Performance</h3>
   {% include page_template %}
 </div>
 </body>
