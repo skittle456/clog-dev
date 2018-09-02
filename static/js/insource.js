@@ -137,8 +137,59 @@ $(document).ready(function() {
             });
         }
     });
-$('div.back').click(function(){
-    console.log('back clicked');
-    window.history.back;
+    $('div.back').click(function(){
+        console.log('back clicked');
+        window.history.back;
+    });
+    $('.new-reply').click(function(){
+        element = $(this).data('comment');
+        $( "#new-reply-" + element ).toggle();
+        $( "#new-reply-" + element ).focus();
+
+    });
+    $('.new-comment').keypress(function(e,data){
+        if (e.keyCode == 13){
+            message = $(this).val();
+            if (message !== ''){
+                insource = $(this).data('insource');
+                userID = $(this).data('uid');
+                name = $(this).data('uname');;
+                head = $(this).data('head') === 'null' ? null : $(this).data('head');
+                var request = $.ajax({
+                    url: "/apis/comment_list/",
+                    method: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        "message": message,
+                        "user": userID,
+                        "insource": insource,
+                        "reply_to": head
+                    }),
+                }).done(function(){
+                    var element = head === null ? $('#comment-container') : $('#reply-block-'+head);
+                    element.append(
+                    '<div class="row'+ (head === null ? '' : ' comment-reply') + '">' +
+                        '<div class="col-xs-3 comment-img">' +
+                            '<i class="fa fa-user-circle comment-img"></i>' +
+                        '</div>' +
+                        '<div class="col-xs comment-content">' +
+                            '<a class="comment-head responsive-text">' + name +' </a>' +
+                            '<p class="comment-text responsive-text"> ' + message + '</p>' +
+                            '<p class="comment-text comment-time responsive-text"> Just now </p>' +
+                        '</div>' +
+                    '</div>');
+                })
+                .fail(function() {
+                    $('#login-modal').modal();
+                });
+                $(this).val('');
+            }
+            if(e.preventDefault) event.preventDefault(); 
+            return false;
+        }
+    });
 });
-});
+
+
+

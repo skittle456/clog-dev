@@ -262,7 +262,6 @@ def load_editor(request,blog_id):
     }
     return render(request,'load_editor.html',data)
 
-# TODO: return comments
 def get_insource_unique(request, blog_id,slug):
     blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
     trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
@@ -278,14 +277,14 @@ def get_insource_unique(request, blog_id,slug):
             pinned = True
         if user in user_like:
             liked = True
-    comments = Comment.objects.filter(insource=blog_id, reply_to=None).order_by('created_on')
+    comment_list = Comment.objects.filter(insource=blog_id, reply_to=None).order_by('created_on')
     data = {
         'blog':blog,
         'trending_blogs': trending_blogs,
         'pinned':pinned,
         'liked': liked,
         'follow_list': follow_list,
-        # 'comments': comments
+        'comment_list': comment_list
     }
     return render(request, 'insource.html', data)
 

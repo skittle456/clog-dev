@@ -107,10 +107,50 @@
             {% endif %}
     </div>
 </div>
+
+<div class="comment-container">
+    <div id="comment-container">
+        <div class="d-block headers" style="margin-bottom:20px;">Comments</div>
+        {% for comment in comment_list %}
+        <div class="row comment-block" id="comment-block-{{comment.comment_id}">
+            <div class="col-xs-3  comment-img">
+                <i class="fa fa-user-circle comment-img"></i>
+            </div>
+            <div class="col-xs comment-content">
+                <a class="comment-head responsive-text"> {{comment.user.first_name}} {{comment.user.last_name}} </a>
+                <p class="comment-text responsive-text"> {{comment.message}}   </p>
+                <p class="comment-text comment-time responsive-text"> {{comment.created_on|timesince|upto:','}} ago </p>
+                <a class="new-reply responsive-text" data-comment="{{comment.comment_id}}"> Reply </a>
+            </div>
+        </div>
+        <div id="reply-block-{{comment.comment_id}}">
+            {% for reply in comment.get_replies %}
+            <div class="row comment-reply">
+                <div class="col-xs-3 comment-img">
+                    <i class="fa fa-user-circle comment-img"></i>
+                </div>
+                <div class="col-xs comment-content">
+                    <a class="comment-head responsive-text"> {{reply.user.first_name}} {{reply.user.last_name}} </a>
+                    <p class="comment-text responsive-text"> {{reply.message}}   </p>
+                    <p class="comment-text comment-time responsive-text"> {{reply.created_on|timesince|upto:','}} ago </p>
+                    <a class="new-reply responsive-text" data-comment="{{comment.comment_id}}"> Reply </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <textarea class="form-control new-comment comment-reply" style="display: none;" rows="1" cols="50" placeholder="Add a reply"
+        data-insource="{{blog.blog_id}}" data-head="{{comment.comment_id}}" data-uid="{{user.user_id}}" data-uname="{{user.first_name}} {{user.last_name}}"
+        id="new-reply-{{comment.comment_id}}" ></textarea>
+        {% endfor %}
+    </div>
+    <textarea class="form-control new-comment" rows="1" cols="50" placeholder="Add a comment"
+        data-insource="{{blog.blog_id}}" data-head="null" data-uid="{{user.user_id}}" data-uname="{{user.first_name}} {{user.last_name}}"
+        id="new-comment" ></textarea>
 </div>
 
+<div>
     <hr style="margin-bottom:15px;">
-    <div class="d-block" style="font-size:22px;padding:2px;margin-bottom:20px;">Read Next</div>
+    <div class="d-block headers" style="font-size:22px;padding:2px;margin-bottom:20px;">Read Next</div>
     <div class="row justify-content-center">
         {% for blog in trending_blogs %}
         <div class="col-lg-4 col-md-4 col-sm-12" style="margin-left:50px;margin-right:50px;">
@@ -137,6 +177,8 @@
         var justHtmlContent = document.getElementById('content');
         $('#content').html(temp);
     });
+
+    
     </script>
     <script src="{% static "/js/blog_list.js" %}"></script>
     <script src="{% static "/js/insource.js" %}"></script>
