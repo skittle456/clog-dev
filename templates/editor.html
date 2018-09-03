@@ -17,29 +17,66 @@
 {% endblock %}
 {% block content %}
 <div class="container" id="content-container" style="padding:20px;">
-        <div id="editor-container">
-        </div>
-            <button class="btn btn-next"  role="button" onclick="submitContent()">Next</button>
-        </div>
-<div class="container" id="form-container" style="padding:40px;">
-    <form id="form-content" method="post" enctype="multipart/form-data" id="formUpload"> {% csrf_token %}
+    <div id="editor-container"></div>
+    <button class="btn btn-next"  role="button" onclick="submitContent()">Next</button>
+</div>
+<form id="form-content" method="post" enctype="multipart/form-data" id="formUpload"> {% csrf_token %}
+    <div class="container" id="form-container" style="padding:40px;">
+        {% comment %} 
         <div class="form-group">
-                {{ form.as_p }}
-            </div>
+            {{ form.as_p }}
+        </div>
         <div class="form-group">
-                {{ blog_form.as_p }}
+            {{ blog_form.as_p }}
+        </div> 
+        {% endcomment %}
+
+        <p>
+            <label class="input-label" for="id_file"> File: </label>
+            <input type="file" id="id_file" name="coid_filever" accept="image/png, image/jpeg" />
+        </p>
+        <p>
+            <label class="input-label" for="id_title"> Title: </label>
+            <input type="text" id="id_title" name="title"/>
+        </p>
+        <p>
+            <label class="input-label" for="category_selector"> Category: </label>
+            <select id="category_selector">
+                <option value="">------</option>
+                {% for category in category_list %}
+                    <option value="{{category.category_id}}"> {{category.title}} </option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label class="input-label" for="provider_selector"> Provider: </label>
+            <select id="provider_selector">
+                <option value="">------</option>
+                {% for provider in provider_list %}
+                    <option value="{{provider.provider_id}}"> {{provider.provider_name}} </option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <span class="input-label"> Tags: </span>
+            <div id="selected-tag"></div> 
+            <div id="tags-container">
+                {% for tag in tag_list %}
+                    <div class="tag" data-id="{{tag.tag_id}}" data-name="{{tag.tag_name}}"> 
+                        <i class="fa fa-tags"> {{tag.tag_name}} </i>   
+                    </div>
+                {% endfor %}
             </div>
-    
+        </p>
+
     <button class="btn btn-postblog" type="submit" role="button" onclick="postBlog()">Upload</button>
     <button class="btn btn-postblog"  role="button" onclick="preview()">Preview</button>
-</div>
-<div class="container" id="preview-container" style="padding:40px;">
-    <div id="preview-content">
-
     </div>
-    <button class="btn btn-back"  role="button" onclick="back()">Back</button>
+    <div class="container" id="preview-container" style="padding:40px;">
+        <div id="preview-content"></div>
+        <button class="btn btn-back"  role="button" onclick="back()">Back</button>
+    </div>
 </form>
-</div>
 {% endblock %}
 </body>
 

@@ -77,6 +77,10 @@ function postBlog(){
     path = path.replace(/^.*[\\\/]/, '')
     var link = encodeURIComponent(path);
     console.log(link);
+    var title = $('#id_title').val();
+    var provider = $('#provider_selector option:selected').val();
+    var category = $('#category_selector option:selected').val();
+    var tags =  tagList.join();
     var request = $.ajax({
         url: "/apis/post",
         method: "POST",
@@ -86,10 +90,10 @@ function postBlog(){
             "blog_content":content,
             "blog":{
                 "img_url":link,
-                "title": $('#id_title').val(),
-                "provider":$('#id_provider').val(),
-                "category":$('#id_category').val(),
-                "tags":$('#id_tags').val()
+                "title": title,
+                "provider": provider,
+                "category": category,
+                "tags": tags
             }
         }),
     })
@@ -97,7 +101,29 @@ function postBlog(){
     //alert('Open the console to see the submit data!')
     return false;
 }
+var tagList = [];
+var tagMapping = {};
+function updateTag(tagID,tagName){
+    tagMapping[tagID] = tagName;
+    if (tagList.includes(tagID)){
+        var index = tagList.indexOf(tagID);
+        tagList.splice(index,1);
+    }else{
+        tagList.push(tagID);
+    }
+    $('#selected-tag').empty();
+    tagList.forEach(function(id){
+        $('#selected-tag').append('<i class="fa fa-tags"> ' + tagMapping[id] + '</i> &nbsp');
+    });
+}
 $(document).ready(function(){
     $('#form-container').hide();
     $('#preview-container').hide();
+    $('.tag').click(function(){
+        var isSelcted = $(this).hasClass('tag-selected');
+        $(this).toggleClass('tag-selected');
+        var id = $(this).data('id');
+        var name = $(this).data('name');
+        updateTag(id,name);
+    });
 });

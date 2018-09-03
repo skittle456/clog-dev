@@ -208,7 +208,11 @@ def editor(request):
             # blog = blog.save()
             # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
             return redirect('/')
-    return render(request,'editor.html',{'form':form,'blog_form':blog_form})
+    provider_list = Provider.objects.all()
+    category_list = Category.objects.all()
+    tag_list = Tag.objects.all()
+    return render(request,'editor.html', \
+        {'form':form,'blog_form':blog_form,'provider_list':provider_list,'category_list':category_list,'tag_list':tag_list})
 
 def edit_provider_profile(request):
     form = PostForm()   
