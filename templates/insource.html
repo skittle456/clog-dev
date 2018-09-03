@@ -139,12 +139,12 @@
             {% endfor %}
         </div>
         <textarea class="form-control new-comment comment-reply" style="display: none;" rows="1" cols="50" placeholder="Add a reply"
-        data-insource="{{blog.blog_id}}" data-head="{{comment.comment_id}}" data-uid="{{user.user_id}}" data-uname="{{user.first_name}} {{user.last_name}}"
+        data-insource="{{blog.blog_id}}" data-head="{{comment.comment_id}}" data-uid="{{user.id}}" data-uname="{{user.first_name}} {{user.last_name}}"
         id="new-reply-{{comment.comment_id}}" ></textarea>
         {% endfor %}
     </div>
     <textarea class="form-control new-comment" rows="1" cols="50" placeholder="Add a comment"
-        data-insource="{{blog.blog_id}}" data-head="null" data-uid="{{user.user_id}}" data-uname="{{user.first_name}} {{user.last_name}}"
+        data-insource="{{blog.blog_id}}" data-head="null" data-uid="{{user.id}}" data-uname="{{user.first_name}} {{user.last_name}}"
         id="new-comment" ></textarea>
 </div>
 
