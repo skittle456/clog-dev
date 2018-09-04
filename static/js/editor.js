@@ -76,27 +76,26 @@ function postBlog(){
     var path = $('#id_file').val();
     path = path.replace(/^.*[\\\/]/, '')
     var link = encodeURIComponent(path);
-    console.log(link);
+    // console.log(link);
     var title = $('#id_title').val();
     var provider = $('#provider_selector option:selected').val();
     var category = $('#category_selector option:selected').val();
-    var tags =  tagList.join();
     var request = $.ajax({
         url: "/apis/post",
         method: "POST",
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify({
-            "blog_content":content,
-            "blog":{
-                "img_url":link,
+            "blog_content": content,
+            "blog": {
+                "img_url": link,
                 "title": title,
                 "provider": provider,
                 "category": category,
-                "tags": tags
+                "tags": tagList
             }
         }),
-    })
+    });
     // No back end to actually submit to!
     //alert('Open the console to see the submit data!')
     return false;

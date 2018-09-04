@@ -190,24 +190,24 @@ def editor(request):
     form = PostForm()   
     blog_form = BlogForm()
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        blog_form = BlogForm(request.POST)
-        if form.is_valid():
-            initial_obj = form.save(commit=False)
-            ##random_str = str(time.time())
-            ##initial_obj.file.name = random_str[:10]
-            initial_obj.save()
-            time.sleep(20)
-            #title = slugify(blog_form.cleaned_data['title'],allow_unicode=True)
-            ##blog = Blog.objects.get(title=blog_form.cleaned_data['title'],provider__provider_id=blog_form.cleaned_data['provider'].provider_id)
-            ##blog.img_url = '/static/upload/images/' + random_str[:10]
-            ###blog.save()
-            # blog_form.img_url = settings.MEDIA_ROOT + form.file
-            # blog = blog_form.save()
-            # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
-            # blog = blog.save()
-            # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
-            return redirect('/')
+        # form = PostForm(request.POST, request.FILES)
+        # blog_form = BlogForm(request.POST)
+        # if form.is_valid():
+        #     initial_obj = form.save(commit=False)
+        #     ##random_str = str(time.time())
+        #     ##initial_obj.file.name = random_str[:10]
+        #     initial_obj.save()
+        #     time.sleep(20)
+        #     #title = slugify(blog_form.cleaned_data['title'],allow_unicode=True)
+        #     ##blog = Blog.objects.get(title=blog_form.cleaned_data['title'],provider__provider_id=blog_form.cleaned_data['provider'].provider_id)
+        #     ##blog.img_url = '/static/upload/images/' + random_str[:10]
+        #     ###blog.save()
+        #     # blog_form.img_url = settings.MEDIA_ROOT + form.file
+        #     # blog = blog_form.save()
+        #     # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
+        #     # blog = blog.save()
+        #     # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
+        return redirect('/')
     provider_list = Provider.objects.all()
     category_list = Category.objects.all()
     tag_list = Tag.objects.all()
@@ -322,15 +322,20 @@ class InsourceList(APIView):
     def post(self,request, format=None):
         # request.data['user'] = request.user.id
         serializer = InsourceSerializer(data=request.data)
+        print(request.data)
         if serializer.is_valid():
             blog = serializer.save()
             #link = link.split('\')
             #blog.img_url = '/media/images/'+link[-1]
             provider = Provider.objects.get(writer__id=request.user.id)
-            if request.user in provider.writer:
-                blog.provider = provider
+            try:
+                if request.user in provider.writer:
+                    blog.provider = provider
+            except TypeError:
+                pass
             blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
