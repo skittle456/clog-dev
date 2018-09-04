@@ -322,7 +322,6 @@ class InsourceList(APIView):
     def post(self,request, format=None):
         # request.data['user'] = request.user.id
         serializer = InsourceSerializer(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             blog = serializer.save()
             #link = link.split('\')
@@ -335,7 +334,6 @@ class InsourceList(APIView):
                 pass
             blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
