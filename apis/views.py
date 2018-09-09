@@ -268,7 +268,9 @@ def load_editor(request,blog_id):
 
 def get_insource_unique(request, blog_id,slug):
     blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
-    trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
+    # trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
+    recommender = Recommender()
+    trending_blogs = recommender.get_related_post(blog.blog)
     pinned = False
     liked = False
     follow_list = None
