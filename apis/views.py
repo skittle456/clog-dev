@@ -234,8 +234,10 @@ def edit_provider_profile(request):
                 
 @page_template('provider_blog_list.html')
 def provider_editor(request,extra_context=None):
-    
-    blogs = list(Insource.objects.filter(blog__provider__writer__id=request.user.id))[::-1]
+    if not user.is_writer:
+        return Response("not valid writer",status=400)
+    #blogs = list(Insource.objects.filter(blog__provider__writer__id=request.user.id))[::-1]
+    blogs = list(Insource.objects.filter(blog__provider__provider_id=request.user.provider.provider_id))[::-1]
     provider_form = ProviderForm(instance=blogs[0].blog.provider)
     if request.method == 'POST':
         provider_form = ProviderForm(request.POST)
@@ -323,16 +325,14 @@ class InsourceList(APIView):
         # request.data['user'] = request.user.id
         serializer = InsourceSerializer(data=request.data)
         if serializer.is_valid():
-            blog = serializer.save()
-            #link = link.split('\')
-            #blog.img_url = '/media/images/'+link[-1]
-            provider = Provider.objects.get(writer__id=request.user.id)
-            try:
-                if request.user in provider.writer:
-                    blog.provider = provider
-            except TypeError:
-                pass
-            blog.save()
+            # blog = serializer.save()
+            # provider = Provider.objects.get(writer__id=request.user.id)
+            # try:
+            #     if request.user in provider.writer:
+            #         blog.provider = provider
+            # except TypeError:
+            #     pass
+            # blog.save()
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
