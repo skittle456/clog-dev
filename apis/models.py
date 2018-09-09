@@ -20,7 +20,7 @@ class Provider(models.Model):
     url = models.URLField(null=True,blank=True)
     favicon_url = models.URLField(default=None,null=True,blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    writer = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    #writer = models.ManyToManyField(settings.AUTH_USER_MODEL)
     def __str__(self):
         time = str(self.created_on)
         time = time[0:11]
