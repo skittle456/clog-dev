@@ -12,6 +12,139 @@
 {% block js %}
 {% endblock %}
 {% block content %}
+<nav id="sidebar" class="active">
+    <div class="navbar-header" style="margin-left:15px;">
+        <a class="navbar-brand" style="color:#f9a11d;" href="/">
+          <img src="{% static "favicon.ico" %}" width="28" style="margin-bottom:-7px;">
+          <span class="text-logo">The CLOG<span style="font-size:-40%;">.co</span></span>
+      </a>
+      </div>
+      <li class="nav-item">
+              <a class="home text-muted" style="font-family:Cloud-Bold;color:black;margin-right:3px;" href="/" role="button" >
+                <img src="{% static "favicon.ico" %}" width="20">
+                Home</a>
+      </li>
+      <li class="nav-item">
+          <a class="mypin text-muted" role="button" style="text-transform: capitalize;" href="/myfollow" id="category-follow" style="margin-right:12px;">
+              My Follow
+              <i class="fa fa-fire"></i>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a class="mypin text-muted" role="button" style="text-transform: capitalize;" href="/mypin" id="category-pin" style="margin-right:12px;">
+              My Pin
+              <i class="fa fa-map-pin"></i>
+          </a>
+      </li>
+      <li role="separator" class="dropdown-divider"></li>
+      <li class="nav-item">
+        <span class="text-muted">Category</span>
+      </li>
+      {% for tag in tags %}
+      {% if forloop.counter < 6 %}
+        <li class="nav-item">
+          <a class="text-dark" style="text-transform: capitalize;" href="/tag/{{tag}}"> <i class="fa fa-tag" style="color:lightgrey;" aria-hidden="true"></i> {{tag}} </a>
+        </li>
+      {% endif %}
+      {% endfor %}
+      <span style="margin-left:3px;margin-right:3px;"></span>
+      {% if user.is_authenticated %}
+      <li role="separator" class="dropdown-divider"></li>
+      <li class="nav-item">
+          <span class="text-muted">Settings</span>
+      </li>
+      {% if user.is_staff %}
+      <li class="nav-item">
+              <a href="/editor" role="button" class="editor text-muted"> <i class="fa fa-pen-fancy"></i> New story  </a>
+          </li>
+      <li class="nav-item">
+              <a href="/provider_editor" role="button" class="provider-editor text-muted"> <i class="fa fa-edit"></i> Edit my stories </a>
+          </li>
+      {% endif %}
+      <li class="nav-item">
+          <a href="#" role="button" class="feedback text-muted" data-toggle="modal" data-target="#feedback-model" >Feedback</a>
+      </li>
+      <li class="nav-item">
+          <a href="#" role="button" class="logout text-muted" onclick="logout()"> Logout </a>
+      </li>
+      {% else %}
+      <li role="separator" class="dropdown-divider"></li>
+      <li class="nav-item">
+          <span class="text-muted">Account</span>
+      </li>
+      <li class="nav-item">
+              <a class="register text-muted" href="#"  data-toggle="modal" data-target="#register-modal" role="button" style="margin-right:12px;">Sign Up</a>
+      </li>
+          <li class="nav-item">
+                  <a class="signin" style="color:#f9a11d" href="#" data-toggle="modal" data-target="#login-modal" role="button" >Sign In</a>
+          </li>
+      {% endif %}
+        </nav>
+<div id="content">
+
+<!-- mobile nav -->
+<nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center nav-sm">
+        <button class="p-2 d-flex mr-auto btn-side" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false">
+          <i class="fa fa-bars fa-lg sidebar-collaspe"></i>
+    </button>
+        <ul class="navbar-nav justify-content-center">
+            <li class="nav-item">
+                <img class="sm-logo" src="{% static "theclog-logo.png" %}">
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto justify-content-end">
+            <li class="nav-item p-2">
+                <button class="btn search-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </li>
+        </ul>
+</nav>
+<!-- end mobile nav -->
+<!-- searchbar for mobile nav -->
+<nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center nav-search searchbar">
+    <form id="search-form" type="GET" >
+        <input class="form-control mr-sm-2 searchbar" type="search" placeholder="&#xf002;  search" aria-label="Search" name="search" onkeypress="mySearch()" value="{{search_query}}">
+        <input type="submit" style="visibility: hidden;" />
+    </form>
+</nav>
+<!-- end searchbar for mobile -->
+
+<!-- website nav -->
+<div class="nav-scroller nav-tag nav-md bb-bg-lg">
+    <nav class="nav d-flex tag-bar">
+      <img class="nav-brand" src="{% static "favicon.ico" %}" width="22" height="22">
+    <div class="p-2 text-muted tag-title"  id="tag-feed" style="text-transform: capitalize;" >
+        <span class="badge badge-pill blog-tag" id="feed" style="font-family:Cloud-Bold;">Home </span>
+      </div>
+    {% for tag in tags %}
+    {% if forloop.counter <= 5 %}
+    <div class="p-2 text-muted tag-title"  id="tag-{{tag.tag_name}}" style="text-transform: capitalize;" >
+      <span class="badge badge-pill blog-tag" id="{{tag.tag_name}}">
+        {{tag.tag_name}}
+      </span>
+      
+    </div>
+    {% endif %}
+    {% endfor %}
+        <ul class="nav navbar-right ml-auto" >
+          <li class="nav-item search-item p-2">
+              <form id="search-form" type="GET" >
+                      <input class="form-control mr-sm-2 searchbar" type="search" placeholder="&#xf002;  search" aria-label="Search" name="search" onkeypress="mySearch()" value="{{search_query}}">
+                      <input type="submit" style="visibility: hidden;" />
+                  </form>
+                </li>
+        <li class="nav-item p-2">
+            <a class="register text-muted" href="#"  data-toggle="modal" data-target="#register-modal" role="button" >Sign Up</a>
+        </li>
+        <li class="nav-item p-2">
+                <a class="signin" style="color:#f9a11d" href="#" data-toggle="modal" data-target="#login-modal" role="button" >Sign In</a>
+        </li>
+          
+  </ul>
+    </nav>
+</div>
+<!-- end website nav -->
 <div id="trending-container">
     <div id="demo" class="carousel slide" data-ride="carousel">
       
@@ -43,7 +176,7 @@
               <p ><span>{{blog.title}}<span></p>
               </a>
             </div>
-          </div>
+            </div>
           {% endfor %}
         </div>
         <!-- Left and right controls -->
@@ -54,37 +187,8 @@
           <i class="fa fa-chevron-right" aria-hidden="true" style="color:#999999"></i>
         </a>
       </div>
-    </div>
 </div>
 <div id="content-container">
-<div class="nav-scroller nav-category nav navbar-nav nav-fill w-100" style="background-color:white;height:45px;" value="feed">
-    <div class="p-2 category-title on-selected" align="center" id="feed">feed</div>
-    <div style='width: 1px; top: 0px; bottom: 50%; left: 0px; 
-    background-color: lightgrey; overflow: hidden'>
-&nbsp;
-</div>
-    {% for category in categories %}
-		  <div class="p-2 category-title" align="left" id="{{category.title}}">
-        {{category.title}}
-      </div>
-      <div style='width: 1px; top: 0px; bottom: 50%; left: 0px; 
-      background-color: lightgrey; overflow: hidden'>
-&nbsp;
-</div>
-    {% endfor %}
-      </div>
-<div class="nav-scroller nav-tag py-1 mb-2" >
-      <nav class="nav d-flex justify-content-between tag-bar" style="display: -ms-flexbox;display: flex;-ms-flex-wrap: nowrap;flex-wrap: nowrap;
-      padding-bottom: 1rem;margin-top: -1px;overflow-x: auto;text-align: center;white-space: nowrap;-webkit-overflow-scrolling: touch;float:left;">
-      {% for tag in tags %}
-      <div class="p-2 text-muted tag-title"  id="tag-{{tag.tag_name}}" style="text-transform: capitalize;" >
-        <span class="badge badge-pill blog-tag" id="{{tag.tag_name}}">
-          {{tag.tag_name}}
-        </span>
-      </div>
-      {% endfor %}
-      </nav>
-  </div>
 <div class="loading" align="center" style="margin-top:40px;display:none;">
     <i class="fa fa-circle-o-notch fa-spin fa-4x" style="color:#f9a11d"></i>
 </div>
@@ -92,6 +196,7 @@
 {% block blogcontent %}
 <div id="blog-container">
 	{% include page_template %}
+</div>
 </div>
 </body>
 {% endblock %}

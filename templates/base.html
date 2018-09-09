@@ -179,6 +179,7 @@
                 </div>
             </div>
             <!-- End Register popup Modal -->
+            {% if user.is_authenticated %}
             <div class="modal fade" id="setting-modal" role="dialog" style="z-index:5000;">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -228,79 +229,11 @@
                         </div>
                     </div>
                 </div>
-        {% if user.is_authenticated %}
-        <nav class="navbar mainbar">
-        {% else %}
-        <nav class="navbar mainbar navbar-expand-md">
         {% endif %}
-                <a class="navbar-brand" style="color:#f9a11d;" href="/">
-                    <img class="brand" src="{% static "favicon.ico" %}">
-                    <span class="text-logo">The CLOG<span style="font-size:-40%;">.co</span></span>
-                    <span class="subtext-logo"> Discover New Perspective</span>
-                </a>
-                <div class="nav-item search-item">
-                        <form id="search-form" type="GET" >
-                            <input class="form-control mr-sm-2 searchbar" type="search" placeholder="&#xf002;  search" aria-label="Search" name="search" onkeypress="mySearch()" value="{{search_query}}">
-                            <input type="submit" style="visibility: hidden;" />
-                        </form>
-                    </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarsExampleDefault"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"> <i class="fa fa-user-circle-o fa-lg" style="margin-right:-19px;"></i> </span>
-                </button>
-                <div class="collapse navbar-collapse" id="narbars">
-                    <ul class="nav navbar-nav navbar-right ml-auto" >
-                        <!--
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="nav-item">
-                            <a href="#" role="button" class="btn btn-md" data-toggle="modal" data-target="#feedback-model" >Feedback</a>
-                        </li>
-                        -->
-                        {% if user.is_authenticated %}
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="nav-item">
-                                <a class="mypin text-muted" role="button" style="text-transform: capitalize;" href="/myfollow" id="category-follow" style="margin-right:12px;">
-                                    My Follow
-                                    <i class="fa fa-fire"></i>
-                                </a>
-                            </li>
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="nav-item">
-                            <a class="mypin text-muted" role="button" style="text-transform: capitalize;" href="/mypin" id="category-pin" style="margin-right:12px;">
-                                my pin
-                                <i class="fa fa-map-pin"></i>
-                            </a>
-                        </li>
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="nav-item">
-                                <a href="#" role="button" class="feedback text-muted" data-toggle="modal" data-target="#feedback-model" >Feedback</a>
-                            </li>
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="nav-item">
-                                <a href="#" role="button" class="logout text-muted" onclick="logout()"> Logout </a>
-                            </li>
-                        {% if user.is_staff %}
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="nav-item">
-                                <a href="/editor" role="button" class="editor text-muted"> <i class="fa fa-pen-fancy"></i> New story  </a>
-                            </li>
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="nav-item">
-                                <a href="/provider_editor" role="button" class="provider-editor text-muted"> <i class="fa fa-edit"></i> Edit my stories </a>
-                            </li>
-                        {% endif %}
-                        {% else %}
-                        <li class="nav-item">
-                                <a class="register text-muted" href="#"  data-toggle="modal" data-target="#register-modal" role="button" style="margin-right:12px;">Sign Up</a>
-                        </li>
-                            <li class="nav-item">
-                                    <a class="signin" style="color:#f9a11d" href="#" data-toggle="modal" data-target="#login-modal" role="button" >Sign In</a>
-                            </li>
-                        {% endif %}
-
-                    </ul>
-                </div>
-            </nav>
+        <div class="logo-brand" style="margin:auto;margin-top: -60px;padding: 5px;" align="center">
+            <img src="{% static "theclog-logo.png" %}" style="width:27vw;">
+        </div>
+            
     <!--
     <div class"container-descript" style="margin-top:5rem;margin-bottom:-5.2rem;">
         <div class="descript" align="center" style="display:block;background-color:#FFA300;color:white;"> แหล่งรวมบทความสำหรับชาว Millennials เพื่อเปิดมุมมองใหม่ๆ </div>
@@ -327,3 +260,4 @@
     {% block javascript %}
     {% endblock %}
 </html>
+

@@ -1,9 +1,56 @@
 $(document).ready(function (){
-    // if ($(window).width() < 690) {
-    //     console.log('moblie');
-    //     return $('.mainbar').addClass('navbar-expand-md');
-    // }
+    $('.nav-brand').hide();
+    if ($(window).width() < 690) {
+        //return $('.mainbar').addClass('navbar-expand-md');
+        console.log('moblie');
+        // $('.search-item').hide();
+        $('.logo-brand').remove();
+        $('.nav-md').remove()
+        $('.searchbar').hide();
+        $('body').click(function(evt){   
+            if($(evt.target).is('.sidebar-collaspe')) {
+                //event handling code
+                $('#sidebar').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                return
+            }
+            else if(!$(evt.target).is('.fa-search')) {
+                $('.searchbar').hide();
+                $('.nav-sm').fadeIn();
+            }
+
+            $('#sidebar').addClass('active')
+            $('.collapse.in').addClass('in');
+            $('a[aria-expanded=false]').attr('aria-expanded', 'True');
+        });
+    }
+    else{
+        $('.nav-sm').remove();
+        $('.sidebar').remove();
+        $('.nav-search').remove();
+        // $('.mobile-search').hide();
+        // $('.search-button').hide()
+        // $('#sidebar').toggleClass('active');
+    }
+    $('.search-btn').on('click', function(){
+        $('.nav-sm').hide();
+        $('.searchbar').fadeIn();
+    })
    // $('.mainbar').removeClass('mobile');
+    // $('#sidebarCollapse').on('click', function () {
+    //     $('#sidebar').toggleClass('active');
+    // });
+    // $('.search-button').on('click',function(){
+    //     $('.mobile-search').show();
+    //     $('.search-item').show();
+    // })
+    // $('.search-item').on('focus', function(){
+    //     $('navbar-brand').hide()
+    // })
+    // $('.search-item').on('focusout', function(){
+    //     $('navbar-brand').show()
+    // })
 });
 
 // FB.login(function(response) {
@@ -123,6 +170,31 @@ function register(){
         alert("unable to register")
     });
     $('button.close').click();
+}
+
+function edit_profile(user_id){
+    if($('#register-password').val() != $('#confirm-password').val()){
+        return alert('incorrect password');
+    }
+    var request = $.ajax({
+        url: "/apis/edit_profile"+user_id,
+        method: "PATCH",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({
+            "username":$('#account-username').val(),
+            "password":$('#account-password').val(),
+            "first_name":$('#first_name').val(),
+            "last_name":$('#last_name').val(),
+            "email":$('#setting-email').val(),
+
+        }),
+    }).done(function(){
+        alert("success");
+    })
+    .fail(function() {
+        alert("fail")
+    });
 }
 
 function logout(){
