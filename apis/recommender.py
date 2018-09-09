@@ -41,8 +41,6 @@ class Recommender:
                 if (temp[0].blog_id != blog.blog_id):
                     related_post.append(temp[0])
                 tag_index += 1
-            print("\t" , len(related_post))
-            print(related_post)
             return related_post
         except:
             return self.get_trending_blog(4)
