@@ -100,8 +100,10 @@ input.searchbar {
     height: 31.837px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
-    border-radius: 24px;
-    background-color: #E5E5E4;
+    /* border-radius: 24px; */
+    /* background-color: #E5E5E4; */
+    border:none;
+    background-color: transparent;
 }
 
 input.searchbar:focus {

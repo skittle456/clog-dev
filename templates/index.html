@@ -80,7 +80,6 @@
           </li>
       {% endif %}
         </nav>
-<div id="content">
 
 <!-- mobile nav -->
 <nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center nav-sm">
@@ -134,32 +133,232 @@
                       <input type="submit" style="visibility: hidden;" />
                   </form>
                 </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item p-2">
+            <span><img class="sidebar-collaspe" style="cursor:pointer;" src="{% static "images/user-icon.png" %}" width="20" height="20"> {{user.first_name}} {{user.last_name}}</span>
+        </li>
+        {% else %}
         <li class="nav-item p-2">
             <a class="register text-muted" href="#"  data-toggle="modal" data-target="#register-modal" role="button" >Sign Up</a>
         </li>
         <li class="nav-item p-2">
                 <a class="signin" style="color:#f9a11d" href="#" data-toggle="modal" data-target="#login-modal" role="button" >Sign In</a>
         </li>
+        {% endif %}
           
   </ul>
     </nav>
 </div>
 <!-- end website nav -->
+<style>
+  .h-800x {
+    height:800px!important;
+  }
+  .h-600x {
+    height:600px!important;
+  }
+  .bg-grad-layer-6:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;
+  opacity: .6; background: linear-gradient(to top,  #000 0%,  rgba(0,0,0,.4) 100%); }
+  .color-red {
+    color:red;
+    background-color:red;
+  }
+  .color-blue {
+    color:blue;
+    background-color:blue;
+  }
+
+  .color-black {
+    color:black;
+    background-color:black;
+  }
+
+  .color-pink {
+    color:black;
+    background-color:pink;
+  }
+  .color-orange {
+    color:black;
+    background-color: orange;
+  }
+  .color-aqua {
+    color:black;
+    background-color: aqua;
+  }
+  .oflow-hidden {
+    overflow: hidden;
+  }
+  .h-2-3 {
+    height: 66.666%!important;
+  }
+  .h-1-3 {
+    height: 33.333%!important;
+  }
+  .h-3-4 {
+    height: 75%!important;
+  }
+  .h-1-5 {
+    height: 20%!important;
+  }
+  .pos-relative {
+    position: relative;
+  }
+  .dplay-block {
+    display: block;
+  }
+  .img-bg{ position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1; }
+  .abs-blr{ position: absolute; bottom: 0; left: 0; right: 0; z-index: 1; }
+  .bg-1{ background: url(/static/images/goat.jpg) no-repeat center; background-size: cover; }
+  .list-li-mr-20 > li {
+    margin-right: 20px;
+}
+.w-16 {
+  width: 16.66%;
+}
+.font-12 {
+  font-size:12px;
+}
+.font-15 {
+  font-size:15px;
+}
+.p-20 {
+  padding:20px;
+}
+.color-primary {
+  color: #ffa300;
+}
+.abs-center {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+}
+
+@media(max-width: 690px) {
+  .h-sm-auto {
+    height: auto!important;
+  }
+  .h-sm-90x {
+    height: 90px!important;
+  }
+  .w-sm-100 {
+    width: 100%!important;
+  }
+  .h-sm-300x {
+    height: 300px!important;
+  }
+  .w-sm-1-3 {
+    width: 33.33%!important;
+  }
+}
+</style>
+<div class="container">
+  <div class="h-600x h-sm-auto">
+      <div class="h-2-3 h-sm-auto oflow-hidden h-3-4">
+          <div class="p-1 color-red float-left w-50 h-100 w-sm-100 h-sm-300x">
+              <a class="pos-relative h-100 dplay-block" href="#">
+                  <div class="img-bg bg-1 bg-grad-layer-6"></div>
+                    <div class="abs-blr color-white p-20 bg-sm-color-7">
+                      <h3 class="mb-5 mb-sm-1 font-sm-13 color-primary"><b>{{trending_blogs.0.title}}</b></h3>
+                      <ul class="list-inline text-white">
+                        <li class="list-inline-item">{{trending_blogs.0.created_on|date}}</li>
+                        <li class="list-inline-item"><span class="provider_img"><img width="16"height="16" src="{{trending_blogs.0.provider.favicon_url}}" ></span>
+                           <span><b>{{trending_blogs.0.provider.provider_name}}</b></span> </li>
+                        <li class="list-inline-item"><i class="mr-5 font-12 ion-ios-bolt text-muted"></i>{{trending_blogs.0.total_views}} read</li>
+                      </ul>
+                    </div><!--abs-blr -->
+                  </a><!-- pos-relative -->
+          </div>
+          <div class="p-1 color-blue float-left h-50 w-25 w-sm-100 h-sm-300x">
+              <a class="pos-relative h-100 dplay-block" href="#">
+                  
+                  <div class="img-bg bg-1 bg-grad-layer-6"></div>
+                    
+                  <div class="abs-blr color-white ml-2">
+                      <h4 class="mb-1 color-primary font-15"><b>Russians Bisiopsems Cry Condptocurrecy</b></h4>
+                      <ul class="list-li-mr-20 text-white">
+                        <li class="list-inline-item">Jan 25, 2018</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-ios-bolt text-muted"></i>30,190</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-chatbubbles text-muted"></i>30</li>
+                      </ul>
+                    </div><!--abs-blr -->
+                  </a><!-- pos-relative -->
+          </div>
+          <div class="p-1 color-orange float-left h-50 w-25 w-sm-100 h-sm-300x">
+              <a class="pos-relative h-100 dplay-block" href="#">
+                  
+                  <div class="img-bg bg-1 bg-grad-layer-6"></div>
+                    
+                  <div class="abs-blr color-white ml-2">
+                      <h4 class="mb-1 color-primary font-15"><b>Russians Bisiopsems Cry Condptocurrecy</b></h4>
+                      <ul class="list-li-mr-20 text-white">
+                        <li class="list-inline-item">Jan 25, 2018</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-ios-bolt"></i>30,190</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-chatbubbles"></i>30</li>
+                      </ul>
+                    </div><!--abs-blr -->
+                  </a><!-- pos-relative -->
+          </div>
+          <div class="p-1 color-pink float-left h-50 w-25 w-sm-100 h-sm-300x">
+              <a class="pos-relative h-100 dplay-block" href="#">
+                  
+                  <div class="img-bg bg-1 bg-grad-layer-6"></div>
+                    
+                  <div class="abs-blr color-white ml-2">
+                      <h4 class="mb-1 color-primary font-15"><b>Russians Bisiopsems Cry Condptocurrecy</b></h4>
+                      <ul class="list-li-mr-20 text-white">
+                        <li class="list-inline-item">Jan 25, 2018</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-ios-bolt"></i>30,190</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-chatbubbles"></i>30</li>
+                      </ul>
+                    </div><!--abs-blr -->
+                  </a><!-- pos-relative -->
+          </div>
+          <div class="p-1 color-aqua float-left h-50 w-25 w-sm-100 h-sm-300x">
+              <a class="pos-relative h-100 dplay-block" href="#">
+                  
+                  <div class="img-bg bg-1 bg-grad-layer-6"></div>
+                    
+                  <div class="abs-blr color-white ml-2">
+                      <h4 class="mb-1 color-primary font-15"><b>Russians Bisiopsems Cry Condptocurrecy</b></h4>
+                      <ul class="list-li-mr-20 text-white">
+                        <li class="list-inline-item">Jan 25, 2018</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-ios-bolt"></i>30,190</li>
+                        <li class="list-inline-item"><i class="mr-2 font-12 ion-chatbubbles"></i>30</li>
+                      </ul>
+                    </div><!--abs-blr -->
+                  </a><!-- pos-relative -->
+          </div>
+      </div>
+      <div class="oflow-hidden h-1-5">
+        {% for tag in tags %}
+        {% if forloop.counter0 < 6 %}
+        <div class="p-1 float-left h-100 w-16 h-sm-90x w-sm-1-3">
+          <a class="pos-relative h-100 dplay-block">
+            <div class="img-bg bg-1 bg-grad-layer-6"></div>
+              <div class="abs-center ml-2 text-capitalize">
+                <h4 class="text-white"> {{tag.tag_name}} </h4>
+              </div>
+          </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+</div>
 <div id="trending-container">
     <div id="demo" class="carousel slide" data-ride="carousel">
       
         <!-- Indicators -->
-        <!-- 
         <ul class="carousel-indicators" style="color:#FFA300;">
           {% for blog in trending_blogs %}
           {% if forloop.first %}
-          <li data-target="#demo" data-slide-to="{{forloop.counter0}}" class="active"></li>
+          <li data-target="#demo" data-slide-to="item-{{forloop.counter0}}" class="active"></li>
           {% else %}
-          <li data-target="#demo" data-slide-to="{{forloop.counter0}}"></li>
+          <li data-target="#demo" data-slide-to="item-{{forloop.counter0}}"></li>
           {% endif %}
           {% endfor %}
         </ul>
-        -->
         <!-- The slideshow -->
         <div class="carousel-inner row w-100 mx-auto" role="listbox">
           {% for blog in trending_blogs %}
@@ -197,8 +396,6 @@
 <div id="blog-container">
 	{% include page_template %}
 </div>
-</div>
-</body>
 {% endblock %}
 {% block javascript %}
 <script src="{% static "/js/index.js" %}"></script>
@@ -209,4 +406,3 @@
 });
 </script>
 {% endblock %}
-</html>

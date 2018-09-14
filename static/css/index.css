@@ -105,11 +105,9 @@ div.tag {
     margin-left:1.5rem;
 }
 .carousel {
-    height: 240px;
-    margin-left: 20px;
+    height: 350px;
     padding-top:1.5rem;
     padding-bottom:3rem;
-    width:86vw;
     margin: 0 auto;
 }
 .carousel-indicators li {
@@ -222,7 +220,7 @@ div.tag {
         width: 120px;
     }
     .img-fluid {
-        max-width: 264px;
+        width: 100%!important;
     }
     .item,.img-container {
         width:100vw;
