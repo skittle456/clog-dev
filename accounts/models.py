@@ -12,3 +12,14 @@ class User(AbstractUser):
     #watched_blog = models.ManyToManyField(Blog)
     class Meta:
         db_table = 'auth_user'
+
+class WriterRegistration(models.Model):
+    status_choices = (
+        ('held_for_review','Held for Review'),
+        ('approved','Approved'),
+        ('declined','Declined'),
+    )
+    request_id = models.AutoField(max_length=10,primary_key=True)
+    description = models.TextField()
+    status = models.CharField(choices=status_choices,max_length=30,default='held_for_review')
+    created_on = models.DateTimeField(auto_now_add=True)
