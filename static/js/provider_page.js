@@ -42,9 +42,9 @@ function reload_elements(){
     }
     else if (pathName.search("/provider/"+provider_path+"/tag/") != -1){
         let tagName = pathName.substring(pathName.lastIndexOf('/') + 1);
-        $('#feed').addClass('on-selected');
+        // $('#feed').addClass('on-selected');
         $("#"+tagName).addClass( "on-tagged");
-        $("#tag-"+tagName).prependTo(".tag-bar");
+        // $("#tag-"+tagName).prependTo(".tag-bar");
         $(".nav-tag").animate({ scrollLeft: 0 }, "slow");
         return false;
       }
@@ -67,7 +67,7 @@ $(document).ready(function() {
     $('.nav-category').addClass('nav-ontop-category');
     $('#trending-container').hide();
     $('.on-selected').removeClass('on-selected');
-    $('#tag-container').prepend($('.nav-tag'));
+    //$('#tag-container').prepend($('.nav-tag'));
     $('#blog-container').prepend($('.loading'));
     $('.nav-tag').show();
 

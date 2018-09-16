@@ -60,7 +60,7 @@ class Base(object):
         if extra_context is not None:
             data.update(extra_context)
         return data
-
+   
 base = Base()
 
 def privacy_policy(request):
@@ -234,10 +234,11 @@ def edit_provider_profile(request):
                 
 @page_template('provider_blog_list.html')
 def provider_editor(request,extra_context=None):
-    if not user.is_writer:
-        return Response("not valid writer",status=400)
+    if not request.user.is_writer:
+        #return Response("not valid writer",status=400)
+        return redirect('/')
     #blogs = list(Insource.objects.filter(blog__provider__writer__id=request.user.id))[::-1]
-    blogs = list(Insource.objects.filter(blog__provider__provider_id=request.user.provider.provider_id))[::-1]
+    blogs = list(Insource.objects.filter(blog__provider__provider_id=request.user.writer.provider_id))[::-1]
     provider_form = ProviderForm(instance=blogs[0].blog.provider)
     if request.method == 'POST':
         provider_form = ProviderForm(request.POST)
