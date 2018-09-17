@@ -26,7 +26,7 @@ class Base(object):
     def __init__(self):
         self.recommender = Recommender()
 
-    def core(self,request,blogs,extra_context=None):
+    def core(self,request,blogs=None,extra_context=None):
         categories = Category.objects.order_by('created_on')
         #tags = Tag.objects.order_by('-created_on')
         tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
@@ -208,11 +208,12 @@ def editor(request):
         #     # blog = blog.save()
         #     # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
         return redirect('/')
-    provider_list = Provider.objects.all()
-    category_list = Category.objects.all()
-    tag_list = Tag.objects.all()
+    data = base.core(request)
+    data['provider_list'] = Provider.objects.all()
+    data['category_list'] = Category.objects.all()
+    data['tag_list'] = Tag.objects.all()
     return render(request,'editor.html', \
-        {'form':form,'blog_form':blog_form,'provider_list':provider_list,'category_list':category_list,'tag_list':tag_list})
+        {'form':form,'blog_form':blog_form,'provider_list':provider_list,'category_list':category_list,'tag_list':tag_list}) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
 
 def edit_provider_profile(request):
     form = PostForm()   
@@ -246,15 +247,11 @@ def provider_editor(request,extra_context=None):
             initial_obj = form.save(commit=False)
             initial_obj.save()
             return redirect('/')
-
-    data = {
-        "blogs": blogs,
-        #"form": form,
-        "provider_form": provider_form,
-    }
+    data = base.core(request,blogs)
+    data["provider_form"] = provider_form
     if extra_context is not None:
         data.update(extra_context)
-    return render(request,'provider_editor.html',data)
+    return render(request,'provider_editor.html',data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
 
 
 def load_editor(request,blog_id):
@@ -264,16 +261,16 @@ def load_editor(request,blog_id):
     # provider = Provider.objects.get(writer__id=request.user.id)
     # if provider is None or provider != blog.blog.provider:
     #     return redirect('/')
-    data = {
-        "blog": blog,
-    }
-    return render(request,'load_editor.html',data)
+    data = base.core(request)
+    data['blog'] = blog
+    return render(request,'load_editor.html',data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
 
 def get_insource_unique(request, blog_id,slug):
     blog = get_object_or_404(Insource,blog_id=blog_id, slug=slug)
     # trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
     recommender = Recommender()
     trending_blogs = recommender.get_related_post(blog.blog)
+    data = base.core(request)
     pinned = False
     liked = False
     follow_list = None
@@ -287,24 +284,20 @@ def get_insource_unique(request, blog_id,slug):
         if user in user_like:
             liked = True
     comment_list = Comment.objects.filter(insource=blog_id, reply_to=None).order_by('created_on')
-    data = {
-        'blog':blog,
-        'trending_blogs': trending_blogs,
-        'pinned':pinned,
-        'liked': liked,
-        'follow_list': follow_list,
-        'comment_list': comment_list
-    }
-    return render(request, 'insource.html', data)
+    data['blog'] = blog
+    data['trending_blogs'] = trending_blogs
+    data['liked'] = liked
+    data['pinned'] = pinned
+    data['comment_list'] = comment_list
+    return render(request, 'insource.html', data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
 
 def get_insource_blog(request, slug):
     blog = get_object_or_404(Insource, slug=slug)
     trending_blogs = Blog.objects.filter(~Q(blog_id=blog.blog_id)).order_by('-total_views')[:4]
-    data = {
-        'blog':blog,
-        'trending_blogs': trending_blogs
-    }
-    return render(request, 'insource.html', data)
+    data = base.core(request)
+    data['blog'] = blog
+    data['trending_blogs'] = trending_blogs
+    return render(request, 'insource.html', data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
 
 class PhotoList(APIView):
     def post(self,request,format=None):
