@@ -25,7 +25,7 @@ $(document).ready(function (){
         $('.searchbar').hide();
     }
     else{
-        $('.trending-cotainer-sm').remove();
+        $('.trending-container-sm').remove();
         $('.nav-sm').remove();
         $('.nav-search').remove();
         // $('.mobile-search').hide();
