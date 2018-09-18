@@ -127,7 +127,7 @@
   <div class="h-600x h-sm-auto">
       <div class="h-2-3 h-sm-auto oflow-hidden h-3-4">
         {% for blog in trending_blogs %}
-        {% if forloop.counter < 4 %}
+        {% if forloop.counter < 6 %}
         {% if forloop.first %}
           <div class="p-1 float-left w-50 h-100 w-sm-100 h-sm-300x">
               <a class="pos-relative h-100 dplay-block" href="{{blog.url}}">
@@ -143,7 +143,6 @@
                     </div><!--abs-blr -->
                   </a><!-- pos-relative -->
           </div>
-        {% endif %}
         {% else %}
           <div class="p-1 float-left h-50 w-25 w-sm-100 h-sm-300x">
               <a class="pos-relative h-100 dplay-block" href="{{blog.url}}">
@@ -161,6 +160,7 @@
                     </div><!--abs-blr -->
                   </a><!-- pos-relative -->
           </div>
+          {% endif %}
           {% endif %}
           {% endfor %}
       </div>
