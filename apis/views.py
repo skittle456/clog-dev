@@ -212,8 +212,7 @@ def editor(request):
     data['provider_list'] = Provider.objects.all()
     data['category_list'] = Category.objects.all()
     data['tag_list'] = Tag.objects.all()
-    return render(request,'editor.html', \
-        {'form':form,'blog_form':blog_form,'provider_list':provider_list,'category_list':category_list,'tag_list':tag_list}) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
+    return render(request,'editor.html', data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
 
 def edit_provider_profile(request):
     form = PostForm()   
