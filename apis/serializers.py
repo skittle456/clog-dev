@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from apis.models import *
-from accounts.models import User
+from accounts.models import *
 from django.utils.text import slugify
 from datetime import datetime
 
@@ -103,3 +103,15 @@ class CommentSerializer(serializers.ModelSerializer):
             'reply_to',
             'insource',
             'created_on')
+
+class WriterRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WriterRegistration
+        fields = (
+            'request_id',
+            'user',
+            'description',
+            'status',
+            'created_on',
+        )
+        

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load apis_extra %}
+{% load el_pagination_tags %}
+{% block title %}<title>The CLOG</title>{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static "/css/writer_registration.css" %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container main-container" style="margin-top:40px;">
+    <div class="row">
+        <div class="col col-xs table-selector" id="pending-table-selector">
+            Pending
+        </div>
+         <div class="col col-xs table-selector" id="approved-table-selector">
+            Approved
+        </div>
+         <div class="col col-xs table-selector" id="rejected-table-selector">
+            Declined
+        </div>
+    </div>
+    {% comment %} Pending table {% endcomment %}
+    {% if pending_list %}
+    <table class="table register-table-list" id="pending-table">
+        <thead>
+            <tr>
+                <th scope="col"> Name </th>
+                <th scope="col"> Description </th>
+                <th scope="col"> Action </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pending in pending_list %}
+            <tr id="pending-{{pending.request_id}}">
+                <th scope="row"> {{pending.user.first_name}} {{pending.user.last_name}} </th>
+                <td> {{pending.description}} </td>
+                <td>
+                    <button type="button" class="btn-status btn-success btn-accept"
+                     data-id="{{pending.request_id}}" data-row="pending-{{pending.request_id}}"
+                     data-name="{{pending.user.first_name}} {{pending.user.last_name}}">
+                        Approve
+                    </button>
+                    <button type="button" class="btn-status btn-danger btn-reject" 
+                    data-id="{{pending.request_id}}" data-row="pending-{{pending.request_id}}"
+                    data-name="{{pending.user.first_name}} {{pending.user.last_name}}"> 
+                        Decline 
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="register-table-list" id="pending-table">
+        <h1> No pending request </h1>
+    </div>
+    {% endif %}
+    {% comment %} End of Pending table {% endcomment %}
+    {% comment %} Approved table {% endcomment %}
+    <table class="table register-table-list" id="approved-table">
+        <thead>
+            <tr>
+                <th scope="col"> Name </th>
+                <th scope="col"> Action </th>
+            </tr>
+        </thead>
+        <tbody id="approved-table-body">
+            {% for approved in approved_list %}
+            <tr id="approved-{{approved.request_id}}">
+                <th scope="row"> {{approved.user.first_name}} {{approved.user.last_name}} </th>
+                <td>
+                    <button type="button" class="btn-status btn-danger btn-reject" 
+                    data-id="{{approved.request_id}}" data-row="approved-{{approved.request_id}}"
+                    data-name="{{approved.user.first_name}} {{approved.user.last_name}}">
+                        Revoke 
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}            
+        </tbody>
+    </table>
+    {% comment %} End of Approved table {% endcomment %}
+    {% comment %}  Declined Table {% endcomment %}
+    <table class="table register-table-list" id="rejected-table">
+        <thead>
+            <tr>
+                <th scope="col"> Name </th>
+                <th scope="col"> Action </th>
+            </tr>
+        </thead>
+        <tbody id="rejected-table-body">
+            {% comment %} {% for rejected in rejected_list %} {% endcomment %}
+            {% for rejected in declined_list %}
+            <tr id="rejected-{{rejected.request_id}}">
+                <th scope="row"> {{rejected.user.first_name}} {{rejected.user.last_name}} </th>
+                <td>
+                    <button type="button" class="btn-status btn-success btn-accept" 
+                    data-id="{{rejected.request_id}}" data-row="rejected-{{rejected.request_id}}"
+                    data-name="{{rejected.user.first_name}} {{rejected.user.last_name}}"> 
+                        Approve 
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+    {% comment %} End of rejected table {% endcomment %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static "/js/writer_registration.js" %}"></script>
+{% endblock %}

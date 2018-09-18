@@ -567,3 +567,66 @@ class CommentDetail(APIView):
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+def register_writer(request):
+    user = request.user
+    if user.is_staff:
+        pending_list = WriterRegistration.objects.filter(status='held_for_review').order_by('-created_on')
+        approved_list = WriterRegistration.objects.filter(status='approved').order_by('-created_on')
+        declined_list = WriterRegistration.objects.filter(status='declined').order_by('-created_on')
+        data = {
+            'pending_list':pending_list,
+            'approved_list':approved_list,
+            'declined_list':declined_list
+        }
+        return render(request, 'writer_registration.html', data)
+    return redirect('/')
+
+class WriterRegistrationList(APIView):
+    def get(self,requests,format=None):
+        registration = WriterRegistration.objects.all()
+        serializer = WriterRegistrationSerializer(registration,many=True)
+        json_data = {}
+        json_data['data'] = serializer.data
+        return JsonResponse(json_data, safe=False)
+        
+    def post(self,request):
+        serializer = WriterRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response("Success", status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class WriterRegistrationDetail(APIView):
+    def get_object(self,request_id):
+        try:
+            return WriterRegistration.objects.get(request_id = request_id)
+        except WriterRegistration.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self,requests,request_id,format=None):
+        registration = WriterRegistration.objects.get(request_id=request_id)
+        serializer = WriterRegistrationSerializer(registration)
+        json_data = {}
+        json_data['data'] = serializer.data
+        return JsonResponse(json_data, safe=False)
+
+    def patch(self,request,request_id,format=None):
+        registration = self.get_object(request_id)
+        serializer = WriterRegistrationSerializer(registration,data=request.data,partial=True)
+        if serializer.is_valid():
+            user = registration.user
+            if request.data['status'] == 'approved':
+                user.is_writer = True
+            else:
+                user.is_writer = False
+            user.save()
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self,request,request_id,format=None):
+        registration = self.get_object(request_id)
+        registration.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
