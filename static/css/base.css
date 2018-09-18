@@ -278,3 +278,6 @@ a[data-toggle="collapse"] {
     margin:10px;
     margin-right:-4px;
 }
+.blog-tag {
+    cursor:pointer;
+}
