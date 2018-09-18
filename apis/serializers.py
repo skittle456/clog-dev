@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from apis.models import *
 from accounts.models import *
-from django.utils.text import slugify
+#from django.utils.text import slugify
 from datetime import datetime
 
 class BlogSerializer(serializers.ModelSerializer):
@@ -45,7 +45,8 @@ class InsourceSerializer(serializers.ModelSerializer):
         now = datetime.now()
         blog.img_url = '/static/upload/images/'+now.strftime('%Y')+'/'+now.strftime('%m')+'/'+now.strftime('%d')+'/'+ blog.img_url
         #blog.url = "/blog/"+ slugify(blog_data['title'], allow_unicode=True)
-        blog.url = "/clog/"+ str(blog.blog_id) + "/" + blog_data['title'].replace(" ","-").lower()
+        slug = slugify.core(blog_data['title'])
+        blog.url = "/clog/"+ str(blog.blog_id) + "/" + slug
         blog.tags.set(blog_data['tags'])
         blog.save()
         insource, created = Insource.objects.update_or_create(blog=blog,blog_content=validated_data['blog_content'])

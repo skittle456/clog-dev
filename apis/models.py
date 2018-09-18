@@ -1,7 +1,15 @@
 from django.db import models
-from django.utils.text import slugify
+#from django.utils.text import slugify
 from django.conf import settings
+from re import sub
 # Create your models here.
+
+class Slugify(object):
+    def core(self, string):
+        sub_text = sub('[^A-Za-z0-9ก-๙]', '',string)
+        sub_text = sub_text.replace(" ","-").lower()
+        return sub_text
+slugify = Slugify()
 
 class Photo(models.Model):
     id = models.AutoField(max_length=10,primary_key=True)
@@ -74,7 +82,7 @@ class Insource(models.Model):
     blog_content = models.TextField()
     def save(self, *args, **kwargs):
         #self.slug = slugify(self.blog.title,allow_unicode=True)
-        self.slug = self.blog.title.replace(" ","-").lower()
+        self.slug = slugify.core(self.blog.title)
         super(Insource, self).save(*args, **kwargs)
 
     def __str__(self):
