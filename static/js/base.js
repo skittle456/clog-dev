@@ -40,16 +40,40 @@ $(document).ready(function (){
         }
         this.id = "hide";
         $('.searchbar').hide();
-    })
-    // $( ".searchbar" ).submit(function( event ) {
-    //     event.preventDefault();
-    //     alert('submitted');
-    //     if(location.search.substring('editor') != -1 || location.search.substring('/clog/') != -1){
-    //         alert(this.text);
-    //         location.href = "/?search="+this.text;
-    //         this.submit();
-    //     }
-    //   });
+    });
+    $('.blog-tag').on('click', function() {
+        $('.searchbar').val("")
+        var tag_path = $(this).attr('id');
+        var category_path = $('.on-selected').attr('id');
+        $('#blog-container').fadeOut();
+        $('.loading').css("display", "block");
+        var path = '/tag/'+tag_path;
+        if (location.pathname == "/tag/"+tag_path){
+            return $('html,body').animate({
+                scrollTop: $("#blog-container").offset().top
+            }, 'slow');
+        }
+        else if(location.pathname == "/category/"+category_path+"/tag/"+tag_path){
+            path = "/category/"+category_path;
+        }
+        else if(tag_path == "feed"){
+            //// rewrite this function
+            path="/";
+        }
+        if(!$('#blog-container').length){
+            window.location.href = path;
+        }
+        $('#blog-container').load(path, function() {
+            $('.loading').css("display", "none");
+            $(this).fadeIn();
+          });
+        history.pushState(null, null, path);
+        reload_elements();
+        //$("html, body").animate({ scrollTop: 0 }, "slow");
+        $('html,body').animate({
+            scrollTop: $("#blog-container").offset().top
+        }, 'slow');
+    });
     var lastScrollTop = 0;
     var nav = $('.mainbar');
     var nav_category = $('.nav-category');
