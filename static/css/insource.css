@@ -8,6 +8,9 @@ div.nav-item.vt {
     margin-bottom:70px;
     cursor: pointer;
 }
+.pin-item, .like-btn {
+    cursor: pointer;
+}
 .container {
     margin-top:35px;
 }

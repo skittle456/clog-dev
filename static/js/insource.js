@@ -72,11 +72,12 @@ $(document).ready(function() {
                 method: "GET",
             }).done(function(){
                 //$('.fa-map-pin').css("color", "red");
-                $('.pin-item').css("color", "white");
-                $('.pin-item').css("background-color", "#f9a11d");
-                $('.pin-item').css("border", "1px solid #f9a11d");
-                $('.pin-item').attr("name","pinned")
+                $('.nav-item.pin-item').css("color", "white");
+                $('.nav-item.pin-item').css("background-color", "#f9a11d");
+                $('.nav-item.pin-item').css("border", "1px solid #f9a11d");
+                $('.nav-item.pin-item').attr("name","pinned")
                 $('#pin-text').text("Unpin this post");
+                $(".pin-label").attr("src","/static/images/pin_orange.png");
             })
             .fail(function() {
                 $('#login-modal').modal();
@@ -88,10 +89,11 @@ $(document).ready(function() {
                 method: "DELETE",
             }).done(function(){
                 //$('.fa-map-pin').css("color", "red");
-                $('.pin-item').css("background-color", "grey");
-                $('.pin-item').css("border", "1px solid white");
-                $('.pin-item').attr("name","unpin")
+                $('.nav-item.pin-item').css("background-color", "grey");
+                $('.nav-item.pin-item').css("border", "1px solid white");
+                $('.nav-item.pin-item').attr("name","unpin")
                 $('#pin-text').text("Pin this post");
+                $(".pin-label").attr("src","/static/images/pin_white.png");
             })
             .fail(function() {
                 $('#login-modal').modal();
@@ -109,8 +111,9 @@ $(document).ready(function() {
                 $('.like-btn').css("color", "#f9a11d");
                 $('.like-btn').css("background-color", "white");
                 $('.like-btn').attr("name","liked")
-                var count = parseInt($('.like-num').text());
-                console.log(count);
+                $('.like-label').css("color","#f9a11d");
+                $('.like-label').css("background-color", "transparent");
+                var count = parseInt($('.nav-item.like-num').text());
                 count=count+1;
                 $('.like-num').text(count);
             })
@@ -126,9 +129,10 @@ $(document).ready(function() {
                 //$('.fa-map-pin').css("color", "red");
                 $('.like-btn').css("color", "white");
                 $('.like-btn').css("background-color", "lightgrey");
-                $('.like-btn').attr("name","unlike")
-                var count = parseInt($('.like-num').text());
-                console.log(count);
+                $('.like-btn').attr("name","unlike");
+                $('.like-label').css("color","lightgrey");
+                $('.like-label').css("background-color", "transparent");
+                var count = parseInt($('.nav-item.like-num').text());
                 count=count-1;
                 $('.like-num').text(count);
             })
