@@ -125,8 +125,8 @@ div.tag {
     right:-10%;
 }
 .img-fluid {
-    max-width: 264px;
-    height: 139.45px;
+    width: 100%!important;
+    height: 220px;
 }
 @media (min-width: 768px) {
 
@@ -218,9 +218,6 @@ div.tag {
     }
     .on-selected {
         width: 120px;
-    }
-    .img-fluid {
-        width: 100%!important;
     }
     .item,.img-container {
         width:100vw;
