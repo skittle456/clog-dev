@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^load_editor/(?P<blog_id>[0-9]+)$', views.load_editor, name='load_editor'),
     url(r'^provider_editor', views.provider_editor, name='provider_editor'),
     url(r'^terms/privacy',views.privacy_policy,name='privacy_policy'),
+    url(r'^writer_registration',views.register_writer, name='register_writer'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
