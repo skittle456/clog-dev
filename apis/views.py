@@ -20,7 +20,8 @@ from rest_framework.decorators import api_view
 from apis.forms import PostForm, BlogForm, ProviderForm
 import time
 from apis.recommender import Recommender
-#from django.conf import settings
+from django.core.mail import send_mail,EmailMessage
+from django.conf import settings
 # Create your views here.
 class Base(object):
     def __init__(self):
@@ -311,6 +312,35 @@ def register_writer(request):
         return render(request, 'writer_registration.html', data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
     return redirect('/')
 
+class EmailStaff(object):
+    def core(self, request_id):
+        writer = WriterRegistration.object.get(request_id=request_id)
+        staffs = User.objects.filter(is_staff=True)
+        for i in staffs:
+            message = '<div class="container" style="padding:25px;color:#999;text-align:center;background-color:#f9f9f9;">'
+            message+= '<div class="container" style="padding:25px;text-align:left;background-color:white;color:#373D3F;border: .05rem solid #e5e5e5;" align="center">'
+            message+= '<h2> Clog </h2>'
+            message+= '<hr />'
+            message+= '<h3> Hi '+ i.first_name +'</h3>'
+            message+= '<p>'+ writer.user.first_name+ ' '+ writer.user.last_name +' applying for a writer account.</p>'
+            message+= '<p> With '+ writer.description+'excuse </p>'
+            message+= '<form action="http://theclog.co/writer_registration">'
+            message+=  '<input type="submit" value="Confirm writer" style="background-color:orange;color:white;border:none"/></form>'
+            message+= '<p> Thank! </p>'
+            message+= '<p> The Clog Dev team</p>'
+            message+= '</div>'
+            message+= '<p><small>Clog Corporation</small></p>'
+            message+= '</div>'
+            message+= '</div>'
+            mail = EmailMessage()
+            mail.subject = 'Verify'+ writer.user.first_name  +'writer account '
+            mail.body = message
+            mail.from_email = settings.EMAIL_HOST_USER
+            mail.to = [i.email]
+            mail.content_subtype = "html"
+            mail.send()
+        return Response(status=200)
+
 class PhotoList(APIView):
     def post(self,request,format=None):
         serializer = FeedbackSerializer(data=request.data)
@@ -510,7 +540,9 @@ class Register(APIView):
             user = serializer.save()
             user.set_password(request.data['password'])
             user.save()
-            return Response("Success", status=status.HTTP_201_CREATED)
+            auth_user = authenticate(username=user.username,password=request.data['password'])
+            login(request,auth_user)
+            return Response(user.id, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
@@ -590,8 +622,12 @@ class WriterRegistrationList(APIView):
         
     def post(self,request):
         serializer = WriterRegistrationSerializer(data=request.data)
+        email = EmailStaff()
         if serializer.is_valid():
-            serializer.save()
+            writer_request = serializer.save()
+            writer_request.user = request.user
+            writer_request.save()
+            email.core(writer_request.request_id)
             return Response("Success", status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

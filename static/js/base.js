@@ -41,6 +41,9 @@ $(document).ready(function (){
         this.id = "hide";
         $('.searchbar').hide();
     });
+    $('.writer-checkbox').change(function() {
+        $('#writer-text').attr('disabled',!this.checked)
+    });
     $('.blog-tag').on('click', function() {
         $('.searchbar').val("")
         var tag_path = $(this).attr('id');
@@ -230,6 +233,21 @@ function register(){
             "last_name":$('#last_name').val(),
             "email":$('#register-email').val(),
         }),
+        async: false,
+        success : function(text)
+        {
+            if($('.writer-checkbox').prop( "checked")){
+                var request_writer = $.ajax({
+                    url: "/apis/writer_registration_list",
+                    method: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        "description":$('#writer-text').val(),
+                    }),
+                })
+            }
+        }
     }).done(function(){
         location.href = "/"
     })

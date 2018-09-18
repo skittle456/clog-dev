@@ -40,6 +40,16 @@ os.environ['wsgi.url_scheme'] = 'https'
 ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'accounts.User'
 
+#email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'clogcorporation@gmail.com'
+EMAIL_HOST_PASSWORD = 'clogsince2018'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 SOCIAL_AUTH_FACEBOOK_KEY = '251982945408281'
 SOCIAL_AUTH_FACEBOOK_SECRET = '2172931d31e3433af0ae0ed77a2aa694'
 # Application definition
