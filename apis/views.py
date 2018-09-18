@@ -298,6 +298,19 @@ def get_insource_blog(request, slug):
     data['trending_blogs'] = trending_blogs
     return render(request, 'insource.html', data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
 
+def register_writer(request):
+    user = request.user
+    data = base.core(request)
+    if user.is_staff:
+        pending_list = WriterRegistration.objects.filter(status='held_for_review').order_by('-created_on')
+        approved_list = WriterRegistration.objects.filter(status='approved').order_by('-created_on')
+        declined_list = WriterRegistration.objects.filter(status='declined').order_by('-created_on')
+        data['pending_list'] = pending_list
+        data['approved_list'] = approved_list
+        data['declined_list'] = declined_list
+        return render(request, 'writer_registration.html', data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
+    return redirect('/')
+
 class PhotoList(APIView):
     def post(self,request,format=None):
         serializer = FeedbackSerializer(data=request.data)
@@ -566,19 +579,6 @@ class CommentDetail(APIView):
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-def register_writer(request):
-    user = request.user
-    if user.is_staff:
-        pending_list = WriterRegistration.objects.filter(status='held_for_review').order_by('-created_on')
-        approved_list = WriterRegistration.objects.filter(status='approved').order_by('-created_on')
-        declined_list = WriterRegistration.objects.filter(status='declined').order_by('-created_on')
-        data = {
-            'pending_list':pending_list,
-            'approved_list':approved_list,
-            'declined_list':declined_list
-        }
-        return render(request, 'writer_registration.html', data)
-    return redirect('/')
 
 class WriterRegistrationList(APIView):
     def get(self,requests,format=None):
