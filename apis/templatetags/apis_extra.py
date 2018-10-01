@@ -40,4 +40,3 @@ def keep_blockquote(value):
     #             string = "".join(str_lst)
     value = html.unescape(value)
     return value
-                    

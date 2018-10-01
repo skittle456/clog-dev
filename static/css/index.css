@@ -47,7 +47,7 @@ div.nav-scroller {
 
 }
 span.provider_name, span.date {
-    font-size: 24px;
+    font-size: 17px;
 }
 
 span.date {
@@ -197,7 +197,7 @@ div.tag {
         height: 30px;
     }
     span.provider_name, span.date {
-        font-size: 18px;
+        font-size: 14px;
     }
     div.item {
         padding-bottom:15px;
