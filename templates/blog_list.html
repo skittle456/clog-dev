@@ -5,6 +5,13 @@
 {% lazy_paginate 14 blogs %}
 {% for blog in blogs %}
   <div class="item card" width="352" style="border:none">
+	<div class="form-in-line">
+			<a class="text-muted" href="/provider/{{blog.provider.provider_name|lower}}">
+				<img class="provider_img p-1" width="40"height="40" src="{{blog.provider.favicon_url}}" >
+			<span class="provider_name pr-5 mr-5" style="border-right:0.5px solid lightgrey"> {{blog.provider.provider_name}} </span>
+			</a>
+		<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
+	</div>
     <a id="blog_link" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
 				<!-- <div class="img-container" width="352" style="height:206.329px;overflow:hidden;">-->
 					<!--<img src="{{blog.img_url}}" style="max-width:400px;margin:0 -100%;">-->
@@ -23,13 +30,6 @@
 						{% endif %}
 					</div>
 			</h5>
-    <div class="form-in-line">
-			<a class="text-muted" href="/provider/{{blog.provider.provider_name|lower}}">
-				<span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
-			<span class="provider_name p-1 mr-2" style="border-right:0.5px solid lightgrey"> {{blog.provider.provider_name}} </span>
-			</a>
-		<span class="date">{{blog.created_on|timesince|upto:','}} ago</span>
-	</div>
 	</div>
 	<div class="tag card-text" align="left">
 		{% for tag in blog.tags.all %}

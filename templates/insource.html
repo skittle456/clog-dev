@@ -94,7 +94,7 @@
     <div class="credit-container">
         <span class="provider_img postimg"><img width="60"height="60" src="{{blog.blog.provider.favicon_url}}" style="float: left;margin-right: 15px;" ></span>
         <div class="form-in-line">
-        <div class="text-muted"> Posted by<span class="provider_name" style="font-size:18px;font-family:Cloud-Bold;"> {{blog.blog.provider.provider_name}} </span>              
+        <div class="text-muted" style="font-size:22px;">Posted by <span class="provider_name" style="font-size:20px;font-family:Cloud-Bold;"> {{blog.blog.provider.provider_name}} </span>              
             <span style="color:#e4e4e4;margin-left:20px;margin-right:20px">|</span>
             {% if not user.is_authenticated or provider not in follow_list %}
             <div class="btn follow-btn" style="color:#FFA300;background-color:white;border: 1px solid #FFA300;" name="unfollow" id="{{blog.blog.provider.provider_id}}">
@@ -155,7 +155,9 @@
         {% for blog in trending_blogs %}
         <div class="col-lg-4 col-md-4 col-sm-12" style="margin-left:50px;margin-right:50px;">
                 <a align="center" id="blog_link d-block" href="{{blog.url}}" onclick="getBlog('{{blog.url}}','{{blog.blog_id}}');return false;">
-                    <img src="{{blog.img_url}}" style="width: 300px;max-height:206.329px;">
+                    <div class="img-container" width="380" style="height:200px;overflow:hidden;">
+                            <img src="{{blog.img_url}}" style="max-width:400px;margin:0 -100%;">
+                        </div>
                 </a>
                 <div align="center"
                 <a id="blog_link" href="{{blog.url}}" style="color:black;">{{blog.title}}</a>
