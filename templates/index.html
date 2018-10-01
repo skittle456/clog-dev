@@ -122,6 +122,8 @@
   .bg-2{ background: url("{{trending_blogs.2.img_url}}") no-repeat center; background-size: cover; }
   .bg-3{ background: url("{{trending_blogs.3.img_url}}") no-repeat center; background-size: cover; }
   .bg-4{ background: url("{{trending_blogs.4.img_url}}") no-repeat center; background-size: cover; }
+  .bg-5{ background: url("{{trending_blogs.5.img_url}}") no-repeat center; background-size: cover; }
+  .bg-6{ background: url("{{trending_blogs.6.img_url}}") no-repeat center; background-size: cover; }
 </style>
 <div class="container mt-4 trending-container-md">
   <div class="h-600x h-sm-auto">
@@ -210,7 +212,16 @@
             {% endif %}
             <div class="carousel-caption img-container img-fluid img-bg bg-{{forloop.counter0}} bg-grad-layer-6">
             <a id="blog_link" href="{{blog.url}}" target="_blank">
-                <h3 class="text-white">{{blog.title}}</h3>
+                <div class="abs-blr color-white ml-2">
+                    <h4 class="mb-1 ml-2 color-primary font-15"><b>{{blog.title}}</b></h4>
+                    <ul class="list-li text-white">
+                      <li class="list-inline-item font-12">{{blog.created_on|date}}</li>
+                      <li class="list-inline-item font-12"><i class="mr-2 font-12 text-muted"></i><span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
+                        <span><b>{{blog.provider.provider_name}}</b></span> </li>
+                      <li class="list-inline-item font-12"><i class="mr-2 font-12 text-muted"></i>{{blog.total_views}} read</li>
+                    </ul>
+                  </div><!--abs-blr -->
+                  
             </a>
             </div>
             </div>
