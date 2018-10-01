@@ -182,13 +182,6 @@
       </div>
 </div>
 </div>
-<style>
-  /* Make the image fully responsive */
-  .carousel-inner img {
-      width: 100%;
-      height: 100%;
-  }
-  </style>
 <div class="trending-container-sm" id="trending-container" style="margin-top:70px;">
     <div id="demo" class="carousel slide" data-ride="carousel">
 
@@ -212,8 +205,8 @@
             {% endif %}
             <div class="carousel-caption img-container img-fluid img-bg bg-{{forloop.counter0}} bg-grad-layer-6">
             <a id="blog_link" href="{{blog.url}}" target="_blank">
-                <div class="abs-blr color-white ml-2">
-                    <h4 class="mb-1 ml-2 color-primary font-15"><b>{{blog.title}}</b></h4>
+                <div class="abs-blr color-white">
+                    <h4 class="mb-1 color-primary font-15"><b>{{blog.title}}</b></h4>
                     <ul class="list-li text-white">
                       <li class="list-inline-item font-12">{{blog.created_on|date}}</li>
                       <li class="list-inline-item font-12"><i class="mr-2 font-12 text-muted"></i><span class="provider_img"><img width="16"height="16" src="{{blog.provider.favicon_url}}" ></span>
