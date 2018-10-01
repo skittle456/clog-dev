@@ -201,18 +201,14 @@
           {% endfor %}
         </ul>
         <!-- The slideshow -->
-        <div class="carousel-inner">
+        <div class="carousel-inner" style="width:100%;height:360px;">
           {% for blog in trending_blogs %}
             {% if forloop.first %}
             <div class="carousel-item active" id="item-{{forloop.counter0}}" >
             {% else %}
             <div class="carousel-item" id="item-{{forloop.counter0}}" >
             {% endif %}
-            <a href="{{blog.url}}" target="_blank">
-              <div class="img-container img-fluid img-bg bg-{{forloop.counter0}} bg-grad-layer-6">
-              </div>
-            </a>
-            <div class="carousel-caption">
+            <div class="carousel-caption img-container img-fluid img-bg bg-{{forloop.counter0}} bg-grad-layer-6">
             <a id="blog_link" href="{{blog.url}}" target="_blank">
                 <h3 class="text-white">{{blog.title}}</h3>
             </a>
