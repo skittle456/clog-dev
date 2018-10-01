@@ -209,7 +209,9 @@
             <div class="carousel-item" id="item-{{forloop.counter0}}" >
             {% endif %}
             <a href="{{blog.url}}" target="_blank">
-              <img class="img-fluid bg-grad-layer-6" src="{{blog.img_url}}" alt="{{blog.title}}" >
+              <div class="img-container bg-grad-layer-6" style="width:100%;height:230px;overflow:hidden;">
+                <img class="img-fluid" src="{{blog.img_url}}" style="max-width:350px;"alt="{{blog.title}}" >
+              </div>
             </a>
             <div class="carousel-caption">
             <a id="blog_link" href="{{blog.url}}" target="_blank">
