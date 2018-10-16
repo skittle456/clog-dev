@@ -123,58 +123,15 @@ $(document).ready(function (){
     });
 });
 
-// FB.login(function(response) {
-//     if(response.authResponse) {
-//         FB.api('/me',function(response){
-//             console.log('hi' + response.name);
-//             console.log(response.email);
-//             var request = $.ajax({
-//                 url: "/apis/login",
-//                 method: "POST",
-//                 contentType: "application/json",
-//                 dataType: "json",
-//                 data: JSON.stringify({
-//                     "username":response.email,
-//                     "password":response.name
-//                 }),
-//             }).done(function(){
-//                 document.location.reload(true);
-//             })
-//             .fail(function() {
-//                 console.log(response);
-//                 var register_fb = $.ajax({
-//                     url: "/apis/register",
-//                     method: "POST",
-//                     contentType: "application/json",
-//                     dataType: "json",
-//                     data: JSON.stringify({
-//                         "username":response.name,
-//                         "password":response.name,
-//                         "first_name":response.first_name,
-//                         "last_name":response.last_name,
-//                         "email":response.email
-//                     }),
-//                 }).done(function(){
-//                     location.href = "/"
-//                     var request = $.ajax({
-//                         url: "/apis/login",
-//                         method: "POST",
-//                         contentType: "application/json",
-//                         dataType: "json",
-//                         data: JSON.stringify({
-//                             "username":response.email,
-//                             "password":response.name
-//                         }),
-//                     })
-//                 })
-//                 .fail(function() {
-//                     alert('fail');
-//                 })
-//             });
-//         });
+FB.login(function(response) {
+    if(response.authResponse) {
+        FB.api('/me',function(response){
+            console.log('hi' + response.name);
+            console.log(response.email);
+    })
+    }
+})
 
-//     }
-// })
 function post_feedback(){
     console.log($('textarea#message-text.form-control').val());
     console.log($('input#email.form-control').val());
