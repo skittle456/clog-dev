@@ -67,6 +67,15 @@
             js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
+    
+            FB.login(function(response) {
+                if(response.authResponse) {
+                    FB.api('/me',function(response){
+                        console.log('hi' + response.name);
+                        console.log(response.email);
+                })
+                }
+            })
         </script>
     
     {% block css %}{% endblock %}

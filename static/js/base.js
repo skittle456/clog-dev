@@ -123,14 +123,6 @@ $(document).ready(function (){
     });
 });
 
-FB.login(function(response) {
-    if(response.authResponse) {
-        FB.api('/me',function(response){
-            console.log('hi' + response.name);
-            console.log(response.email);
-    })
-    }
-})
 
 function post_feedback(){
     console.log($('textarea#message-text.form-control').val());
