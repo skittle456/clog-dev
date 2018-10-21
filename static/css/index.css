@@ -37,7 +37,8 @@ div.nav-scroller {
 }
 #blog_link{
     color:white;
-    font-size: 20px;
+    font-size: 24px;
+    font-family: Cloud-Bold;
 }
 .blog-row{
     margin-bottom:10px;
