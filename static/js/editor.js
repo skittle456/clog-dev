@@ -21,6 +21,14 @@ $.ajaxSetup({
         }
     } 
 });
+function generateNewFileName(s){
+    var now = new Date();
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var extension = s.substring(s.lastIndexOf('.')); 
+    var newName = now.getTime();
+    for (var i = 0; i < 8; i++) newName += possible.charAt(Math.floor(Math.random() * possible.length))
+    return newName+extension;
+}
 var quill = new Quill('#editor-container', {
     modules: {
         toolbar: [
@@ -74,7 +82,9 @@ function postBlog(){
     //console.log(text);
     //console.log("Submitted", $(form).serialize(), $(form).serializeArray());
     var path = $('#id_file').val();
+    // console.log(path);
     path = path.replace(/^.*[\\\/]/, '')
+    path = generateNewFileName(path);
     var link = encodeURIComponent(path);
     // console.log(link);
     var title = $('#id_title').val();
@@ -95,9 +105,10 @@ function postBlog(){
                 "tags": tagList
             }
         }),
+    }).done(function() {
+        window.location.href = "/";
     });
     // No back end to actually submit to!
-    //alert('Open the console to see the submit data!')
     return false;
 }
 var tagList = [];
@@ -126,3 +137,4 @@ $(document).ready(function(){
         updateTag(id,name);
     });
 });
+

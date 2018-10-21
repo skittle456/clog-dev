@@ -208,7 +208,8 @@ def editor(request):
         #     # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
         #     # blog = blog.save()
         #     # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
-        return redirect('/')
+        #return redirect('/')
+        return Response("Success", status=status.HTTP_201_CREATED)
     data = base.core(request)
     data['provider_list'] = Provider.objects.all()
     data['category_list'] = Category.objects.all()
@@ -363,7 +364,7 @@ class InsourceList(APIView):
         # request.data['user'] = request.user.id
         serializer = InsourceSerializer(data=request.data)
         if serializer.is_valid():
-            # blog = serializer.save()
+            blog = serializer.save()
             # provider = Provider.objects.get(writer__id=request.user.id)
             # try:
             #     if request.user in provider.writer:
