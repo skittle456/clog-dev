@@ -105,11 +105,15 @@ function postBlog(){
                 "tags": tagList
             }
         }),
-    }).done(function() {
-        window.location.href = "/";
+        error: function(){
+            return true;
+        },
+        success: function(msg){ 
+            window.location.href = "/";
+            return false;
+        }
     });
     // No back end to actually submit to!
-    return false;
 }
 var tagList = [];
 var tagMapping = {};
