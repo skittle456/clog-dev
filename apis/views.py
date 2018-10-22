@@ -209,11 +209,15 @@ def editor(request):
         #     # blog = blog.save()
         #     # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
         #return redirect('/')
-    data = base.core(request)
+    # data = base.core(request)
+    tags = Tag.objects.annotate(num_blogs=Count('blog')).order_by('-num_blogs')
+    data = {
+        "tags":tags,
+    }
     data['provider_list'] = Provider.objects.all()
     data['category_list'] = Category.objects.all()
     data['tag_list'] = Tag.objects.all()
-    return render(request,'editor.html', data) if data['search_query'] == "" else redirect('/?search='+data['search_query'])
+    return render(request,'editor.html', data)
 
 def edit_provider_profile(request):
     form = PostForm()   

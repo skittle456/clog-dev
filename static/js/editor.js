@@ -105,13 +105,9 @@ function postBlog(){
                 "tags": tagList
             }
         }),
-        error: function(){
-            return true;
-        },
-        success: function(msg){ 
-            window.location.href = "/";
-            return false;
-        }
+    }).done(function() {
+        window.location.href = "/";
+        return false;
     });
     // No back end to actually submit to!
 }
