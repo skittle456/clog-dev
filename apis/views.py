@@ -190,7 +190,7 @@ class BlogList(APIView):
 def editor(request):
     form = PostForm()   
     blog_form = BlogForm()
-    if request.method == 'POST':
+    #if request.method == 'POST':
         # form = PostForm(request.POST, request.FILES)
         # blog_form = BlogForm(request.POST)
         # if form.is_valid():
@@ -208,7 +208,7 @@ def editor(request):
         #     # blog.url = "www.theclog.co/blog/"+ str(blog.blog_id)
         #     # blog = blog.save()
         #     # insource = Insource(blog=blog,blog_content=validated_data['blog_content'])
-        return redirect('/')
+        #return redirect('/')
     data = base.core(request)
     data['provider_list'] = Provider.objects.all()
     data['category_list'] = Category.objects.all()
