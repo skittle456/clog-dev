@@ -27,5 +27,5 @@ class WriterRegistration(models.Model):
     request_id = models.AutoField(max_length=10,primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField()
-    status = models.CharField(choices=status_choices,max_length=30,default='held_for_review')
+    status = models.CharField(choices=status_choices,max_length=35,default='held_for_review')
     created_on = models.DateTimeField(auto_now_add=True)

@@ -12,7 +12,7 @@ class Slugify(object):
 slugify = Slugify()
 
 class Photo(models.Model):
-    id = models.AutoField(max_length=10,primary_key=True)
+    id = models.AutoField(max_length=12,primary_key=True)
     file = models.ImageField(upload_to='images/%Y/%m/%d')
     description = models.CharField(max_length=255, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
