@@ -136,7 +136,7 @@ DATABASES = {
 #         "HOST": "clogdb.cu3dhkpiem10.ap-southeast-1.rds.amazonaws.com",
 #         "PORT": "5432",
 #     }
-}
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
